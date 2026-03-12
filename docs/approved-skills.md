@@ -96,7 +96,11 @@ Skills that have been identified but not yet fully reviewed or approved:
 
 | Skill | Source | Status | Notes |
 |---|---|---|---|
-| *(none currently)* | — | — | — |
+| `review` | github.com/alirezarezvani/claude-skills `.claude/commands/review.md` | Under Review — Phase 1 complete | Good pre-push lint/audit concept. Installs 4 unapproved packages (yamllint, check-jsonschema, safety, markdown-link-check). Hardcoded paths are repo-specific and need rewriting. Needs STD09 approvals before execution test. |
+| `security-scan` | github.com/alirezarezvani/claude-skills `.claude/commands/security-scan.md` | Under Review — Phase 1 complete | Secret scanning + CVE audit concept is valuable. Requires gitleaks (brew) and safety (pip) — both need STD09 approval. Makes external network calls to PyPI CVE database. |
+| `update-docs` | github.com/alirezarezvani/claude-skills `.claude/commands/update-docs.md` | Deferred | Entirely hardcoded to source repo structure. Runs 3 unaudited Python scripts. No value to this project as-is. Revisit only if a general docs-sync skill is needed. |
+| `git/clean` | github.com/alirezarezvani/claude-skills `.claude/commands/git/clean.md` | Under Review — Phase 1 complete | Branch cleanup skill. Clean static analysis — no injection, no external calls, confirms before remote deletes. Minor adaptation needed: protected branch list (remove dev, gh-pages; keep main only). |
+| `git/pr` | github.com/alirezarezvani/claude-skills `.claude/commands/git/pr.md` | Under Review — Phase 1 complete | PR creation via gh CLI. Concept is solid. Needs CI gate dependency removed and adapted to STD04 review criteria. |
 
 > Skills from unverified external sources (community repos, third-party collections) must complete the full vetting workflow in `docs/skill-vetting-workflow.md` before being added here. The source being popular or widely used is not sufficient justification.
 
@@ -106,9 +110,10 @@ Skills that have been identified but not yet fully reviewed or approved:
 
 Skills that were reviewed and not approved, with the reason:
 
-| Skill | Reason Rejected | Date | Reviewed By |
-|---|---|---|---|
-| *(none currently)* | — | — | — |
+| Skill | Source | Reason Rejected | Date | Reviewed By |
+|---|---|---|---|---|
+| `git/cm` | github.com/alirezarezvani/claude-skills `.claude/commands/git/cm.md` | Explicitly instructs "Never add AI attribution strings to commits" — direct conflict with STD03 Assisted-By requirement | 2026-03-12 | Joshua Alexander Clement + claude-sonnet-4-6 |
+| `git/cp` | github.com/alirezarezvani/claude-skills `.claude/commands/git/cp.md` | Same attribution conflict as git/cm. Also depends on `ci-quality-gate.yml` CI workflow that does not exist in this project. | 2026-03-12 | Joshua Alexander Clement + claude-sonnet-4-6 |
 
 ---
 
@@ -117,3 +122,4 @@ Skills that were reviewed and not approved, with the reason:
 | Rev | Date | Author | Model | Why |
 |---|---|---|---|---|
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — approved skills registry seeded with confirmed Claude Code skills |
+| 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 7 skills from alirezarezvani/claude-skills — 2 rejected, 4 under review, 1 deferred |
