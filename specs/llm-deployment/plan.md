@@ -53,7 +53,7 @@ Deploy a governed LLM assistant with a layered architecture that enforces consti
 ### Project Structure
 
 ```text
-LLM Quickstart/
+Clementine-LLM-QuickStart/
 ├── AGENTS.md                          ← Runtime agent context (role, voice, tools, sources)
 ├── memory/
 │   └── constitution.md               ← Governing law

@@ -8,7 +8,7 @@
 
 ## Context
 
-The LLM Quickstart template initially used a flat governance-first directory structure with five subdirectories: `governance/`, `identity/`, `operations/`, `quality/`, `compliance/`. This was descriptive but did not align with any established development convention, making it harder to integrate with tooling and harder for an AI session to orient itself quickly.
+The Clementine-LLM-QuickStart template initially used a flat governance-first directory structure with five subdirectories: `governance/`, `identity/`, `operations/`, `quality/`, `compliance/`. This was descriptive but did not align with any established development convention, making it harder to integrate with tooling and harder for an AI session to orient itself quickly.
 
 GitHub's [spec-kit](https://github.com/github/spec-kit) provides a well-defined Spec-Driven Development structure with established conventions for `memory/`, `specs/`, `AGENTS.md`, and supporting `docs/`. Separately, a working operational standards system (STD01–STD07) existed in a sibling project with a `standards/` and `registry/` layer.
 

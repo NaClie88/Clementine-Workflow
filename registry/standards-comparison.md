@@ -1,8 +1,8 @@
-# Standards Comparison — Clement vs. LLM Quickstart
+# Standards Comparison — Clement vs. Clementine-LLM-QuickStart
 
 **Type**: Reference Document
 **Status**: Draft — For Future Standards Strengthening
-**Scope**: `/home/josh/Development/Clement-Personal-Assistant/standards/` vs. `/home/josh/Development/LLM Quickstart/standards/`
+**Scope**: `/home/josh/Development/Clement-Personal-Assistant/standards/` vs. `/home/josh/Development/Clementine-LLM-QuickStart/standards/`
 **Purpose**: Identify strengths, weaknesses, and holes in each standards set to inform a future consolidation pass.
 
 ---

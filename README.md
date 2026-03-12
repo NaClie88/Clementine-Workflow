@@ -1,4 +1,4 @@
-# LLM System Architecture — Quickstart Template
+# Clementine LLM System Architecture — Quickstart Template
 
 A comprehensive, reusable architecture for deploying LLMs in professional environments. Built on [Spec-Driven Development](https://github.com/github/spec-kit) conventions.
 
@@ -9,7 +9,7 @@ Copy this folder, fill in the `[bracketed placeholders]`, and follow the task li
 ## Structure
 
 ```
-LLM Quickstart/
+Clementine-LLM-QuickStart/
 ├── AGENTS.md                               ← Runtime agent context: role, scope, voice, tools, sources
 ├── memory/
 │   └── constitution.md                    ← Governing law — supersedes all other layers
