@@ -44,7 +44,8 @@ Clementine-LLM-QuickStart/
     ├── logging-audit-policy.md            ← What gets logged and who sees it
     ├── incident-response.md               ← When things go wrong
     ├── change-management.md              ← How to safely update this system
-    └── approved-skills.md                ← Reviewed and approved Claude Code skills registry
+    ├── approved-skills.md                ← Reviewed and approved Claude Code skills registry
+    └── skill-vetting-workflow.md         ← Process for safely evaluating external skills
 ```
 
 ---

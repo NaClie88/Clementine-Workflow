@@ -98,7 +98,7 @@ Skills that have been identified but not yet fully reviewed or approved:
 |---|---|---|---|
 | *(none currently)* | — | — | — |
 
-> Skills from unverified external sources (community repos, third-party collections) must be reviewed against the constitution before being added here. The source being popular or widely used is not sufficient justification.
+> Skills from unverified external sources (community repos, third-party collections) must complete the full vetting workflow in `docs/skill-vetting-workflow.md` before being added here. The source being popular or widely used is not sufficient justification.
 
 ---
 
