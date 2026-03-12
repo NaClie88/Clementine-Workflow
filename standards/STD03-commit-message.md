@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD03
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII (Accountability), Article VIII (Honesty & Transparency)
+**Constitutional Authority**: `memory/constitution.md` Part 2, Amendment 5 (Accountability), Part 2, Amendment 1 (Honesty & Transparency)
 
 ---
 
@@ -66,13 +66,32 @@ chore: move operational docs from governance/ to docs/
 When a commit is produced with AI assistance, append:
 
 ```
-Co-Authored-By: [Model Name] <noreply@anthropic.com>
+Co-Authored-By: [Operator Name] <operator>
+Assisted-By: [Provider] [Tier] [Version] ([model-id]) <noreply@[provider-domain]>
 ```
+
+| Field | Description | Example |
+|---|---|---|
+| `[Provider]` | The AI company or platform | `Anthropic`, `OpenAI`, `Google` |
+| `[Tier]` | Model capability tier if applicable | `Haiku`, `Sonnet`, `Opus`, `GPT-4o`, `Gemini Pro` |
+| `[Version]` | Version number | `4.6`, `2024-11-20` |
+| `([model-id])` | The canonical, unambiguous model identifier | `claude-sonnet-4-6`, `gpt-4o-2024-11-20` |
+
+Examples:
+
+```
+Assisted-By: Anthropic Claude Sonnet 4.6 (claude-sonnet-4-6) <noreply@anthropic.com>
+Assisted-By: OpenAI GPT-4o 2024-11-20 (gpt-4o-2024-11-20) <noreply@openai.com>
+Assisted-By: Google Gemini Pro 1.5 (gemini-1.5-pro) <noreply@google.com>
+```
+
+The model ID in parentheses is the auditable identifier. If a vulnerability is discovered in a specific model version, `git log --grep="[model-id]"` surfaces every commit that model produced. This only works if the ID is consistent and machine-readable — do not paraphrase it.
 
 ---
 
 ## Revision History
 
-| Rev | Date | Author | Why |
-|---|---|---|---|
-| 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD03 |
+| Rev | Date | Author | Model | Why |
+|---|---|---|---|---|
+| 1.0 | 2026-03-10 | Claude | claude-sonnet-4-6 | Initial creation, adapted from Clement-Personal-Assistant STD03 |
+| 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Updated co-authorship to require full model ID for vulnerability traceability; updated constitutional references |

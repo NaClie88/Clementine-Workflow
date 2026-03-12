@@ -27,6 +27,20 @@ Before any work begins, read in order:
 | 4 | Any documents listed as active in `registry/progress.md` | What is currently in progress |
 | 5 | `AGENTS.md` | Deployment context if working on a specific deployment |
 
+### If a Required File Is Missing
+
+Do not proceed with the session if any item in the read list above is missing or unreadable. A missing required file is a blocker, not an inconvenience.
+
+| Situation | Action |
+|---|---|
+| `registry/progress.md` is missing | Stop. Notify the user. Do not begin work without known project state. |
+| `memory/constitution.md` is missing | Stop. The governing law cannot be assumed from memory. |
+| STD05 (this document) is missing | This situation is self-resolving — if you are reading this, it exists. |
+| Any active document listed in progress.md is missing | Flag it. Continue read list, then notify before beginning work on affected areas. |
+| `AGENTS.md` is missing for a deployment session | Stop if the session is deployment-specific. Proceed with template work if not deployment-specific. |
+
+Do not reconstruct or infer a missing document's contents from memory or prior sessions. Each session must read the live document.
+
 ### Verify the branch
 
 Before any commits:
@@ -110,6 +124,7 @@ This context belongs in the deployment's incident log (`docs/logging-audit-polic
 - [ ] Read `memory/constitution.md`
 - [ ] Read STD05 (this document)
 - [ ] Read active work documents
+- [ ] All required files confirmed present — if any missing, stopped and notified user
 - [ ] Verified correct branch with `git status`
 
 **Session end:**
@@ -125,3 +140,4 @@ This context belongs in the deployment's incident log (`docs/logging-audit-polic
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD05; added LLM deployment handoff section |
+| 1.1 | 2026-03-12 | Claude | Added missing-file protocol to §1 and checklist item — closes silent failure mode |

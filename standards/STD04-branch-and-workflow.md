@@ -62,7 +62,25 @@ The suffix is generated at session start and kept for the duration of that sessi
 
 ---
 
-## 4. Never on Main
+## 4. Pull Request Review Criteria
+
+Before merging a pull request, the reviewer must confirm:
+
+| Check | Criterion |
+|---|---|
+| **Complete** | All intended changes are included — no half-applied edits, no broken cross-references |
+| **Self-consistent** | No document in the PR contradicts another document in the same PR or in `main` |
+| **Standard-compliant** | All affected documents have a metadata block, numbered sections, and a revision history entry (per STD02, STD08) |
+| **No new dependencies** | If code or tooling was modified, no unapproved dependencies were introduced (STD09) |
+| **Constitution-safe** | No change conflicts with `memory/constitution.md` — critical changes must go through `docs/change-management.md` first |
+
+"Self-consistent" is not satisfied by the absence of obvious conflicts. The reviewer must check that every cross-reference (`See STD03 §2`, `D01`) still points to something real and accurate.
+
+For AI-authored PRs: the checklist above must be verified by a human reviewer before merge.
+
+---
+
+## 5. Never on Main
 
 - Never force-push to `main`
 - Never commit unfinished work directly to `main`
@@ -75,3 +93,4 @@ The suffix is generated at session start and kept for the duration of that sessi
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD04 |
+| 1.1 | 2026-03-12 | Claude | Added §4 PR review criteria — defined "self-consistent" and added merge checklist |

@@ -21,6 +21,19 @@ Appearance is last. A beautiful document that is hard to navigate is a failure. 
 
 ---
 
+## Contents
+1. [Document Structure](#1-document-structure)
+2. [Navigation Aids](#2-navigation-aids)
+3. [Typography and Formatting](#3-typography-and-formatting)
+4. [Code Blocks and Diagrams](#4-code-blocks-and-diagrams)
+5. [Information Density](#5-information-density)
+6. [Document Length](#6-document-length)
+7. [Tone](#7-tone)
+8. [Status Indicators](#8-status-indicators)
+9. [Visual Hierarchy in Practice](#9-visual-hierarchy-in-practice)
+
+---
+
 ## 1. Document Structure
 
 Every document must open with a metadata block so its type, status, and authority are visible without reading the body:
@@ -96,7 +109,36 @@ Use bullet lists for unordered items with no ranking. Use numbered lists when or
 
 ---
 
-## 4. Information Density
+## 4. Code Blocks and Diagrams
+
+### Code Blocks
+
+Always tag code blocks with a language identifier. Untagged blocks lose syntax highlighting and make the content type ambiguous.
+
+| Use | Example |
+|---|---|
+| Shell commands | ` ```bash ` |
+| Python | ` ```python ` |
+| JavaScript / Node | ` ```javascript ` |
+| SQL | ` ```sql ` |
+| Generic config / plaintext | ` ```text ` |
+| Markdown examples | ` ```markdown ` |
+
+Use ` ```text ` as the fallback for structured content that is not a programming language (e.g., file trees, template blocks, key-value pairs). Do not leave the tag blank.
+
+### Diagrams and Images
+
+Use diagrams only when a visual communicates structure that a table or list cannot. A diagram is not decoration — it earns its place by reducing comprehension time.
+
+Rules:
+- Prefer ASCII / text diagrams (` ```text `) over image files for anything that can be expressed textually — text is diffable, searchable, and renders in all environments.
+- If an image file is used, place it in `docs/assets/` and reference it with a relative path.
+- Every image must have alt text that describes the content, not just "diagram" or "figure".
+- Do not embed diagrams from external URLs — they will break without warning.
+
+---
+
+## 5. Information Density
 
 Documents are written for people who need to work efficiently, not people who need to be convinced. Assume the reader is competent. Write accordingly.
 
@@ -108,7 +150,23 @@ Documents are written for people who need to work efficiently, not people who ne
 
 ---
 
-## 5. Tone
+## 6. Document Length
+
+Long documents are a failure mode, not a sign of thoroughness.
+
+**Indicators that a document should be split:**
+- More than 10 top-level sections
+- A table of contents longer than one screen
+- Two or more major topics that are only loosely related
+- A section that is substantially larger than all others and could stand alone
+
+**How to split:** Create a new numbered document for the extracted topic. Replace the extracted content with a one-paragraph summary and a cross-reference (`See STD09 §2.4`). Update `registry/progress.md` to note the new document.
+
+**Do not split** for length alone if the document covers a single coherent topic. A 12-section standard covering one subject is better than two 6-section documents that constantly reference each other.
+
+---
+
+## 7. Tone
 
 Business casual means: how a knowledgeable colleague writes to another knowledgeable colleague when the stakes are real.
 
@@ -125,7 +183,7 @@ Not formal: passive voice for accountability avoidance, jargon without definitio
 
 ---
 
-## 6. Status Indicators
+## 8. Status Indicators
 
 Use consistent language for document and work item states. Do not invent synonyms.
 
@@ -151,7 +209,7 @@ Use consistent language for document and work item states. Do not invent synonym
 
 ---
 
-## 7. Visual Hierarchy in Practice
+## 9. Visual Hierarchy in Practice
 
 A well-structured document section looks like this:
 
@@ -187,3 +245,4 @@ sections. There are several key points to consider...
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation — business casual, function-first design standard |
+| 1.1 | 2026-03-12 | Claude | Added §4 code block and diagram rules, §5 document length guidance, §6 document length |

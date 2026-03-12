@@ -21,6 +21,7 @@ This standard applies to AI sessions and human contributors equally. Neither may
 3. [Using Approved Technologies](#3-using-approved-technologies)
 4. [Requesting a New Dependency](#4-requesting-a-new-dependency)
 5. [Prohibited Behaviors](#5-prohibited-behaviors)
+6. [Audit and Revocation](#6-audit-and-revocation)
 
 ---
 
@@ -67,9 +68,13 @@ If completing a task requires an unapproved dependency, surface that blocker to 
 
 > This table is populated as packages are approved through the §4 process. Start here — add approved packages as they are granted.
 
-| Package | Ecosystem | Approved Use | Approved By | Date |
-|---|---|---|---|---|
-| [package-name] | [pip / npm] | [what it is used for] | [approver] | [date] |
+| Package | Version | Ecosystem | Approved Use | Approved By | Date |
+|---|---|---|---|---|---|
+| [package-name] | [x.y.z] | [pip / npm] | [what it is used for] | [approver] | [date] |
+
+> Version pinning is required. Approving `requests` without a version means the approval covers an undefined range of behavior. Approve a specific version (`requests==2.31.0`). If the version must be updated, reapprove — do not assume the new version behaves identically.
+>
+> Semantic version ranges (`^1.2.0`, `~1.2`) are acceptable only when the session owner explicitly approves the range in writing. Blanket "latest" approvals are not permitted.
 
 ---
 
@@ -114,8 +119,38 @@ When a task genuinely requires something not in the registry:
 
 ---
 
+## 6. Audit and Revocation
+
+Approvals accumulate. Packages that are approved but no longer used, or that have known vulnerabilities, must be removed from the registry.
+
+### Periodic Review
+
+The §2.4 table must be reviewed at minimum:
+- Before any new deployment goes live
+- When a session adds a new entry to §2.4
+
+During a review, confirm for each entry:
+1. Is the package still in active use in this project?
+2. Does the approved version have known CVEs? Check the package's security advisories.
+3. Is a newer version required by another dependency?
+
+If a package fails any check, revoke it per the process below.
+
+### Revocation Process
+
+1. Remove or update the row in §2.4.
+2. Identify every file in the project that imports or uses the package.
+3. Either replace the usage with an approved alternative, or request re-approval of a clean version.
+4. Create a decision record in `registry/decisions/` noting: what was revoked, why, and what replaced it.
+5. Commit the revocation as a `chore:` commit per STD03.
+
+Do not simply delete the row and leave the import in place. The package is not considered removed until both the registry and the codebase are clean.
+
+---
+
 ## Revision History
 
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation — approved technology and dependency governance |
+| 1.1 | 2026-03-12 | Claude | Added version pinning requirement to §2.4, added §6 audit and revocation process |

@@ -17,6 +17,14 @@ Two goals, equally weighted:
 
 ---
 
+## Why This Convention
+
+A document system that is navigable at a glance is not a luxury — it is a prerequisite for AI-governed systems. An AI session starts with no memory of prior sessions. If documents are hard to find, context is reconstructed slowly and incorrectly. This convention ensures that any session — human or AI — can reorient itself from the folder listing alone.
+
+Short codes (`STD01`, `D03`) are chosen over prose references because they survive document renames, are unambiguous when two documents cover similar topics, and make automated searches reliable. The folder-as-type model avoids prefix collisions and makes folder-level filtering (e.g., searching only `standards/`) useful.
+
+---
+
 ## 1. Folder Structure
 
 Document type is conveyed by folder location. Each folder has one purpose.
@@ -29,6 +37,9 @@ Document type is conveyed by folder location. Each folder has one purpose.
 | `docs/` | — | Operational reference: guardrails, roles, tools, session, quality, compliance. |
 | `registry/` | — | Project state and decision records. |
 | `registry/decisions/` | D## | Records of design choices made at decision forks. |
+| `specs/[deployment-name]/` | — | Deployment specs, plans, and task lists. No numbered code — specs are unique per deployment. |
+
+> `docs/` files use descriptive names only (no code prefix) — they are an operational reference layer, not a numbered document series.
 
 ---
 
@@ -72,8 +83,17 @@ These files exist at fixed paths required by tooling or convention and are exemp
 
 ---
 
+## 4. When a Standard Needs to Change
+
+If this convention needs to change — a new document type, a new folder, or a rule that is causing problems — use `docs/change-management.md` to propose the amendment. Do not quietly rename files or create undocumented types in the interim. The convention only works when it is complete.
+
+If a rule must be violated before it can be formally changed (e.g., tooling forces a filename format), document the violation explicitly in `registry/decisions/` and open a change request immediately.
+
+---
+
 ## Revision History
 
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD01 |
+| 1.1 | 2026-03-12 | Claude | Added rationale section, docs/ layer note, specs/ clarification, amendment path |

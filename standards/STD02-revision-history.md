@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD02
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 2, Amendment 5 (Accountability)
 
 ---
 
@@ -20,17 +20,18 @@ Every document must end with a Revision History table:
 ```markdown
 ## Revision History
 
-| Rev | Date | Author | Why |
-|---|---|---|---|
-| 1.0 | YYYY-MM-DD | [Author] | Initial creation |
-| 1.1 | YYYY-MM-DD | [Author] | [Reason for change] |
+| Rev | Date | Author | Model | Why |
+|---|---|---|---|---|
+| 1.0 | YYYY-MM-DD | [Author] | [model-id or "human"] | Initial creation |
+| 1.1 | YYYY-MM-DD | [Author] | [model-id or "human"] | [Reason for change] |
 ```
 
 ### Rules
 
 - **Rev**: semantic versioning — `1.0` for initial, `1.1` for minor additions or clarifications, `2.0` for changes that alter the document's fundamental meaning
 - **Date**: ISO 8601 format (`YYYY-MM-DD`)
-- **Author**: the person or AI session that made the change
+- **Author**: the person who directed or owns the change — the Operator for AI-assisted work, the individual for human-only work
+- **Model**: the full model ID if AI-assisted (e.g. `claude-sonnet-4-6`, `gpt-4o-2024-11-20`), or `human` if no AI was involved. Use the canonical model ID, not a display name — it must be machine-searchable. This enables vulnerability auditing: if a model version is found to have a flaw, every document it touched can be identified by searching this column.
 - **Why**: one sentence describing why it changed — not what the new content says, but why the change was made
 
 ---
@@ -56,6 +57,7 @@ The Revision History section must be the **last section** of every document. Not
 
 ## Revision History
 
-| Rev | Date | Author | Why |
-|---|---|---|---|
-| 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD02 |
+| Rev | Date | Author | Model | Why |
+|---|---|---|---|---|
+| 1.0 | 2026-03-10 | Claude | claude-sonnet-4-6 | Initial creation, adapted from Clement-Personal-Assistant STD02 |
+| 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added Model column for vulnerability traceability; updated constitutional reference |
