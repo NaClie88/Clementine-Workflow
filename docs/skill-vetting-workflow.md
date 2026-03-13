@@ -10,13 +10,24 @@
 
 Defines the process for reviewing, testing, and approving Claude Code skills from external or unverified sources before they are added to `docs/approved-skills.md`. A skill that has not completed this workflow is treated as unapproved regardless of its apparent quality or source reputation.
 
-Skills are either **pure-prompt** (SKILL.md only — no scripts) or **script-backed** (includes Python or shell scripts invoked via Bash). The workflow covers both. Script-backed skills require additional phases — §2.6 (Script Analysis), §2.7 (Package Review), and the Python sandbox in §7.2.
+Skills are either **pure-prompt** (SKILL.md only — no scripts) or **script-backed** (includes Python, shell, or TypeScript/JavaScript scripts). The workflow covers both. Script-backed skills require additional phases — §2.6 (Script Analysis), §2.7 (Package Review), and the execution sandbox in §7.2–7.3.
 
 ---
 
 ## Contents
 1. [Threat Model](#1-threat-model)
 2. [Phase 1 — Static Analysis](#2-phase-1--static-analysis)
+   - [§2.0 Full File Inventory](#20-full-file-inventory)
+   - [§2.1 Tool Inventory](#21-tool-inventory)
+   - [§2.2 File Scope Analysis](#22-file-scope-analysis)
+   - [§2.3 Network Scope Analysis](#23-network-scope-analysis)
+   - [§2.4 Prompt Injection Scan](#24-prompt-injection-scan)
+   - [§2.5 Hook and Injection Analysis](#25-hook-and-injection-analysis) (hooks.json, settings.json, .sh scripts, CLAUDE.md, MCP config, plugin.json, agents/)
+   - [§2.6 Script Analysis — Python](#26-script-analysis-script-backed-skills-only)
+   - [§2.6b Script Analysis — TypeScript/JavaScript](#26b-typescriptjavascript-script-analysis-if-tsjs-files-present)
+   - [§2.7 Package Review Gate — Python](#27-package-review-gate-script-backed-skills-only)
+   - [§2.7b Package Review Gate — npm](#27b-npm-package-review-gate-typescriptjavascript-skills-only)
+   - [§2.8 Static Analysis Checklist](#28-static-analysis-checklist)
 3. [Phase 2 — Constitutional Review](#3-phase-2--constitutional-review)
 4. [Phase 3 — Risk Classification](#4-phase-3--risk-classification)
 5. [Phase 4 — Sandboxed Execution](#5-phase-4--sandboxed-execution)
@@ -66,6 +77,35 @@ Reading the skill file and scripts to perform static analysis is safe. The threa
 
 For script-backed skills, complete all sections including §2.6 and §2.7 before proceeding. Use `/vet-skill [path]` to automate §2.6 output.
 
+### 2.0 Full File Inventory
+
+**Before any analysis begins, enumerate every file in the skill directory.** Do not proceed to §2.1 until this inventory is complete. Approval cannot be granted for a skill unless every file in this list has been read.
+
+```bash
+find [skill-dir] -type f | sort
+```
+
+Record the results in your review document. Categorise each file:
+
+| Category | Files to look for | Covered in |
+|---|---|---|
+| Skill definition | `SKILL.md` | §2.1–2.4 |
+| Session injection | `CLAUDE.md` | §2.5 |
+| Hook config | `hooks.json`, `settings.json` | §2.5 |
+| Shell hook scripts | `*.sh` (any depth) | §2.5 |
+| Python scripts | `*.py` (any depth) | §2.6 |
+| TypeScript/JavaScript | `*.ts`, `*.js`, `*.mjs` (any depth) | §2.6b |
+| npm config | `package.json`, `package-lock.json` | §2.7b |
+| MCP config | `.mcp.json`, `mcp.json` | §2.5, §2.6b |
+| Sub-skills | `skills/` directory | §2.0 — recursive inventory |
+| Agent definitions | `agents/` directory | §2.5, §2.6b |
+| Plugin config | `plugin.json` | §2.5 |
+| Templates/reference | `templates/`, `docs/` inside skill | Note — usually inert |
+
+If the skill contains a `skills/` subdirectory with nested skills, run the inventory recursively and treat each sub-skill as a separate skill for analysis purposes.
+
+**Stop before §2.1 if SKILL.md is absent.** A skill directory without SKILL.md is an unstructured code drop — it is not a reviewable skill.
+
 ### 2.1 Tool Inventory
 
 List every tool the skill invokes. Flag any that are unexpected for the skill's stated purpose.
@@ -110,18 +150,71 @@ Read the skill file looking for:
 | Scope creep language | "Also do X while you're at it" where X is unrelated to the skill's stated purpose | Review |
 | Escalation requests | Asking Claude to request more permissions or tool access than needed | Review |
 
-### 2.5 Hook Analysis (if hooks present)
+### 2.5 Hook and Injection Analysis
 
-If the skill ships a `hooks.json`, `settings.json`, or shell hook scripts:
+This section covers every file that executes automatically or injects instructions into Claude sessions. These files carry outsized risk because they act without explicit Operator invocation.
+
+#### 2.5.1 CLAUDE.md (if present)
+
+A `CLAUDE.md` inside a skill package is **more powerful than SKILL.md**. It loads unconditionally into every Claude session in the directory, regardless of whether the skill was explicitly invoked.
+
+Read the entire file. Check for:
+- Override instructions, persona replacement, or constitution bypass patterns (see §2.4)
+- Instructions that expand the skill's effective scope beyond what SKILL.md describes
+- References to external URLs or services not declared in SKILL.md
+- Any instruction that contradicts the constitution or this workflow
+
+A CLAUDE.md containing override or bypass language is a **hard reject** under §2.4 rules, with the additional severity that it fires on every session, not just on explicit skill invocation.
+
+#### 2.5.2 hooks.json and settings.json (if present)
 
 - What events trigger each hook? (`PostToolUse`, `SessionStart`, `PreToolUse`, etc.)
-- What does the hook script do? Read the shell script in full.
-- Does the hook write to any files? Which paths?
-- Does the hook make network calls?
-- Does the hook fire on every session/tool use, or only on scoped patterns?
+- Does the hook have a matcher that scopes it to specific tools or patterns?
 - Does `settings.json` pre-grant Bash permissions? What scope?
 
-Pre-granted Bash permissions with broad wildcards (`Bash(*)`) are a **hard reject**. Scoped patterns (`Bash(npx playwright*)`) require Operator review and decision.
+A `PostToolUse` hook with no event type matcher (fires on every tool use) is a **hard reject**. Pre-granted Bash permissions with broad wildcards (`Bash(*)`) are a **hard reject**. Scoped patterns (`Bash(npx playwright*)`) require Operator review and explicit approval.
+
+#### 2.5.3 Shell scripts (if present)
+
+For **every `.sh` file** referenced in hooks.json or present anywhere in the skill directory:
+
+- Read the entire script.
+- What does it do? Summarise in plain terms.
+- Does it write to any files? Which paths?
+- Does it make network calls?
+- Does it call external commands (`curl`, `wget`, `ssh`, `scp`, `rsync`)?
+- Is any user-controlled input passed to shell commands without validation?
+
+A shell script is executed code, not documentation. Read it all — the one function you skip is the one that matters.
+
+#### 2.5.4 MCP server config (.mcp.json, mcp.json) (if present)
+
+MCP servers are persistent processes registered to Claude that expose tools beyond Claude's built-in set.
+
+- What servers are registered? List each by name.
+- What runtime is used? (`npx tsx`, `node`, `python`, etc.)
+- What entry point file does each server start? Note the path.
+- What environment variables does each server require? Are they credentials?
+- Does the server fail fast if credentials are absent, or does it proceed without auth?
+
+The MCP server source files identified here are analysed in §2.6b.
+
+#### 2.5.5 plugin.json (if present)
+
+Some skills ship a `plugin.json` for third-party tool integrations. Read the file and document:
+- What external services are connected?
+- What permissions or OAuth scopes are requested?
+- Are credentials stored locally or transmitted to an external service?
+
+#### 2.5.6 agents/ directory (if present)
+
+If the skill includes an `agents/` subdirectory:
+- What agents are defined?
+- What tools do they invoke?
+- Do they operate autonomously on any trigger, or only on explicit invocation?
+- Do they access shared state files, configuration, or credentials?
+
+Autonomous agents that run without explicit Operator invocation at each step are a **hard reject** unless the skill documentation explicitly describes and limits the autonomy scope.
 
 ### 2.6 Script Analysis (script-backed skills only)
 
@@ -196,6 +289,94 @@ For each script, summarise:
 - What outputs it produces (return values, files written, stdout)
 - Whether any sensitive values (API keys, passwords, PII) pass through
 
+### 2.6b TypeScript/JavaScript Script Analysis (if .ts/.js/.mjs files present)
+
+Applies to any skill containing TypeScript, JavaScript, or MJS files — including MCP server source identified in §2.5.4. Structure mirrors §2.6 for consistency.
+
+Run `/vet-skill [path]` — it will flag TS/JS files for manual review (the tool covers Python only; TS/JS analysis is manual).
+
+#### 2.6b.1 Import/Require Inventory
+
+Extract every import and require statement:
+
+```bash
+grep -rn "^import\|require(" [skill-dir]/**/*.{ts,js,mjs} | sort
+```
+
+For each package:
+- Is it an npm package or a Node.js built-in?
+- Cross-reference against `docs/npm-package-review.md` (see §2.7b). Flag any package not listed as **unreviewed**.
+
+Node.js built-ins (`fs`, `path`, `os`, `child_process`, `net`, `http`, `https`, `crypto`, `stream`, `util`, `events`, `url`, `buffer`, `assert`, `readline`) do not require npm review — but their usage is assessed in §2.6b.2–2.6b.4.
+
+#### 2.6b.2 File Operation Analysis
+
+Scan for file system access:
+
+```bash
+grep -n "fs\.\|readFile\|writeFile\|appendFile\|mkdir\|unlink\|rename\|copyFile\|createReadStream\|createWriteStream" [file].ts
+```
+
+For each finding:
+- What path is accessed — hardcoded constant or constructed from input?
+- Read or write mode?
+- Can a user-controlled value reach the path argument? (path traversal risk)
+
+Flag any writes outside the skill's own directory or `/tmp/`.
+
+#### 2.6b.3 Network Call Analysis
+
+Scan for HTTP and network access:
+
+```bash
+grep -n "fetch(\|axios\.\|got\.\|http\.request\|https\.request\|WebSocket\|createConnection" [file].ts
+```
+
+For each finding:
+- What URL/host is called?
+- Is the URL hardcoded or constructed from user input?
+- What data is sent in the request body or query string?
+- Are any local file contents or environment variables transmitted?
+
+A script that sends file contents or environment variables to an external URL is a **hard reject**.
+
+#### 2.6b.4 Shell Execution Analysis
+
+Scan for subprocess and eval patterns:
+
+```bash
+grep -n "exec(\|execSync\|spawn\|spawnSync\|execFile\|child_process\|eval(\|new Function(" [file].ts
+```
+
+For each finding:
+- What command is run?
+- Is the command string or any argument constructed from user-controlled input?
+- Is `shell: true` used with variable interpolation?
+
+Shell commands constructed from unvalidated user input are a **hard reject**. `eval()` or `new Function()` receiving user-controlled input is a **hard reject**.
+
+#### 2.6b.5 Environment Variable Access
+
+TypeScript/JavaScript files frequently read environment variables for credentials. This is expected for MCP servers — but must be documented.
+
+```bash
+grep -n "process\.env\." [file].ts
+```
+
+For each `process.env.X` reference:
+- What credential or configuration does it read?
+- Is it only read, or is it transmitted outward (network call, logged to file)?
+- Does the script fail gracefully if the variable is absent, or does it proceed silently with undefined?
+
+A script that transmits `process.env` values to external hosts is a **hard reject**.
+
+#### 2.6b.6 Data Flow Summary
+
+For each TS/JS file, summarise:
+- What inputs it accepts (CLI args, stdin, env vars, API calls)
+- What outputs it produces (files written, network calls, stdout)
+- Whether any sensitive values (credentials, file contents) flow to external destinations
+
 ### 2.7 Package Review Gate (script-backed skills only)
 
 After §2.6.1 import inventory, for every package not already in `docs/package-review.md`:
@@ -208,10 +389,39 @@ After §2.6.1 import inventory, for every package not already in `docs/package-r
 
 **A skill cannot proceed to Phase 4 until all its packages are in `docs/package-review.md`.**
 
+### 2.7b npm Package Review Gate (TypeScript/JavaScript skills only)
+
+After §2.6b.1 import inventory, for every npm package not already in `docs/npm-package-review.md`:
+
+1. Check `package.json` for the declared version range — note whether it is pinned (`"1.2.3"`), range-pinned (`"^1.2.3"`), or floating (`"*"`, `"latest"`)
+2. Look up the package on npmjs.com — note maintainers, weekly downloads, last publish date
+3. Check for known CVEs: `npm audit` in the skill's directory, or check the npm security advisories page
+4. Review the package's own `package.json` — what does it depend on transitively?
+5. Classify the package using the npm package tiers below
+6. Add it to `docs/npm-package-review.md` with findings
+
+**npm Package Risk Tiers:**
+
+| Tier | Description | Examples | Requirements |
+|---|---|---|---|
+| **Built-in** | Node.js built-in modules | `fs`, `path`, `os`, `child_process`, `crypto` | None — but usage patterns assessed in §2.6b |
+| **Tier 1 — Low** | Single-purpose, well-known, narrow scope, stable | `zod`, `chalk`, `commander`, `dotenv`, `date-fns` | npm check + usage scan only |
+| **Tier 2 — Medium** | Network OR broad filesystem; well-known | `axios`, `got`, `node-fetch`, `@modelcontextprotocol/sdk` | npm check + CVE audit + Operator review |
+| **Tier 3 — High** | Broad capabilities, credential handling, large dep tree | `openai`, `@anthropic-ai/sdk`, `puppeteer`, `playwright` | Full source review of key files + CVE audit + Phase 4 testing + Operator sign-off |
+| **Tier 4 — Block** | Known supply chain risk, shell execution wrapper, or critical CVE history | (evaluate case-by-case) | Do not use — requires explicit constitutional exception |
+| **Unknown** | Not yet in `docs/npm-package-review.md` | Any package not yet assessed | Complete §2.7b before skill can proceed to Phase 4 |
+
+**Floating version ranges are a flag.** `"*"` or `"latest"` means the package version is not reproducible — a malicious update could alter the skill's behaviour between installs. Require pinned or narrow-range versions before Phase 4.
+
+**A skill with TypeScript/JavaScript cannot proceed to Phase 4 until all its npm packages are in `docs/npm-package-review.md`.**
+
 ### 2.8 Static Analysis Checklist
 
 **For all skills:**
 ```
+[ ] §2.0 File inventory complete — every file in the skill directory listed and categorised
+[ ] Every file in the inventory has been read — no file approved unseen
+[ ] CLAUDE.md reviewed if present — no override/bypass language
 [ ] Tool inventory complete — all tools identified and listed
 [ ] File scope documented — all read/write paths noted
 [ ] No access to governance documents (memory/, standards/, .claude/)
@@ -220,14 +430,20 @@ After §2.6.1 import inventory, for every package not already in `docs/package-r
 [ ] Prompt injection scan complete — no override patterns found
 [ ] Skill does what it claims and only what it claims
 [ ] Source noted — where did this skill come from?
-[ ] Hooks reviewed if present — scope and auto-fire behaviour documented
+[ ] hooks.json reviewed if present — event types, matchers, scope
+[ ] settings.json reviewed if present — pre-granted permissions documented
+[ ] Every .sh hook script read in full — file ops, network calls, shell exec documented
+[ ] MCP config reviewed if present — servers listed, entry points identified
+[ ] plugin.json reviewed if present — external services and permissions documented
+[ ] agents/ directory reviewed if present — autonomy scope documented
+[ ] Sub-skills inventoried if present — each treated as a separate skill for analysis
 ```
 
-**Additional for script-backed skills:**
+**Additional for Python script-backed skills:**
 ```
-[ ] Import inventory complete — all packages listed
+[ ] Python import inventory complete — all packages listed
 [ ] All packages checked against docs/package-review.md
-[ ] No unreviewed packages (or unreviewed packages explicitly queued for §2.7)
+[ ] No unreviewed Python packages (or unreviewed packages explicitly queued for §2.7)
 [ ] File operations documented — paths, modes, construction methods
 [ ] No file writes outside skill working directory or /tmp/
 [ ] Network calls documented — URLs and request bodies identified
@@ -236,6 +452,21 @@ After §2.6.1 import inventory, for every package not already in `docs/package-r
 [ ] No eval() or exec() with dynamic content
 [ ] Data flow documented — inputs and outputs clearly understood
 [ ] Dependency chain checked — does this skill depend on another? (see §10)
+```
+
+**Additional for TypeScript/JavaScript skills:**
+```
+[ ] npm import/require inventory complete — all packages listed
+[ ] All packages checked against docs/npm-package-review.md
+[ ] No unreviewed npm packages (or unreviewed packages explicitly queued for §2.7b)
+[ ] No floating version ranges ("*" or "latest") without flag
+[ ] MCP server source files read in full (§2.6b)
+[ ] File operations documented — paths, modes, user input paths flagged
+[ ] Network calls documented — URLs, request bodies, env var transmission
+[ ] No shell execution with user-controlled arguments (shell: true with variables)
+[ ] No eval() or new Function() with dynamic content
+[ ] Environment variable access documented — no credential transmission outward
+[ ] Data flow documented — inputs and outputs clearly understood
 ```
 
 ---
@@ -568,7 +799,7 @@ Quick reference for findings that trigger an immediate stop and hard reject:
 | Skill spawns persistent background processes | Hard reject |
 | Hook grants `Bash(*)` blanket shell permission | Hard reject |
 
-### Script-layer red flags
+### Python script-layer red flags
 
 | Red Flag | Action |
 |---|---|
@@ -582,6 +813,32 @@ Quick reference for findings that trigger an immediate stop and hard reject:
 | Script spawns subprocesses that themselves spawn further processes | Hard reject |
 | Script accesses `~/.claude/`, `~/.ssh/`, `~/.aws/`, or credential paths | Hard reject |
 | Package dependency has an unpatched critical CVE | Hard reject until patched version is available |
+
+### TypeScript/JavaScript red flags
+
+| Red Flag | Action |
+|---|---|
+| Script uses `eval()` or `new Function()` with dynamic/user-supplied content | Hard reject |
+| Script constructs shell commands from user input (`exec(userInput)`, `spawn('sh', ['-c', userInput])`) | Hard reject |
+| Script passes user input to `child_process` with `shell: true` | Hard reject |
+| Script transmits `process.env` values or file contents to external hosts | Hard reject |
+| Script writes to paths outside `/tmp/` or its own working directory | Hard reject |
+| Script uses an unreviewed npm package (not in `docs/npm-package-review.md`) | Stop — complete §2.7b before proceeding |
+| Script imports a Tier 4 npm package | Hard reject |
+| npm package uses a floating version range (`"*"`, `"latest"`) | Flag — require pin before Phase 4 |
+| Script accesses `~/.claude/`, `~/.ssh/`, `~/.aws/`, or credential paths via `fs` | Hard reject |
+| MCP server transmits credentials or file contents to non-declared external services | Hard reject |
+
+### Hook and injection red flags
+
+| Red Flag | Action |
+|---|---|
+| CLAUDE.md contains override, persona-replacement, or bypass instructions | Hard reject |
+| `PostToolUse` hook with no event matcher (fires on every tool use) | Hard reject |
+| `Bash(*)` blanket permission in `settings.json` | Hard reject |
+| Shell hook script writes to governance files (`CLAUDE.md`, `standards/`, `.claude/`) | Hard reject |
+| Shell hook script makes outbound network calls | Hard reject |
+| Autonomous agent in `agents/` directory runs without explicit Operator invocation | Hard reject (unless scope is documented and bounded) |
 
 When a hard reject is triggered mid-execution, stop the session, tear down the sandbox, and document the finding before doing anything else.
 
@@ -664,3 +921,4 @@ Dependency chain: depends on context-engine (REJECTED) — blocked until adapted
 |---|---|---|---|---|
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — full vetting workflow for external Claude Code skills |
 | 2.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Major extension for script-backed skills: added §2.5 Hook Analysis, §2.6 Script Analysis, §2.7 Package Review Gate, §2.8 unified checklist; extended Phase 4 with strace + network namespace isolation; added Python venv sandbox to §7.2; added script-layer red flags to §8; added §9 Package Risk Tiers; added §10 Dependency Chain Analysis |
+| 3.0 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Comprehensive gap remediation after playwright-pro oversight revealed structural gaps. Added: §2.0 Full File Inventory (enumerate all files before analysis begins — approval requires every file read); expanded §2.5 into six subsections (CLAUDE.md injection analysis, hooks.json/settings.json, every .sh file in full, MCP config, plugin.json, agents/ directory); added §2.6b TypeScript/JavaScript Script Analysis (import inventory, file ops, network calls, shell exec, env var access, data flow); added §2.7b npm Package Review Gate with npm package risk tiers; updated §2.8 checklist with all new mandatory items; updated §8 with TypeScript/JS red flags and hook/injection red flags section |
