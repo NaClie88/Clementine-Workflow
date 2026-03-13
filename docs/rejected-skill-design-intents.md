@@ -12,6 +12,7 @@ When a skill is rejected for implementation violations rather than concept flaws
 1. [context-engine](#1-context-engine)
 2. [chief-of-staff](#2-chief-of-staff)
 3. [self-improving-agent](#3-self-improving-agent)
+4. [cs-onboard](#4-cs-onboard)
 
 ---
 
@@ -130,8 +131,47 @@ The concept is sound. The violations are in the implementation, not the idea.
 
 ---
 
+## 4. cs-onboard
+
+**Source**: github.com/alirezarezvani/claude-skills `c-level-advisor/cs-onboard/SKILL.md`
+**Rejected**: 2026-03-12
+**Reason for rejection**: Explicitly writes to `~/.claude/company-context.md` — user's global Claude config directory. The skill's own documentation confirms: "After the interview, generate `~/.claude/company-context.md`" and "Do not move it." This is the setup wizard for the entire `context-engine` ecosystem (also rejected).
+
+### What It Does
+
+A first-run onboarding wizard for the c-level advisor suite. When a new user activates the c-suite skill set for the first time, `cs-onboard` runs an interactive interview to gather company information, then generates the `company-context.md` file that all other c-level advisor skills depend on.
+
+**Key behaviours**:
+- Runs a structured interview across the same 7 dimensions as `context-engine`: Company, Product, Market, Competition, Metrics, Voice, Team
+- Prompts for each dimension in sequence with guided follow-up questions
+- After the interview, generates and writes the context file to disk
+- Optionally integrates with LinkedIn, Crunchbase, and Google News to pre-populate competitive intelligence before writing
+- Designed as a one-time setup — instructs user not to move the generated file
+
+**Relationship to other rejected skills**: `cs-onboard` is the initializer; `context-engine` is the runtime update layer. Neither is useful without the other. Both were rejected for the same `~/.claude/` path violation.
+
+### What a Compliant Version Would Need
+
+The interview and generation concept is entirely sound. The only violation is where the file is written.
+
+| cs-onboard behaviour | Compliant approach |
+|---|---|
+| Structured interview across 7 dimensions | Carry over as-is. |
+| Write to `~/.claude/company-context.md` | **Change**: Write to `memory/company-context.md` (project-relative). |
+| Pre-population from LinkedIn/Crunchbase/Google News | Permitted — external reads for enrichment. No data exfiltrated. |
+| "Do not move it" instruction | Replace with correct path instruction. |
+
+A compliant `cs-onboard` is essentially `/ctx init` — the subcommand already added to the approved `/ctx` skill. The init subcommand runs an interview and writes to `memory/company-context.md` with Operator confirmation.
+
+### Build Priority
+
+**Already covered** — the `/ctx init` subcommand in the approved `ctx` skill covers this design intent. No separate build needed.
+
+---
+
 ## Revision History
 
 | Rev | Date | Author | Model | Why |
 |---|---|---|---|---|
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — design intents for 3 hard-rejected c-level and engineering-team skills |
+| 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added cs-onboard (§4) — context-engine ecosystem setup wizard; already covered by `/ctx init` |
