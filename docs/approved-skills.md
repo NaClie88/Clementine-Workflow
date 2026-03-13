@@ -54,6 +54,16 @@ An unapproved skill is not necessarily unsafe — it is unknown. The review proc
 |---|---|---|---|---|---|---|
 | Loop | `/loop [interval] [command]` | High | Runs a prompt or slash command on a recurring interval (default 10 min) | **Persistent automation** — runs until explicitly stopped. Use only for well-defined, bounded tasks. Never loop destructive or write operations without a stop condition. | Joshua Alexander Clement | 2026-03-12 |
 
+### Custom Skills (Internally Written)
+
+Skills written for this system and vetted against the full workflow. Source is this project, not an external repository.
+
+| Skill | Invocation | Risk | What It Does | Caveats | Approved | Date |
+|---|---|---|---|---|---|---|
+| Company Context | `/ctx [load\|status\|update\|init]` | Low | Manages persistent company knowledge base at `memory/company-context.md`. Load, review, update, or initialise structured company context. | Reads and writes `memory/company-context.md` — all writes require explicit Operator confirmation | Joshua Alexander Clement | 2026-03-12 |
+| Chief of Staff | `/chief-of-staff [route\|log]` | Low–Medium | Routes strategic questions to the appropriate c-level advisor roles. Presents a routing plan for Operator approval before activating any advisors. Logs ratified decisions to `registry/decisions/`. | Invokes advisor sub-agents — all activations gated by Operator confirmation of the routing plan. Requires `memory/company-context.md` (run `/ctx init` first). | Joshua Alexander Clement | 2026-03-12 |
+| Memory Curator | `/curate [review\|promote\|confirm\|extract\|status]` | Low | Curates auto-memory (`MEMORY.md`) into durable project knowledge. Reviews for promotion candidates, runs a consequence check, outputs formatted text for manual application to `CLAUDE.md`. Never writes to governance files directly. | All promotions require manual Operator action — `/curate promote` outputs text to paste; `/curate confirm` marks the entry done. `/curate extract` stages skill templates to `skills/` (not `.claude/`) for vetting. | Joshua Alexander Clement | 2026-03-12 |
+
 ---
 
 ## 3. Approval Process
@@ -146,3 +156,4 @@ Skills that were reviewed and not approved, with the reason:
 | 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 7 skills from alirezarezvani/claude-skills — 2 rejected, 4 under review, 1 deferred |
 | 1.2 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 8 c-level-advisor skills — 2 hard rejected (context-engine, chief-of-staff: ~/.claude/ writes), 6 under review (board-meeting, competitive-intel, founder-coach, change-management, culture-architect, internal-narrative) |
 | 1.3 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 9 marketing-skill pure-prompt skills (all pass), 2 engineering-team pure-prompt skills (email-template-builder, stripe-integration-expert: both pass), 1 engineering-team hard reject (self-improving-agent: governance writes + persistent hook), 1 engineering-team pending full Phase 1 (playwright-pro: hooks + MCP) |
+| 1.4 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added Custom Skills section to §2 — 3 internally written compliant equivalents approved after Phase 1+2 vetting: ctx (Low), chief-of-staff (Low–Medium), curate (Low) |
