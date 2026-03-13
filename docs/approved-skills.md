@@ -54,6 +54,22 @@ An unapproved skill is not necessarily unsafe — it is unknown. The review proc
 |---|---|---|---|---|---|---|
 | Loop | `/loop [interval] [command]` | High | Runs a prompt or slash command on a recurring interval (default 10 min) | **Persistent automation** — runs until explicitly stopped. Use only for well-defined, bounded tasks. Never loop destructive or write operations without a stop condition. | Joshua Alexander Clement | 2026-03-12 |
 
+### Testing Skills
+
+| Skill | Invocation | Risk | What It Does | Caveats | Approved | Date |
+|---|---|---|---|---|---|---|
+| Playwright Pro | `/pw:init` `/pw:generate` `/pw:review` `/pw:fix` `/pw:migrate` `/pw:coverage` `/pw:report` `/pw:testrail` `/pw:browserstack` | Low–Medium | Production Playwright testing toolkit. Generates, reviews, fixes, and migrates E2E tests. 55 templates, 3 agents (test-architect, test-debugger, migration-planner). Auto-lints test files on every Write/Edit via hook. Optional TestRail and BrowserStack MCP integrations (fully reviewed). | **Hooks auto-fire**: `validate-test.sh` runs on every Write/Edit to spec files (4-pattern linter, prints warnings only). `detect-playwright.sh` runs at session start (prints hint if playwright.config found, read-only). **Pre-granted**: `Bash(npx playwright*)` and `Bash(npx tsx*)` without per-use confirmation. **MCP servers**: TestRail (read/write test cases and results) and BrowserStack (read builds/sessions, mark pass/fail) — both require explicit env var configuration and fail fast if not set. Neither runs without your credentials. | Joshua Alexander Clement | 2026-03-13 |
+
+### Custom Skills (Internally Written)
+
+Skills written for this system and vetted against the full workflow. Source is this project, not an external repository.
+
+| Skill | Invocation | Risk | What It Does | Caveats | Approved | Date |
+|---|---|---|---|---|---|---|
+| Company Context | `/ctx [load\|status\|update\|init]` | Low | Manages persistent company knowledge base at `memory/company-context.md`. Load, review, update, or initialise structured company context. | Reads and writes `memory/company-context.md` — all writes require explicit Operator confirmation | Joshua Alexander Clement | 2026-03-12 |
+| Chief of Staff | `/chief-of-staff [route\|log]` | Low–Medium | Routes strategic questions to the appropriate c-level advisor roles. Presents a routing plan for Operator approval before activating any advisors. Logs ratified decisions to `registry/decisions/`. | Invokes advisor sub-agents — all activations gated by Operator confirmation of the routing plan. Requires `memory/company-context.md` (run `/ctx init` first). | Joshua Alexander Clement | 2026-03-12 |
+| Memory Curator | `/curate [review\|promote\|confirm\|extract\|status]` | Low | Curates auto-memory (`MEMORY.md`) into durable project knowledge. Reviews for promotion candidates, runs a consequence check, outputs formatted text for manual application to `CLAUDE.md`. Never writes to governance files directly. | All promotions require manual Operator action — `/curate promote` outputs text to paste; `/curate confirm` marks the entry done. `/curate extract` stages skill templates to `skills/` (not `.claude/`) for vetting. | Joshua Alexander Clement | 2026-03-12 |
+
 ---
 
 ## 3. Approval Process
@@ -92,11 +108,240 @@ High-risk skills require a defined stop condition and explicit per-use authoriza
 
 ## 5. Skills Under Review
 
-Skills that have been identified but not yet fully reviewed or approved:
+Skills that have been identified but not yet fully reviewed or approved.
 
-| Skill | Source | Status | Notes |
-|---|---|---|---|
-| *(none currently)* | — | — | — |
+**Dependency chain note:** When a skill is listed with `Depends On`, approving it requires the dependency to be approved (or substituted with a compliant equivalent) first. A dependency that is rejected blocks approval of the dependent skill as-is.
+
+**Script-backed skills note:** Phase 1 (static analysis) is now complete for all 125 script-backed skills. Cross-cutting findings from broad sweep: no `~/.claude/` writes, no `CLAUDE.md` writes, no hooks in any script-backed skill. All non-stdlib package imports in Python scripts were found to be inside template string literals (generated code output), not runtime dependencies. The only runtime non-stdlib package is PyYAML, used with `yaml.safe_load()` and guarded with `try/except ImportError` throughout. No hard reject triggers found in any script-backed skill.
+
+---
+
+### Pure-Prompt Skills (Initial Review Batch)
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `review` | alirezarezvani/claude-skills `.claude/commands/review.md` | Phase 1 complete | — | Good pre-push lint/audit concept. Installs 4 unapproved packages (yamllint, check-jsonschema, safety, markdown-link-check). Hardcoded paths are repo-specific and need rewriting. Needs package registry entries before Phase 4. |
+| `security-scan` | alirezarezvani/claude-skills `.claude/commands/security-scan.md` | Phase 1 complete | — | Secret scanning + CVE audit concept. Requires gitleaks (brew) and safety (pip) — both need package registry entries. Makes external network calls to PyPI CVE database. |
+| `update-docs` | alirezarezvani/claude-skills `.claude/commands/update-docs.md` | Deferred | — | Entirely hardcoded to source repo structure. Runs 3 unaudited Python scripts. No value to this project as-is. |
+| `git/clean` | alirezarezvani/claude-skills `.claude/commands/git/clean.md` | Phase 1 complete | — | Branch cleanup skill. No injection, no external calls, confirms before remote deletes. Minor adaptation needed: protected branch list (keep main only). |
+| `git/pr` | alirezarezvani/claude-skills `.claude/commands/git/pr.md` | Phase 1 complete | — | PR creation via gh CLI. Needs CI gate dependency removed and adapted to STD04 review criteria. |
+| `c-level-advisor/board-meeting` | alirezarezvani/claude-skills `c-level-advisor/board-meeting/SKILL.md` | Phase 1 complete | `context-engine` (rejected — substitute `/ctx`) | 6-phase multi-agent board deliberation. Reads `memory/company-context.md`, writes to `memory/board-meetings/`. Medium risk — autonomous project-local memory writes. Must update context loading to use `/ctx`. |
+| `c-level-advisor/competitive-intel` | alirezarezvani/claude-skills `c-level-advisor/competitive-intel/SKILL.md` | Phase 1 complete | — | External WebSearch intelligence gathering (Crunchbase, LinkedIn, G2). No local file writes, no governance access. Medium risk — external network. |
+| `c-level-advisor/founder-coach` | alirezarezvani/claude-skills `c-level-advisor/founder-coach/SKILL.md` | Phase 1 complete | — | Pure coaching framework. No file I/O, no network, no governance access. Low risk. |
+| `c-level-advisor/change-management` | alirezarezvani/claude-skills `c-level-advisor/change-management/SKILL.md` | Phase 1 complete | — | ADKAR-based change playbook. Pure framework skill. Low risk. |
+| `c-level-advisor/culture-architect` | alirezarezvani/claude-skills `c-level-advisor/culture-architect/SKILL.md` | Phase 1 complete | — | Culture health assessment and values framework. Pure framework skill. Low risk. |
+| `c-level-advisor/internal-narrative` | alirezarezvani/claude-skills `c-level-advisor/internal-narrative/SKILL.md` | Phase 1 complete | — | Internal communications strategy framework. Includes contradiction detection. Low risk. |
+| `marketing-skill/ai-seo` | alirezarezvani/claude-skills `marketing-skill/ai-seo/SKILL.md` | Phase 1 complete | — | AI-era SEO strategy framework. Pure prompt. Low risk. |
+| `marketing-skill/brand-guidelines` | alirezarezvani/claude-skills `marketing-skill/brand-guidelines/SKILL.md` | Phase 1 complete | — | Brand identity framework. Optionally reads `.claude/product-marketing-context.md` (project-relative, read-only). Low risk. |
+| `marketing-skill/content-creator` | alirezarezvani/claude-skills `marketing-skill/content-creator/SKILL.md` | Phase 1 complete | — | Deprecated routing wrapper. Minimal attack surface. Low risk. |
+| `marketing-skill/marketing-ideas` | alirezarezvani/claude-skills `marketing-skill/marketing-ideas/SKILL.md` | Phase 1 complete | — | Idea generation framework. Optionally reads `.claude/product-marketing-context.md`. Low risk. |
+| `marketing-skill/marketing-psychology` | alirezarezvani/claude-skills `marketing-skill/marketing-psychology/SKILL.md` | Phase 1 complete | — | Mental models and behavioral frameworks. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/marketing-strategy-pmm` | alirezarezvani/claude-skills `marketing-skill/marketing-strategy-pmm/SKILL.md` | Phase 1 complete | — | Product marketing strategy framework. Pure prompt. Low risk. |
+| `marketing-skill/paywall-upgrade-cro` | alirezarezvani/claude-skills `marketing-skill/paywall-upgrade-cro/SKILL.md` | Phase 1 complete | — | Paywall conversion optimization. Optionally reads `.claude/product-marketing-context.md`. Low risk. |
+| `marketing-skill/popup-cro` | alirezarezvani/claude-skills `marketing-skill/popup-cro/SKILL.md` | Phase 1 complete | — | Popup conversion optimization. Optionally reads `.claude/product-marketing-context.md`. Low risk. |
+| `marketing-skill/social-content` | alirezarezvani/claude-skills `marketing-skill/social-content/SKILL.md` | Phase 1 complete | — | Social media content framework. Optionally reads `.claude/product-marketing-context.md`. Low risk. |
+| `engineering-team/email-template-builder` | alirezarezvani/claude-skills `engineering-team/email-template-builder/SKILL.md` | Phase 1 complete | — | React Email template generation assistant. No file I/O, no network. Low risk. |
+| `engineering-team/stripe-integration-expert` | alirezarezvani/claude-skills `engineering-team/stripe-integration-expert/SKILL.md` | Phase 1 complete | — | Stripe billing integration reference skill. No file I/O, no network. Low risk. |
+| `engineering-team/playwright-pro` | alirezarezvani/claude-skills | **Approved — moved to §2** | — | — |
+| `engineering/api-test-suite-builder` | alirezarezvani/claude-skills `engineering/api-test-suite-builder/SKILL.md` | Phase 1 complete | — | API test generation assistant. Bash examples are user templates only. Low risk. |
+| `engineering/database-schema-designer` | alirezarezvani/claude-skills `engineering/database-schema-designer/SKILL.md` | Phase 1 complete | — | Relational schema design assistant. Code examples only. Low risk. |
+| `engineering/pr-review-expert` | alirezarezvani/claude-skills `engineering/pr-review-expert/SKILL.md` | Phase 1 complete | — | Structured PR review framework. Bash commands are manual user templates. Low risk. |
+| `c-level-advisor/agent-protocol` | alirezarezvani/claude-skills `c-level-advisor/agent-protocol/SKILL.md` | Phase 1 complete | — | Inter-agent communication protocol: invocation syntax, loop prevention (max depth 2), isolation rules. Pure definition — no file I/O, no network. Low risk. |
+| `c-level-advisor/board-deck-builder` | alirezarezvani/claude-skills `c-level-advisor/board-deck-builder/SKILL.md` | Phase 1 complete | — | Board and investor deck builder. No file I/O, no network. Low risk. |
+| `c-level-advisor/company-os` | alirezarezvani/claude-skills `c-level-advisor/company-os/SKILL.md` | Phase 1 complete | — | Company operating system framework (EOS, OKRs, Scaling Up). No file I/O, no network. Low risk. |
+| `c-level-advisor/intl-expansion` | alirezarezvani/claude-skills `c-level-advisor/intl-expansion/SKILL.md` | Phase 1 complete | — | International market expansion framework. No file I/O, no network. Low risk. |
+| `c-level-advisor/ma-playbook` | alirezarezvani/claude-skills `c-level-advisor/ma-playbook/SKILL.md` | Phase 1 complete | — | M&A strategy for both sides. No file I/O, no network. Low risk. |
+| `business-growth/contract-and-proposal-writer` | alirezarezvani/claude-skills `business-growth/contract-and-proposal-writer/SKILL.md` | Phase 1 complete | — | Legal document generator for freelance contracts, SOWs, NDAs, MSAs. No autonomous file I/O, no network. Includes legal counsel disclaimer. Low risk. |
+
+---
+
+### Script-Backed Skills — Business Growth
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `business-growth/customer-success-manager` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: churn risk, expansion scoring, health score. No network, no external deps, no file writes. Low risk. |
+| `business-growth/revenue-operations` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: forecast accuracy, GTM efficiency, pipeline analysis. Low risk. |
+| `business-growth/sales-engineer` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: competitive matrix, POC planner, RFP response analyzer. Low risk. |
+
+---
+
+### Script-Backed Skills — C-Level Advisors
+
+All c-suite advisor scripts are pure stdlib Python analytics tools. SKILL.md behaviours reference `memory/company-context.md` for context loading — substitute `/ctx` for the rejected `context-engine`.
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `c-level-advisor/ceo-advisor` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | `/ctx` (for context loading) | 2 stdlib Python tools: financial scenario analyzer, strategy analyzer. SKILL.md uses `[INVOKE:role\|question]` cross-role invocation pattern. **FLAG**: agent-to-agent invocations; reads company-context.md. Low-Medium risk. |
+| `c-level-advisor/cfo-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 3 stdlib Python tools: burn rate, fundraising model, unit economics. Low risk. |
+| `c-level-advisor/chro-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: comp benchmarker, hiring plan modeler. Low risk. |
+| `c-level-advisor/ciso-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: compliance tracker, risk quantifier (ALE/FAIR). Low risk. |
+| `c-level-advisor/cmo-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: growth model simulator, marketing budget modeler. Low risk. |
+| `c-level-advisor/coo-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: OKR tracker, ops efficiency analyzer. Low risk. |
+| `c-level-advisor/cpo-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: PMF scorer, portfolio analyzer. Low risk. |
+| `c-level-advisor/cro-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: churn analyzer, revenue forecast model. Low risk. |
+| `c-level-advisor/cto-advisor` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 2 stdlib Python tools: tech debt analyzer, team scaling calculator. Low risk. |
+| `c-level-advisor/decision-logger` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | `board-meeting` + `/ctx` | 1 stdlib Python tool: decision tracker CLI. Writes Layer 1 raw transcripts and Layer 2 approved decisions to project-local `memory/board-meetings/`. SKILL.md explicitly states "Never written by agents directly" — writes gated by founder approval at Phase 5. **FLAG**: autonomous project-local memory writes (same pattern as `/ctx`). Medium risk. |
+| `c-level-advisor/executive-mentor` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: decision matrix scorer, stakeholder mapper. Pure prompt advisor. Low risk. |
+| `c-level-advisor/org-health-diagnostic` | alirezarezvani/claude-skills | Phase 1 complete | `/ctx` | 1 stdlib Python tool: health scorer (8 dimensions). Low risk. |
+| `c-level-advisor/scenario-war-room` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: scenario modeler with cascade analysis. Low risk. |
+| `c-level-advisor/strategic-alignment` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: alignment checker. Low risk. |
+
+---
+
+### Script-Backed Skills — Engineering
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `engineering/agent-workflow-designer` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: workflow scaffolder (writes scaffold files to project). SKILL.md uses agent invocation patterns. **FLAG**: agent-to-agent invocations. Low-Medium risk. |
+| `engineering/api-design-reviewer` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 3 stdlib Python tools: api linter, api scorecard, breaking change detector. SKILL.md may reference external validation. **FLAG**: potential network for API spec validation. Low-Medium risk. |
+| `engineering/changelog-generator` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: commit linter, changelog generator. Writes `CHANGELOG.md` to project (by design). Low risk. |
+| `engineering/ci-cd-pipeline-builder` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: pipeline generator, stack detector. Writes pipeline config files to project (by design). Low risk. |
+| `engineering/codebase-onboarding` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: codebase analyzer. Reads project structure, generates onboarding docs. Low risk. |
+| `engineering/dependency-auditor` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 3 stdlib Python tools: dep scanner, license checker, upgrade planner. Uses subprocess for package manager commands. **FLAG**: potential external network for CVE/license databases. Low-Medium risk. |
+| `engineering/env-secrets-manager` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: env auditor. Scans `.env` files and project for leaked secrets. **FLAG**: outputs may expose credential values in terminal; ensure output is not logged. Medium risk. |
+| `engineering/git-worktree-manager` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: worktree manager, worktree cleanup. Subprocess runs `git` commands via list args (no shell=True). Writes `.worktree-ports.json` to worktree dirs. Low risk. |
+| `engineering/interview-system-designer` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: hiring calibrator, loop designer, question bank generator + 1 in scripts/. Pure analytics. Low risk. |
+| `engineering/mcp-server-builder` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: openapi_to_mcp converter. Writes MCP manifest and scaffold files to user-specified output dir. PyYAML used with `yaml.safe_load()` (optional/guarded). Low risk. |
+| `engineering/migration-architect` | alirezarezvani/claude-skills | Phase 1 complete | — | Scripts include rollback generator (writes migration files to project). Pure stdlib. Low risk. |
+| `engineering/monorepo-navigator` | alirezarezvani/claude-skills | Phase 1 complete | — | SKILL.md references CLAUDE.md only in guidance context (not writing to it). Reads monorepo structure. Low risk. |
+| `engineering/observability-designer` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: alert optimizer. Pure computation. Low risk. |
+| `engineering/performance-profiler` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | SKILL.md references k6, Artillery, profiling tools. **FLAG**: subprocess for external benchmarking tools; network calls to test endpoints. Low-Medium risk. |
+| `engineering/runbook-generator` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: runbook generator. Writes runbook docs to user-specified path. Low risk. |
+| `engineering/skill-security-auditor` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: skill_security_auditor.py. Reads and analyzes SKILL.md files for security patterns (the os.system/exec strings in the script are pattern-matching targets, not calls). **FLAG**: reads untrusted SKILL.md files — injection risk if SKILL.md contains malicious content triggering regex edge cases. Medium risk. |
+| `engineering/skill-tester` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 2 stdlib Python tools: script_tester.py (executes Python scripts with timeout), skill_validator.py, quality_scorer.py. PyYAML guarded. **FLAG**: executes Python scripts — scope limited to `/tmp/` sandbox per design but verify before Phase 4. Low-Medium risk. |
+| `engineering/tech-debt-tracker` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: debt scanner, prioritizer, dashboard. Reads codebase, generates reports. Low risk. |
+
+---
+
+### Script-Backed Skills — Engineering Team
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `engineering-team/aws-solution-architect` | alirezarezvani/claude-skills | Phase 1 complete | — | Generates CloudFormation/CDK/Terraform templates. No runtime AWS access. Low risk. |
+| `engineering-team/code-reviewer` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: pr_analyzer.py (subprocess for git diff/log via list args), review_report_generator.py. Low risk. |
+| `engineering-team/google-workspace-cli` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 4 Python scripts. `gws_recipe_runner.py` uses `subprocess.run(cmd, shell=True)` where `cmd` strings are hardcoded `gws` CLI commands — no user input interpolated into shell. Other scripts: `gws_doctor.py`, `workspace_audit.py`, `auth_setup_guide.py` (subprocess for gcloud). **FLAG**: `shell=True` with hardcoded commands; OAuth to Google services; `{placeholder}` values in recipe commands remain literal (not substituted). Medium risk. |
+| `engineering-team/incident-commander` | alirezarezvani/claude-skills | Phase 1 complete | — | Pure incident response framework. No file I/O, no network, no subprocess. Low risk. |
+| `engineering-team/ms365-tenant-manager` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | SKILL.md references PowerShell automation for M365 admin. **FLAG**: PowerShell subprocess; credentials via env vars. Medium risk. |
+| `engineering-team/senior-architect` | alirezarezvani/claude-skills | Phase 1 complete | — | Architecture design skill. Reads project structure. Low risk. |
+| `engineering-team/senior-backend` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | Scripts include `api_scaffolder.py` (writes project files), `api_load_tester.py` (network to user-specified URLs), `database_migration_tool.py` (writes migration files). **FLAG**: `api_load_tester.py` connects to URLs provided via CLI arg — network to arbitrary endpoints. Low-Medium risk. |
+| `engineering-team/senior-computer-vision` | alirezarezvani/claude-skills | Phase 1 complete | — | Scripts: `dataset_pipeline_builder.py` (reads/copies dataset files), `vision_model_trainer.py` (PyYAML guarded with safe_load). No runtime albumentations dependency (config generator only). Low-Medium risk. |
+| `engineering-team/senior-data-engineer` | alirezarezvani/claude-skills | Phase 1 complete | — | `pipeline_orchestrator.py`: prefect/dagster/pandas imports are inside template string literals (generated code output, not runtime deps). PyYAML guarded. Low risk. |
+| `engineering-team/senior-data-scientist` | alirezarezvani/claude-skills | Phase 1 complete | — | Analytics/ML guidance skill. No external deps in scripts. Low risk. |
+| `engineering-team/senior-devops` | alirezarezvani/claude-skills | Phase 1 complete | — | Generates CI/CD workflows, Kubernetes manifests, IaC templates. Low risk. |
+| `engineering-team/senior-frontend` | alirezarezvani/claude-skills | Phase 1 complete | — | React/Next.js scaffolding. Code generation only. Low risk. |
+| `engineering-team/senior-fullstack` | alirezarezvani/claude-skills | Phase 1 complete | — | `project_scaffolder.py`: fastapi/sqlalchemy/django/react imports are inside template string literals (generated code output). Low risk. |
+| `engineering-team/senior-ml-engineer` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | SKILL.md references Docker and kubectl operations. **FLAG**: subprocess for Docker/kubectl; external LLM API calls. Medium risk. |
+| `engineering-team/senior-prompt-engineer` | alirezarezvani/claude-skills | Phase 1 complete | — | Pure prompt engineering framework. Low risk. |
+| `engineering-team/senior-qa` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: `e2e_test_scaffolder.py` (writes test files to project), `test_suite_generator.py`. Low risk. |
+| `engineering-team/senior-secops` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | `security_scanner.py` contains a pattern list that includes `'Subprocess with shell=True'` as a detection target (not actual shell=True usage). **FLAG**: analyzes code for malware patterns — injection risk from untrusted input to scanner. Medium risk. |
+| `engineering-team/senior-security` | alirezarezvani/claude-skills | Phase 1 complete | — | Threat modeling, STRIDE, vulnerability assessment. Offline analysis only. Low risk. |
+| `engineering-team/tdd-guide` | alirezarezvani/claude-skills | Phase 1 complete | — | 5 stdlib Python tools: framework adapter, metrics calculator, output formatter, tdd workflow, test generator. Low risk. |
+| `engineering-team/tech-stack-evaluator` | alirezarezvani/claude-skills | Phase 1 complete | — | 7 stdlib Python tools: ecosystem analyzer, format detector, migration analyzer, report generator, security assessor, stack comparator, TCO calculator. Low risk. |
+
+---
+
+### Script-Backed Skills — Finance
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `finance/financial-analyst` | alirezarezvani/claude-skills | Phase 1 complete | — | 4 stdlib Python tools: budget variance analyzer, DCF valuation, forecast builder, ratio calculator. Low risk. |
+| `finance/saas-metrics-coach` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: metrics calculator, quick ratio calculator, unit economics simulator. Low risk. |
+
+---
+
+### Script-Backed Skills — Marketing
+
+All marketing skill Python scripts are stdlib-only analytics tools. No network calls except where noted. Optional context reads use project-relative paths.
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `marketing-skill/ab-test-setup` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: sample size calculator. Low risk. |
+| `marketing-skill/ad-creative` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: ad copy validator. Low risk. |
+| `marketing-skill/analytics-tracking` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: tracking plan generator. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/app-store-optimization` | alirezarezvani/claude-skills | Phase 1 complete | — | 8 stdlib Python tools: aso scorer, keyword analyzer, competitor analyzer, review analyzer (sentiment on input data, no network), metadata optimizer, launch checklist, localization helper, ab test planner. Low risk. |
+| `marketing-skill/campaign-analytics` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: attribution analyzer, campaign ROI calculator, funnel analyzer. Low risk. |
+| `marketing-skill/churn-prevention` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: churn impact calculator. Low risk. |
+| `marketing-skill/cold-email` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: email sequence analyzer. Low risk. |
+| `marketing-skill/competitor-alternatives` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: comparison matrix builder. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/content-humanizer` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: humanizer scorer. Low risk. |
+| `marketing-skill/content-production` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: brand voice analyzer, content scorer, SEO optimizer. Low risk. |
+| `marketing-skill/content-strategy` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: topic cluster mapper. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/copy-editing` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: readability scorer. Low risk. |
+| `marketing-skill/copywriting` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: headline scorer. Low risk. |
+| `marketing-skill/email-sequence` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: sequence analyzer. References platform integrations as user-side setup. Low risk. |
+| `marketing-skill/form-cro` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: form field analyzer. Low risk. |
+| `marketing-skill/free-tool-strategy` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: tool ROI estimator. Low risk. |
+| `marketing-skill/launch-strategy` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: launch readiness scorer. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/marketing-context` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: context validator. SKILL.md references `.agents/marketing-context.md` as storage (project-relative, not `~/.claude/`). **FLAG**: writes to project-local `.agents/` directory. Low-Medium risk. |
+| `marketing-skill/marketing-demand-acquisition` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: CAC calculator. Low risk. |
+| `marketing-skill/marketing-ops` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: campaign tracker. Low risk. |
+| `marketing-skill/onboarding-cro` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: activation funnel analyzer. Low risk. |
+| `marketing-skill/page-cro` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: `conversion_audit.py`. Uses `urllib.request.urlopen(args.url)` — fetches HTML from user-specified `--url` arg. **FLAG**: network call to user-provided URL. Low-Medium risk. |
+| `marketing-skill/paid-ads` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: ROAS calculator. Low risk. |
+| `marketing-skill/pricing-strategy` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: pricing modeler. Low risk. |
+| `marketing-skill/programmatic-seo` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: URL pattern generator. Low risk. |
+| `marketing-skill/prompt-engineer-toolkit` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 2 stdlib Python tools: `prompt_tester.py` (accepts `--runner-cmd` CLI arg; uses `shlex.split()` + `subprocess.run(list)` — no shell=True), `prompt_versioner.py`. **FLAG**: `--runner-cmd` template executes user-supplied command with prompt/input substituted via `.format()`. Mitigated by `shlex.split()`. Low-Medium risk. |
+| `marketing-skill/referral-program` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: referral ROI calculator. Low risk. |
+| `marketing-skill/schema-markup` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: schema validator. Low risk. |
+| `marketing-skill/seo-audit` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: `seo_checker.py`. Uses `urllib.request.urlopen(args.url)` — fetches HTML from user-specified `--url` arg. **FLAG**: network call to user-provided URL. Low-Medium risk. |
+| `marketing-skill/signup-flow-cro` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: funnel drop analyzer. Low risk. |
+| `marketing-skill/site-architecture` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: `sitemap_analyzer.py`. Uses `urllib.request.urlopen(source)` — fetches sitemap XML from user-specified `--source` arg. **FLAG**: network call to user-provided URL. Low-Medium risk. |
+| `marketing-skill/social-media-analyzer` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: analyze performance, calculate metrics. Accepts JSON input data. Low risk. |
+| `marketing-skill/social-media-manager` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: social calendar generator. Optionally reads `marketing-context.md`. Low risk. |
+| `marketing-skill/x-twitter-growth` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 5 stdlib Python tools: profile auditor, competitor analyzer, tweet composer, content planner, growth tracker. SKILL.md references web search for competitive intelligence. **FLAG**: external network calls for competitive research. Low-Medium risk. |
+
+---
+
+### Script-Backed Skills — Product Team
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `product-team/agile-product-owner` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: user story generator. Low risk. |
+| `product-team/competitive-teardown` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: competitive matrix builder. SKILL.md references iTunes Search API + Twitter/X API v2 for data collection. **FLAG**: external read-only API calls. Low-Medium risk. |
+| `product-team/experiment-designer` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: sample size calculator. Low risk. |
+| `product-team/landing-page-generator` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: `landing_page_scaffolder.py`. Generates TSX/React component code as text output. Low risk. |
+| `product-team/product-analytics` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: metrics calculator. Low risk. |
+| `product-team/product-discovery` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: assumption mapper. Low risk. |
+| `product-team/product-manager-toolkit` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: customer interview analyzer, RICE prioritizer. Low risk. |
+| `product-team/product-strategist` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: OKR cascade generator. Low risk. |
+| `product-team/roadmap-communicator` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: changelog generator. Writes to project changelog (by design). Low risk. |
+| `product-team/saas-scaffolder` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: `project_bootstrapper.py`. Generates project structure and files. Low risk. |
+| `product-team/ui-design-system` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: design token generator. Low risk. |
+| `product-team/ux-researcher-designer` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: persona generator. Low risk. |
+
+---
+
+### Script-Backed Skills — Project Management
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `project-management/atlassian-admin` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: permission audit tool. SKILL.md covers Atlassian admin via REST API with OAuth. **FLAG**: writes to external SaaS (user provisioning, permission changes) via MCP. Operator must verify MCP availability and scope before approval. Medium risk. |
+| `project-management/atlassian-templates` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 1 stdlib Python tool: template scaffolder. SKILL.md uses `confluence_create_page`, `confluence_update_page` MCP ops. **FLAG**: writes to external Confluence via MCP. Medium risk. |
+| `project-management/confluence-expert` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 2 stdlib Python tools: content audit analyzer, space structure generator. SKILL.md uses full Confluence MCP (create_space, create_page, update_page, delete_page). **FLAG**: external SaaS writes + delete operations via MCP. Medium risk. |
+| `project-management/jira-expert` | alirezarezvani/claude-skills | Phase 1 complete (FLAG) | — | 2 stdlib Python tools: JQL query builder, workflow validator. SKILL.md uses Jira MCP (create_project, update_issue, bulk operations). **FLAG**: external SaaS writes + bulk operations via MCP. Medium risk. |
+| `project-management/scrum-master` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: retrospective analyzer, sprint health scorer, velocity analyzer. Low risk. |
+| `project-management/senior-pm` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: project health dashboard, resource capacity planner, risk matrix analyzer. Low risk. |
+
+---
+
+### Script-Backed Skills — Regulatory / Quality Management
+
+All ra-qm-team Python scripts are stdlib-only compliance and audit tools. No network calls, no file writes outside project directories.
+
+| Skill | Source | Status | Depends On | Notes |
+|---|---|---|---|---|
+| `ra-qm-team/capa-officer` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: CAPA tracker. Low risk. |
+| `ra-qm-team/fda-consultant-specialist` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: FDA submission tracker, HIPAA risk assessment, QSR compliance checker. Low risk. |
+| `ra-qm-team/gdpr-dsgvo-expert` | alirezarezvani/claude-skills | Phase 1 complete | — | 3 stdlib Python tools: data subject rights tracker, DPIA generator, GDPR compliance checker. Low risk. |
+| `ra-qm-team/information-security-manager-iso27001` | alirezarezvani/claude-skills | Phase 1 complete | — | 2 stdlib Python tools: compliance checker, risk assessment. Low risk. |
+| `ra-qm-team/isms-audit-expert` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: ISMS audit scheduler. Low risk. |
+| `ra-qm-team/mdr-745-specialist` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: MDR gap analyzer. Low risk. |
+| `ra-qm-team/qms-audit-expert` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: audit schedule optimizer. Low risk. |
+| `ra-qm-team/quality-documentation-manager` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: document validator. Low risk. |
+| `ra-qm-team/quality-manager-qmr` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: management review tracker. Low risk. |
+| `ra-qm-team/quality-manager-qms-iso13485` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: QMS audit checklist. Low risk. |
+| `ra-qm-team/regulatory-affairs-head` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: regulatory tracker. Low risk. |
+| `ra-qm-team/risk-management-specialist` | alirezarezvani/claude-skills | Phase 1 complete | — | 1 stdlib Python tool: risk matrix calculator. Low risk. |
 
 > Skills from unverified external sources (community repos, third-party collections) must complete the full vetting workflow in `docs/skill-vetting-workflow.md` before being added here. The source being popular or widely used is not sufficient justification.
 
@@ -106,9 +351,14 @@ Skills that have been identified but not yet fully reviewed or approved:
 
 Skills that were reviewed and not approved, with the reason:
 
-| Skill | Reason Rejected | Date | Reviewed By |
-|---|---|---|---|
-| *(none currently)* | — | — | — |
+| Skill | Source | Reason Rejected | Date | Reviewed By |
+|---|---|---|---|---|
+| `git/cm` | github.com/alirezarezvani/claude-skills `.claude/commands/git/cm.md` | Explicitly instructs "Never add AI attribution strings to commits" — direct conflict with STD03 Assisted-By requirement | 2026-03-12 | Joshua Alexander Clement + claude-sonnet-4-6 |
+| `git/cp` | github.com/alirezarezvani/claude-skills `.claude/commands/git/cp.md` | Same attribution conflict as git/cm. Also depends on `ci-quality-gate.yml` CI workflow that does not exist in this project. | 2026-03-12 | Joshua Alexander Clement + claude-sonnet-4-6 |
+| `c-level-advisor/context-engine` | github.com/alirezarezvani/claude-skills `c-level-advisor/context-engine/SKILL.md` | Reads and writes `~/.claude/company-context.md` at runtime — hard reject trigger per vetting workflow §8 ("Skill reads or writes `.claude/` or `~/.claude/` config"). Enriches and overwrites this file during sessions. Intent (context enrichment) is reasonable but the implementation grants write access to the user's config layer. | 2026-03-12 | claude-sonnet-4-6 |
+| `c-level-advisor/chief-of-staff` | github.com/alirezarezvani/claude-skills `c-level-advisor/chief-of-staff/SKILL.md` | Writes to `~/.claude/decision-log.md` — hard reject trigger per vetting workflow §8. Also depends on `context-engine` (rejected above) for context loading. Dual violation. | 2026-03-12 | claude-sonnet-4-6 |
+| `engineering-team/self-improving-agent` | github.com/alirezarezvani/claude-skills `engineering-team/self-improving-agent/SKILL.md` | Multiple hard reject triggers: (1) writes to `CLAUDE.md` (governance file equivalent to AGENTS.md), (2) writes to `.claude/rules/` (`.claude/` path), (3) installs a persistent PostToolUse hook (`error-capture.sh`) that fires on every Bash command. Autonomous promotion of patterns to enforced project rules without operator review. | 2026-03-12 | claude-sonnet-4-6 |
+| `c-level-advisor/cs-onboard` | github.com/alirezarezvani/claude-skills `c-level-advisor/cs-onboard/SKILL.md` | Explicitly writes to `~/.claude/company-context.md` — hard reject trigger per vetting workflow §8. Body confirms: "After the interview, generate `~/.claude/company-context.md`" and "Do not move it." This is the setup wizard for the context-engine ecosystem (also rejected). Same `~/.claude/` violation. | 2026-03-12 | claude-sonnet-4-6 |
 
 ---
 
@@ -117,3 +367,11 @@ Skills that were reviewed and not approved, with the reason:
 | Rev | Date | Author | Model | Why |
 |---|---|---|---|---|
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — approved skills registry seeded with confirmed Claude Code skills |
+| 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 7 skills from alirezarezvani/claude-skills — 2 rejected, 4 under review, 1 deferred |
+| 1.2 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 8 c-level-advisor skills — 2 hard rejected (context-engine, chief-of-staff: ~/.claude/ writes), 6 under review (board-meeting, competitive-intel, founder-coach, change-management, culture-architect, internal-narrative) |
+| 1.3 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 static analysis of 9 marketing-skill pure-prompt skills (all pass), 2 engineering-team pure-prompt skills (email-template-builder, stripe-integration-expert: both pass), 1 engineering-team hard reject (self-improving-agent: governance writes + persistent hook), 1 engineering-team pending full Phase 1 (playwright-pro: hooks + MCP) |
+| 1.4 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added Custom Skills section to §2 — 3 internally written compliant equivalents approved after Phase 1+2 vetting: ctx (Low), chief-of-staff (Low–Medium), curate (Low) |
+| 1.5 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 complete across all remaining pure-prompt skills: 10 new Under Review (api-test-suite-builder, database-schema-designer, pr-review-expert, agent-protocol, board-deck-builder, company-os, intl-expansion, ma-playbook, contract-and-proposal-writer); playwright-pro Phase 1 complete (FLAG — hooks clean, blanket Playwright CLI permissions); 1 new hard reject (cs-onboard: ~/.claude/ write) |
+| 1.6 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added `Depends On` column to §5 for dependency chain tracking (workflow §10). board-meeting flagged as depending on rejected context-engine — must substitute `/ctx` before approval. All other Under Review skills have no cross-skill dependencies. |
+| 1.8 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Approved playwright-pro — moved to §2 Testing Skills. Full review completed: hook scripts (validate-test.sh, detect-playwright.sh), CLAUDE.md, .mcp.json, and both MCP server source files (testrail-mcp, browserstack-mcp) all clean. TestRail and BrowserStack MCP integrations approved — credentials from env vars only, fail fast if not configured, no local file writes. |
+| 1.7 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Phase 1 complete for all 125 script-backed skills (broad sweep + domain batch analysis). No hard reject triggers found in any skill Python scripts or SKILL.md files. All 125 added to §5 organized by domain. Key findings: no `~/.claude/` writes, no `CLAUDE.md` writes, no hooks/settings.json outside playwright-pro and self-improving-agent (already reviewed), all third-party package imports in template strings (not runtime deps), PyYAML used safely throughout. 15 skills flagged (not rejected) for network calls, subprocess, MCP writes, or agent invocations. |

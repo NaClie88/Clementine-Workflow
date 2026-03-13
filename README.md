@@ -45,7 +45,8 @@ Clementine-LLM-QuickStart/
     ├── incident-response.md               ← When things go wrong
     ├── change-management.md              ← How to safely update this system
     ├── approved-skills.md                ← Reviewed and approved Claude Code skills registry
-    └── skill-vetting-workflow.md         ← Process for safely evaluating external skills
+    ├── skill-vetting-workflow.md         ← Process for safely evaluating external skills
+    └── rejected-skill-design-intents.md ← Design intent summaries for rejected skills — reference for compliant re-implementation
 ```
 
 ---
