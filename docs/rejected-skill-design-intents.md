@@ -13,6 +13,9 @@ When a skill is rejected for implementation violations rather than concept flaws
 2. [chief-of-staff](#2-chief-of-staff)
 3. [self-improving-agent](#3-self-improving-agent)
 4. [cs-onboard](#4-cs-onboard)
+5. [google-workspace-cli](#5-google-workspace-cli)
+6. [ms365-tenant-manager](#6-ms365-tenant-manager)
+7. [atlassian-suite](#7-atlassian-suite) (atlassian-admin, atlassian-templates, confluence-expert, jira-expert)
 
 ---
 
@@ -169,9 +172,127 @@ A compliant `cs-onboard` is essentially `/ctx init` — the subcommand already a
 
 ---
 
+## 5. google-workspace-cli
+
+**Source**: github.com/alirezarezvani/claude-skills `engineering-team/google-workspace-cli/SKILL.md`
+**Rejected**: 2026-03-13
+**Reason for rejection**: `gws_recipe_runner.py` uses `subprocess.run(cmd, shell=True)` — live shell execution with Google OAuth credentials active in the Claude session. Additional scripts run `gcloud` subprocesses directly. Direct live execution with no review buffer between Claude output and Google Workspace changes.
+
+### What It Does
+
+A CLI wrapper for Google Workspace administration using the `gws` tool. Covers Gmail, Drive, Calendar, Meet, Chat, Contacts, Groups, Users, and Shared Drives.
+
+**Key behaviours**:
+- `gws_recipe_runner.py` — executes `gws` CLI commands directly via `shell=True`
+- `gws_doctor.py` — checks gws installation and auth status (subprocess)
+- `workspace_audit.py` — audits workspace configuration (subprocess for gcloud)
+- `auth_setup_guide.py` — guides OAuth setup, runs `gcloud auth` commands
+
+**The problem**: `shell=True` with live OAuth means a Claude session error, hallucination, or bad prompt produces an immediate Workspace change with no review step.
+
+### What the Compliant `/gws` Skill Needs
+
+| google-workspace-cli behaviour | Compliant approach |
+|---|---|
+| Execute `gws` commands directly in Claude session | Generate a `registry/pending-ops/gws/YYYY-MM-DD-HH-MM.sh` script for Operator review |
+| `shell=True` subprocess | No subprocess in Claude session at all — output is a reviewed shell script |
+| Live OAuth during session | Credentials only needed when Operator runs the reviewed script |
+| Doctor/audit tools | Permitted read-only — these can remain as-is (no writes, no live auth) |
+
+**Sync mechanism**: Operator reviews the generated `.sh` file, then runs it manually. One script per session batch. The gws CLI itself is unchanged — only when it fires changes.
+
+### Build Priority
+
+**High** — Google Workspace is a common admin target. The compliant version is structurally simple: replace subprocess execution with file generation. The `gws` CLI and recipe logic carry over entirely.
+
+---
+
+## 6. ms365-tenant-manager
+
+**Source**: github.com/alirezarezvani/claude-skills `engineering-team/ms365-tenant-manager/SKILL.md`
+**Rejected**: 2026-03-13
+**Reason for rejection**: SKILL.md describes PowerShell subprocess execution for live M365 admin operations with credentials passed via environment variables. Direct execution in Claude session means no review buffer between generated PowerShell and M365 tenant changes.
+
+### What It Does
+
+Microsoft 365 tenant administration via PowerShell automation. Covers user lifecycle (create, disable, offboard), Teams management, SharePoint sites, Exchange policies, conditional access, and compliance.
+
+**Key behaviours**:
+- Generates PowerShell commands for M365 Graph API and Exchange Online
+- Executes via subprocess with credentials from env vars
+- Covers high-privilege operations: user provisioning, license assignment, MFA policy, conditional access rules
+
+**The problem**: High-privilege operations (conditional access, MFA policy, bulk user changes) executing directly in a Claude session with no mandatory review step before they land in the tenant.
+
+### What the Compliant `/m365` Skill Needs
+
+| ms365-tenant-manager behaviour | Compliant approach |
+|---|---|
+| Execute PowerShell in Claude session | Generate `registry/pending-ops/m365/YYYY-MM-DD-HH-MM.ps1` for Operator review |
+| Credentials via env vars during session | Credentials only needed when Operator runs the reviewed `.ps1` |
+| Direct high-privilege ops | All high-privilege ops (conditional access, MFA, bulk) require explicit Operator review before execution |
+| Audit and reporting commands (read-only) | Permitted as-is — read-only Graph API calls are low risk |
+
+**Sync mechanism**: Operator reviews the generated `.ps1` file, then runs it in a PowerShell session with M365 credentials. One script per Claude session batch.
+
+### Build Priority
+
+**Medium** — M365 admin is high-privilege territory. The compliant version is straightforward (file generation instead of subprocess execution) but the script templates need careful review given the privilege level of the operations.
+
+---
+
+## 7. atlassian-suite
+
+This entry covers four skills rejected for the same architectural reason and replaced by a single compliant `/atlassian` skill.
+
+**Skills covered**:
+- `project-management/atlassian-admin` — user provisioning, permission changes via Atlassian REST API
+- `project-management/atlassian-templates` — Confluence page creation from templates via MCP
+- `project-management/confluence-expert` — full Confluence management including delete operations via MCP
+- `project-management/jira-expert` — Jira project/issue management including bulk operations via MCP
+
+**Rejected**: 2026-03-13
+**Reason for rejection**: All four skills write to external Atlassian SaaS services (Confluence, Jira) via live MCP connections during the Claude session. No review buffer between Claude output and external changes. `confluence-expert` additionally exposes `delete_page` and `delete_space` operations — irreversible actions with no staging step.
+
+### What They Do Collectively
+
+| Skill | Operations |
+|---|---|
+| `atlassian-admin` | Create/disable users, assign groups, manage permissions, audit access |
+| `atlassian-templates` | Create Confluence pages from templates; `confluence_create_page`, `confluence_update_page` |
+| `confluence-expert` | Full space/page lifecycle: `create_space`, `create_page`, `update_page`, `delete_page` |
+| `jira-expert` | `create_project`, `create_issue`, `update_issue`, `transition_issue`, bulk ops |
+
+**The problem**: Four separate skills with overlapping Atlassian scope, all writing live via MCP. `delete_page` is irreversible. Bulk Jira operations can affect hundreds of issues in one call. No mandatory review step.
+
+### What the Compliant `/atlassian` Skill Needs
+
+One unified skill covering all four domains with a local-first staging architecture:
+
+| atlassian-suite behaviour | Compliant approach |
+|---|---|
+| Live MCP writes during Claude session | Stage operations as structured JSON in `registry/pending-ops/atlassian/` |
+| `delete_page` / `delete_space` live | Staged as a delete request — requires explicit second confirmation at sync time |
+| Bulk Jira operations live | Staged as a bulk spec — Operator reviews scope before sync |
+| User provisioning live | Staged as a provisioning request — reviewed before any account changes |
+| Read operations (get_pages, get_issues, search) | Permitted live — reads are low risk and needed for context |
+
+**Staging format**: Each Claude session produces a timestamped JSON file in `registry/pending-ops/atlassian/YYYY-MM-DD-HH-MM-ops.json`. The file lists operations in sequence with type, target, payload, and a `requires_confirmation` flag for destructive ops.
+
+**Sync mechanism**: `scripts/atlassian-sync.py` reads the staging directory, presents a summary of pending operations, prompts for confirmation on any destructive ops, then executes via Atlassian REST API using credentials from env vars. Processed files are moved to `registry/processed/atlassian/`.
+
+**MCP**: The existing Atlassian MCP can remain for read operations. Write operations go through the staging path only.
+
+### Build Priority
+
+**High** — Atlassian is the most commonly used project management stack in this skill set. Four skills collapse into one. The compliant version adds a staging layer but preserves all the useful functionality. The Python sync script is the main build artifact beyond the SKILL.md itself.
+
+---
+
 ## Revision History
 
 | Rev | Date | Author | Model | Why |
 |---|---|---|---|---|
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — design intents for 3 hard-rejected c-level and engineering-team skills |
 | 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added cs-onboard (§4) — context-engine ecosystem setup wizard; already covered by `/ctx init` |
+| 1.2 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Added §5 google-workspace-cli, §6 ms365-tenant-manager, §7 atlassian-suite (4 skills) — all rejected for direct live writes to external services; replaced by compliant local-first `/gws`, `/m365`, `/atlassian` skills |
