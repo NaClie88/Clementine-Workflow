@@ -205,6 +205,14 @@ A CLI wrapper for Google Workspace administration using the `gws` tool. Covers G
 
 **High** — Google Workspace is a common admin target. The compliant version is structurally simple: replace subprocess execution with file generation. The `gws` CLI and recipe logic carry over entirely.
 
+> **Prerequisite gate — do not build until all of the following are established:**
+> 1. Operator has identified the specific Google Workspace tenant and admin scope required
+> 2. Data flow is defined: what data enters the session, what the generated script touches, and what stays local
+> 3. OAuth credential management approach is vetted — credentials must not appear in session context or generated files
+> 4. A specific integration need exists that native Claude cannot meet without the `gws` CLI
+>
+> Check this file (§5) before starting. The design intent is ready; the operator context is the gate.
+
 ---
 
 ## 6. ms365-tenant-manager
@@ -238,6 +246,15 @@ Microsoft 365 tenant administration via PowerShell automation. Covers user lifec
 ### Build Priority
 
 **Medium** — M365 admin is high-privilege territory. The compliant version is straightforward (file generation instead of subprocess execution) but the script templates need careful review given the privilege level of the operations.
+
+> **Prerequisite gate — do not build until all of the following are established:**
+> 1. Operator has identified the specific M365 tenant and the admin roles/operations required
+> 2. Data flow is defined: session scope, what the generated `.ps1` touches, and what credential store is used
+> 3. PowerShell credential management is vetted — credentials must not appear in session context or generated scripts in plaintext
+> 4. High-privilege operation categories (conditional access, MFA, bulk user changes) have explicit Operator-approved scope limits documented
+> 5. A specific integration need exists that native Claude cannot meet
+>
+> Check this file (§6) before starting. The design intent is ready; the operator context is the gate.
 
 ---
 
@@ -287,6 +304,15 @@ One unified skill covering all four domains with a local-first staging architect
 
 **High** — Atlassian is the most commonly used project management stack in this skill set. Four skills collapse into one. The compliant version adds a staging layer but preserves all the useful functionality. The Python sync script is the main build artifact beyond the SKILL.md itself.
 
+> **Prerequisite gate — do not build until all of the following are established:**
+> 1. Operator has identified the specific Atlassian Cloud instance and the projects/spaces in scope
+> 2. Data flow is defined: what enters the session, what is staged, what the sync script touches
+> 3. Atlassian API token management is vetted — tokens must not appear in session context or staged JSON files
+> 4. Destructive operations (`delete_page`, `delete_space`, bulk Jira transitions) have explicit Operator-approved scope limits documented before the sync script is built
+> 5. A specific integration need exists that cannot be met by the Atlassian web UI or existing CLI tools
+>
+> Check this file (§7) before starting. The design intent is ready; the operator context is the gate.
+
 ---
 
 ## Revision History
@@ -296,3 +322,4 @@ One unified skill covering all four domains with a local-first staging architect
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — design intents for 3 hard-rejected c-level and engineering-team skills |
 | 1.1 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Added cs-onboard (§4) — context-engine ecosystem setup wizard; already covered by `/ctx init` |
 | 1.2 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Added §5 google-workspace-cli, §6 ms365-tenant-manager, §7 atlassian-suite (4 skills) — all rejected for direct live writes to external services; replaced by compliant local-first `/gws`, `/m365`, `/atlassian` skills |
+| 1.3 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Added prerequisite gate blocks to §5, §6, §7 — build is deferred until Operator establishes target service, data flow, credential management, and scope limits for each integration |

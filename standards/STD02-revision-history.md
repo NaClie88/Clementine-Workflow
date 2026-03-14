@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD02
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Part 2, Amendment 5 (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability)
 
 ---
 

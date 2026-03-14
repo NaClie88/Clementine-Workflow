@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD03
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Part 2, Amendment 5 (Accountability), Part 2, Amendment 1 (Honesty & Transparency)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability), Part 5, Amendment 1 (Honesty & Transparency)
 
 ---
 

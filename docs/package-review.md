@@ -48,6 +48,70 @@ Standard library packages are pre-approved. They require no entry here but are l
 
 ## Tier 1 — Low Risk
 
+### pypdf
+- **Version reviewed:** 4.1.0
+- **Risk tier:** Tier 1
+- **Install footprint:** none
+- **Capabilities:** Pure-Python PDF reader — extracts text, metadata, page content from existing PDF files. No write capability.
+- **Concerns:** None for read-only use. Malformed PDFs could trigger parsing edge cases but no known RCE history.
+- **Decision:** APPROVED
+
+### pdfplumber
+- **Version reviewed:** 0.11.0
+- **Risk tier:** Tier 1
+- **Install footprint:** pypdf, pdfminer.six (Wand optional)
+- **Capabilities:** PDF text and table extraction; higher-level than pypdf. Read-only.
+- **Concerns:** Same as pypdf — reads existing files only. No network, no shell.
+- **Decision:** APPROVED
+
+### reportlab
+- **Version reviewed:** 4.1.0
+- **Risk tier:** Tier 2
+- **Install footprint:** chardet, pillow (optional)
+- **Capabilities:** PDF generation — can embed text, images, hyperlinks, and arbitrary binary content into PDF output
+- **Concerns:** Generates binary output; if skill writes to user-specified paths verify destination is project-local. No network at runtime (font loading may check system paths on first run).
+- **Decision:** APPROVED WITH CONDITIONS — verify output path is project-local or temp; do not write to user-specified paths without sanitization
+
+### openpyxl
+- **Version reviewed:** 3.1.2
+- **Risk tier:** Tier 1
+- **Install footprint:** et-xmlfile
+- **Capabilities:** Excel (.xlsx) read and write — cells, formulas, charts, named ranges
+- **Concerns:** None for local file I/O. Writes stay within the file path given; verify path is project-local. No network, no shell.
+- **Decision:** APPROVED WITH CONDITIONS — verify output path is project-local
+
+### pillow
+- **Version reviewed:** 10.2.0
+- **Risk tier:** Tier 1
+- **Install footprint:** none (optional: libjpeg, libpng, libtiff via system)
+- **Capabilities:** Image processing — open, transform, save many image formats (JPEG, PNG, GIF, TIFF, BMP, WebP, etc.)
+- **Concerns:** Historical CVEs in image format decoders (mostly resolved in recent versions); do not process untrusted external images without input validation. No network, no shell.
+- **Decision:** APPROVED WITH CONDITIONS — process only locally generated or known-source images; do not pipe user-supplied URLs to Pillow directly
+
+### imageio
+- **Version reviewed:** 2.34.0
+- **Risk tier:** Tier 1
+- **Install footprint:** pillow, numpy
+- **Capabilities:** Image and video reading/writing; delegates to pillow, ffmpeg (via imageio-ffmpeg), or other backends depending on format
+- **Concerns:** By itself, Tier 1. Risk depends on which backend is activated — if imageio-ffmpeg is present, ffmpeg URI handling applies (see imageio-ffmpeg entry below).
+- **Decision:** APPROVED — see imageio-ffmpeg entry if video output is required
+
+### imageio-ffmpeg
+- **Version reviewed:** 0.5.1
+- **Risk tier:** Tier 2
+- **Install footprint:** ships a self-contained ffmpeg binary (~70MB)
+- **Capabilities:** Wraps ffmpeg for video encode/decode. ffmpeg can open network URIs (rtsp://, http://, etc.) in addition to local files.
+- **Concerns:** Ships a bundled binary that is not managed by the OS package manager or pip security audits. ffmpeg's network URI support could be abused if user input reaches the input path argument. Binary version should be tracked against ffmpeg security advisories.
+- **Decision:** APPROVED WITH CONDITIONS — skill must pass only locally generated or fixed file paths to ffmpeg; do not pass user-controlled strings as input URI
+
+### numpy
+- **Version reviewed:** 1.26.4
+- **Risk tier:** Tier 1
+- **Install footprint:** none (C extensions only)
+- **Capabilities:** Numeric array computation — mathematical operations, array manipulation, linear algebra
+- **Concerns:** None. No network, no shell, no file I/O beyond what the calling code explicitly does.
+- **Decision:** APPROVED
+
 ### requests
 - **Version reviewed:** 2.31.0
 - **Risk tier:** Tier 1
@@ -272,3 +336,4 @@ Standard library packages are pre-approved. They require no entry here but are l
 | Date | Change |
 |---|---|
 | 2026-03-12 | Initial registry created. Standard library pre-approvals, Tier 1 (requests, click, pydantic, pydantic-settings, python-dotenv, rich, typer, httpx), Tier 2 (jinja2, PyYAML, paramiko, GitPython, cryptography, boto3, openai, anthropic), Tier 3 (selenium, playwright, docker, pyautogui), Tier 4 (pycryptodome, requests-unixsocket, pyzmq in scripts, pickle for untrusted input). |
+| 2026-03-13 | Added 8 packages required by Anthropic official skills: Tier 1 (pypdf, pdfplumber, openpyxl, pillow, imageio, numpy), Tier 2 (reportlab, imageio-ffmpeg). Clears package gate hold on pdf, xlsx, slack-gif-creator skills from github.com/anthropics/skills. |

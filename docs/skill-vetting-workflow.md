@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Part 1, Amendment 5 (No Undermining Oversight), Part 2, Amendment 5 (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 1, Amendment 5 (No Undermining Oversight), Part 5, Amendment 5 (Accountability)
 
 ---
 
@@ -480,21 +480,21 @@ Check against each Part:
 | Part | Check |
 |---|---|
 | Part 1, Amendment 5 | Does the skill ask Claude to conceal its actions or bypass oversight? |
-| Part 2, Amendment 1 | Does the skill instruct Claude to fabricate, omit, or mislead? |
-| Part 2, Amendment 4 | Does the skill handle or transmit private or sensitive data? |
-| Part 2, Amendment 5 | Does the skill produce auditable, attributable outputs? |
-| Part 2, Amendment 7 | Does the skill respect attribution — does it claim authorship for work it did not originate? |
-| Part 4, Amendment 1 | Does the skill ask Claude to act beyond its defined authority? |
+| Part 5, Amendment 1 | Does the skill instruct Claude to fabricate, omit, or mislead? |
+| Part 5, Amendment 4 | Does the skill handle or transmit private or sensitive data? |
+| Part 5, Amendment 5 | Does the skill produce auditable, attributable outputs? |
+| Part 5, Amendment 8 | Does the skill respect attribution — does it claim authorship for work it did not originate? |
+| Part 3, Amendment 1 | Does the skill ask Claude to act beyond its defined authority? |
 
 Any constitutional violation is a **hard reject**. Document the specific article violated.
 
 ```
 [ ] Part 1 — no oversight bypass
-[ ] Part 2, Amendment 1 — no deception or omission
-[ ] Part 2, Amendment 4 — no unauthorized data handling
-[ ] Part 2, Amendment 5 — outputs are attributable
-[ ] Part 2, Amendment 7 — attribution respected
-[ ] Part 4, Amendment 1 — no authority overreach
+[ ] Part 5, Amendment 1 — no deception or omission
+[ ] Part 5, Amendment 4 — no unauthorized data handling
+[ ] Part 5, Amendment 5 — outputs are attributable
+[ ] Part 5, Amendment 8 — attribution respected
+[ ] Part 3, Amendment 1 — no authority overreach
 ```
 
 ---
@@ -514,9 +514,28 @@ Skills with any **hard reject** flag do not proceed. Document in §6 (Rejected S
 ## 5. Phase 4 — Sandboxed Execution
 
 **Goal**: Observe what the skill actually does in an isolated environment.
-**Required**: Sandbox setup per §7. No real credentials or sensitive data in scope.
+**Required**: No real credentials or sensitive data in scope.
 
-Pure-prompt skills use the git worktree sandbox (§7.1). Script-backed skills use the Python venv sandbox (§7.2) in addition to the worktree.
+### When Phase 4 applies
+
+| Skill type | Phase 4 required? |
+|---|---|
+| Pure-prompt (no scripts) | **No** — fully characterised by reading |
+| Script-backed, stdlib-only, no network, fully code-reviewed | **No** — code review is sufficient |
+| Script-backed with network calls | **Yes** |
+| Script-backed with subprocess calling external binaries | **Yes** |
+| skill-tester or any skill that executes other scripts | **Yes** |
+| Any skill where code review was incomplete | **Yes** |
+
+### Sandbox method
+
+**Use Docker Desktop.** The full procedure, container configuration, network policy, per-category test procedures, and pass/fail criteria are in **`docs/phase4-sandbox.md`**.
+
+The strace and Python venv approach in §7 below remains available as a fallback on systems without Docker, but Docker is the preferred and more complete isolation boundary.
+
+**Network policy**: default `--network none`. Network access is granted per skill, as needed, with an individual decision documented before Phase 4 runs. See `docs/phase4-sandbox.md §2` for the network exception process.
+
+Pure-prompt skills do not use the git worktree sandbox (§7.1) — they have nothing to execute. Script-backed skills requiring Phase 4 use Docker per `docs/phase4-sandbox.md` in preference to the Python venv sandbox (§7.2).
 
 ### 5.1 Pre-execution baseline
 
