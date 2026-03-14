@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Initial template creation complete. All governance, standards, registry, and spec-kit structure in place. No outstanding work. Fill in `[bracketed placeholders]` throughout `AGENTS.md`, `docs/knowledge-sources.md`, `docs/tool-use-policy.md`, and `docs/user-roles-permissions.md` before first deployment.
+Session 2026-03-14 complete. Vetting queue fully cleared (skill-tester Phase 4 Docker passed). Constitution rewritten to v5.0 (Parts reordered by importance, Parts 2+3 merged into Conduct with two-tier hierarchy, 12 gaps from Garden Helper diff closed). Cross-references in docs/ and standards/ audited and corrected to new Part numbers. New: dev-philosophy-reference.md (107 entries with examples, strengths, weaknesses, mitigations). New: STD10 tool usage discipline. Fill in `[bracketed placeholders]` throughout `AGENTS.md`, `docs/knowledge-sources.md`, `docs/tool-use-policy.md`, and `docs/user-roles-permissions.md` before first deployment.
 
 ---
 
@@ -54,6 +54,11 @@ Initial template creation complete. All governance, standards, registry, and spe
 | `standards/STD07-progress-tracking.md` | Standard | 2026-03-10 | Ratified |
 | `standards/STD08-brand-standard.md` | Standard | 2026-03-10 | Ratified |
 | `standards/STD09-approved-technology.md` | Standard | 2026-03-10 | Ratified |
+| `standards/STD10-tool-usage-discipline.md` | Standard | 2026-03-14 | Ratified — tool and git operation batching to minimise permission prompts |
+| `memory/constitution.md` | Constitution | 2026-03-14 | v5.0 — Parts reordered by importance ranking; cross-refs audited across all docs |
+| `docs/dev-philosophy-reference.md` | Reference | 2026-03-14 | 107-entry reference: dev philosophies, privacy theories, security frameworks with examples, S/W/M |
+| `docs/approved-skills.md` | Reference | 2026-03-14 | Rev 2.3 — skill-tester approved with Phase 4 Docker caveat |
+| `docs/phase4-sandbox.md` | Reference | 2026-03-14 | Docker sandbox procedure; OSError canary fix documented |
 
 ---
 
