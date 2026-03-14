@@ -1,2 +1,5 @@
 # LanceDB vector index — derived artifact, rebuilt by scripts/embed.py
 db/lance/
+
+# Python virtual environment (if created locally)
+.venv/

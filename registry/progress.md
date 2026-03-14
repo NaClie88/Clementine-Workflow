@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Session 2026-03-14 complete. Vetting queue fully cleared (skill-tester Phase 4 Docker passed). Constitution rewritten to v5.0 (Parts reordered by importance, Parts 2+3 merged into Conduct with two-tier hierarchy, 12 gaps from Garden Helper diff closed). Cross-references in docs/ and standards/ audited and corrected to new Part numbers. New: dev-philosophy-reference.md (107 entries with examples, strengths, weaknesses, mitigations). New: STD10 tool usage discipline. Fill in `[bracketed placeholders]` throughout `AGENTS.md`, `docs/knowledge-sources.md`, `docs/tool-use-policy.md`, and `docs/user-roles-permissions.md` before first deployment.
+Session 2026-03-14 (continued). RAG knowledge base built and functional. LanceDB approved via STD09 §4 (D01) after 12-option evaluation. Schema.yaml ratified. 107 entries migrated from dev-philosophy-reference.md into per-entry files. LanceDB index built and tested (query.py returning semantically correct results). Next: fill TODO frontmatter fields in entry files (theorist, year, applies-to, tags), then vet query skill through Phase 1–4 workflow.
 
 ---
 
@@ -21,7 +21,8 @@ Session 2026-03-14 complete. Vetting queue fully cleared (skill-tester Phase 4 D
 
 | Document | Type | State | In state since | Notes |
 |---|---|---|---|---|
-| — | — | — | — | No active work. Template is ready for deployment configuration. |
+| `knowledge-base/entries/` | Knowledge Base | In progress | 2026-03-14 | 107 entries exist; TODO frontmatter fields (theorist, year, applies-to, tags) need filling |
+| `docs/approved-skills.md` | Reference | Pending | — | query.py needs Phase 1–4 skill vetting |
 
 ---
 
@@ -59,6 +60,12 @@ Session 2026-03-14 complete. Vetting queue fully cleared (skill-tester Phase 4 D
 | `docs/dev-philosophy-reference.md` | Reference | 2026-03-14 | 107-entry reference: dev philosophies, privacy theories, security frameworks with examples, S/W/M |
 | `docs/approved-skills.md` | Reference | 2026-03-14 | Rev 2.3 — skill-tester approved with Phase 4 Docker caveat |
 | `docs/phase4-sandbox.md` | Reference | 2026-03-14 | Docker sandbox procedure; OSError canary fix documented |
+| `docs/knowledge-base-rag-plan.md` | Plan | 2026-03-14 | RAG system plan — ChromaDB replaced with LanceDB (D01) |
+| `registry/decisions/D01-lancedb-vector-database.md` | Decision | 2026-03-14 | 12-option evaluation; LanceDB chosen; 4 packages approved in STD09 §2.4 |
+| `knowledge-base/schema.yaml` | Schema | 2026-03-14 | Ratified entry frontmatter schema |
+| `knowledge-base/scripts/migrate.py` | Script | 2026-03-14 | One-time migration: dev-philosophy-reference.md → 107 per-entry files |
+| `knowledge-base/scripts/embed.py` | Script | 2026-03-14 | Indexes entries into LanceDB (CPU, all-MiniLM-L6-v2, 384d) |
+| `knowledge-base/scripts/query.py` | Script | 2026-03-14 | CLI query tool; cosine similarity; --domain, --applies-to, --top-k, --json |
 
 ---
 
