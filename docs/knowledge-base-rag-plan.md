@@ -19,9 +19,9 @@ The system must be both agent-readable (semantic query) and human-readable (brow
 | Decision | Choice | Rationale |
 |---|---|---|
 | Storage model | Embedded in project repo | Self-contained, portable, no external service dependency |
-| Local tool | ChromaDB | File-based, no server process, same API as self-hosted |
-| Self-hosted path | ChromaDB server (`chroma run`) | Same client API as local — migration is a config change |
-| Cloud path | Qdrant Cloud | Similar enough API to ChromaDB that migration is ~1 week |
+| Local tool | LanceDB | File-based (Arrow columnar), no server process, same Python API as self-hosted. Approved: D01 |
+| Self-hosted path | LanceDB server | Same client API as local — migration is a connection string change |
+| Cloud path | LanceDB Cloud | Same client API as local and self-hosted — migration is a connection string change |
 | Embedding model | `sentence-transformers/all-MiniLM-L6-v2` | Small, fast, CPU-only, no API key required |
 | Source of truth | Per-entry markdown files with YAML frontmatter | Git-native, human-readable, agent-readable, diffable |
 | Human UI (now) | Obsidian | Reads frontmatter natively, renders graph of `related:` links, zero infrastructure |
@@ -33,21 +33,21 @@ The system must be both agent-readable (semantic query) and human-readable (brow
 ## Deployment Phases
 
 ### Phase 1 — Local (current target)
-- ChromaDB stores as files on disk (`knowledge-base/db/chroma/`)
+- LanceDB stores as files on disk (`knowledge-base/db/lance/`)
 - `embed.py` rebuilds the index from source files
 - `query.py` CLI for human testing
 - Agent query skill (vetted through Phase 1–4 workflow)
 - Human UI: Obsidian pointed at `knowledge-base/entries/`
 
 ### Phase 2 — Self-hosted
-- Run `chroma run --path ./db/chroma` — ChromaDB becomes a server
-- Client connection string changes from local to `http://localhost:8000`
+- Run LanceDB server pointed at `./db/lance/` — same data, server-accessible
+- Client connection string changes from local path to `http://localhost:8080`
 - Everything else identical
 - Human UI: MkDocs static site on the same files
 
 ### Phase 3 — Cloud
-- Migrate ChromaDB → Qdrant Cloud (or pgvector if already on Postgres)
-- Connection string change + minor client API translation
+- Connect LanceDB client to LanceDB Cloud (or pgvector if Postgres is already the app datastore)
+- Connection string change only — no code rewrite required
 - Human UI: deployed MkDocs or a purpose-built filter UI
 
 ---
@@ -72,9 +72,9 @@ knowledge-base/
     organisation/
     documentation/
   db/
-    chroma/                   ← derived artifact (gitignored, rebuilt from entries/)
+    lance/                    ← derived artifact (gitignored, rebuilt from entries/)
   scripts/
-    embed.py                  ← indexes all entries into ChromaDB
+    embed.py                  ← indexes all entries into LanceDB
     query.py                  ← CLI query tool for human testing
   schema.yaml                 ← required frontmatter fields and allowed values
   README.md                   ← how to use the knowledge base
@@ -136,10 +136,10 @@ INDEXING  (run embed.py once, then on each content update)
   - reads each file
   - extracts frontmatter metadata
   - embeds body text using all-MiniLM-L6-v2
-  - stores vector + metadata in ChromaDB
+  - stores vector + metadata in LanceDB
       │
       ▼
-  db/chroma/  (local files)
+  db/lance/  (local Arrow files)
 
 
 RETRIEVAL  (agent runs query skill at session start or on demand)
@@ -150,7 +150,7 @@ RETRIEVAL  (agent runs query skill at session start or on demand)
       ▼
   query skill
   - embeds the context string
-  - similarity search in ChromaDB
+  - similarity search in LanceDB
   - optional pre-filter on domain/applies-to metadata
   - returns top-K entries (default: 10)
       │
@@ -184,7 +184,7 @@ Python script that:
 - Parses YAML frontmatter from each file
 - Validates required fields against `schema.yaml` (logs warnings for missing fields, does not crash)
 - Embeds the body text using `sentence-transformers/all-MiniLM-L6-v2`
-- Upserts into ChromaDB (idempotent — safe to re-run on update)
+- Upserts into LanceDB (idempotent — safe to re-run on update)
 - Prints a summary: N entries indexed, M warnings
 
 **Output:** `knowledge-base/scripts/embed.py`
@@ -193,7 +193,7 @@ Python script that:
 CLI tool that:
 - Accepts a query string as argument
 - Optional flags: `--domain security`, `--applies-to backend`, `--top-k 10`
-- Embeds the query, searches ChromaDB, returns formatted results
+- Embeds the query, searches LanceDB, returns formatted results
 - Supports both human-readable output and `--json` for machine consumption
 - Exits with code 0 on success, 1 on failure
 
@@ -206,7 +206,7 @@ python query.py "designing authentication for a healthcare app" --domain securit
 ### Step 5 — Vet and approve the query skill
 The query script becomes an agent skill. It goes through the full vetting workflow (Phases 1–4) documented in `docs/skill-vetting-workflow.md`.
 
-Phase 4 Docker sandbox: `--network none` is acceptable (no network needed — local ChromaDB only).
+Phase 4 Docker sandbox: `--network none` is acceptable (no network needed — local LanceDB only).
 
 **Output:** Entry in `docs/approved-skills.md`
 
@@ -295,13 +295,13 @@ This file is the migration source for Step 2. Its sections map to knowledge-base
 
 ```
 Python 3.11+
-chromadb>=0.4.0
-sentence-transformers>=2.2.0
-python-frontmatter>=1.0.0
-pyyaml>=6.0
+lancedb==0.29.2
+sentence-transformers==5.3.0
+python-frontmatter==1.1.0
+pyyaml==6.0.3
 ```
 
-All pure Python, no native extensions, no GPU required. Runs on the same machine that runs Claude Code.
+All approved per STD09 §2.4 (Decision record: D01). No GPU required. Runs on the same machine that runs Claude Code.
 
 ---
 
@@ -319,5 +319,6 @@ All pure Python, no native extensions, no GPU required. Runs on the same machine
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-14 | Joshua Alexander Clement | Initial plan — architecture decisions made in session. Written before context compaction. |
+| 1.1 | 2026-03-14 | Joshua Alexander Clement | Updated ChromaDB → LanceDB throughout following STD09 §4 approval process (D01). |
 
 Assisted-By: Anthropic Claude Sonnet 4.6 (claude-sonnet-4-6)

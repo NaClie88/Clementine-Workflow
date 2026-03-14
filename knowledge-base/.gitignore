@@ -1,2 +1,2 @@
-# ChromaDB vector index — derived artifact, rebuilt by scripts/embed.py
-db/chroma/
+# LanceDB vector index — derived artifact, rebuilt by scripts/embed.py
+db/lance/
