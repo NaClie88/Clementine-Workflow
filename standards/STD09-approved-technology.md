@@ -70,7 +70,10 @@ If completing a task requires an unapproved dependency, surface that blocker to 
 
 | Package | Version | Ecosystem | Approved Use | Approved By | Date |
 |---|---|---|---|---|---|
-| [package-name] | [x.y.z] | [pip / npm] | [what it is used for] | [approver] | [date] |
+| `lancedb` | 0.29.2 | pip | Vector database for knowledge base RAG system — local file-based storage, similarity search, metadata filtering. Decision record: D01 | Joshua Alexander Clement | 2026-03-14 |
+| `sentence-transformers` | 5.3.0 | pip | Text embedding model (`all-MiniLM-L6-v2`) — converts entry body text and query strings to float vectors for similarity search. No stdlib equivalent. Decision record: D01 | Joshua Alexander Clement | 2026-03-14 |
+| `pyyaml` | 6.0.3 | pip | YAML parser — reads `knowledge-base/schema.yaml` and validates entry frontmatter. Python stdlib has no YAML parser. Decision record: D01 | Joshua Alexander Clement | 2026-03-14 |
+| `python-frontmatter` | 1.1.0 | pip | Markdown frontmatter parser — extracts YAML header blocks (between `---` delimiters) from `.md` entry files. Thin wrapper around pyyaml. Decision record: D01 | Joshua Alexander Clement | 2026-03-14 |
 
 > Version pinning is required. Approving `requests` without a version means the approval covers an undefined range of behavior. Approve a specific version (`requests==2.31.0`). If the version must be updated, reapprove — do not assume the new version behaves identically.
 >
@@ -154,3 +157,4 @@ Do not simply delete the row and leave the import in place. The package is not c
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation — approved technology and dependency governance |
 | 1.1 | 2026-03-12 | Claude | Added version pinning requirement to §2.4, added §6 audit and revocation process |
+| 1.2 | 2026-03-14 | Joshua Alexander Clement | Added first four approved packages to §2.4: lancedb, sentence-transformers, pyyaml, python-frontmatter (D01) |
