@@ -3,13 +3,13 @@ id: devsecops
 title: "DevSecOps"
 domain: methodology
 sub-domain: "operational philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: multiple
+year: 2012
+related: [devops, gitops, supply-chain-security, secrets-management]
+tags: [security-shift-left, secure-sdlc, automation, compliance, sast-dast]
 ---
 
 ## Definition

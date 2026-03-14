@@ -3,13 +3,13 @@ id: privacy-as-limitation-of-power
 title: "Privacy as Limitation of Power (Solove's Taxonomy)"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Julie E. Cohen
+year: 2012
+related: [privacy-as-a-human-right, surveillance-capitalism, contextual-integrity]
+tags: [power-dynamics, regulatory, surveillance, corporate-power]
 ---
 
 ## Definition

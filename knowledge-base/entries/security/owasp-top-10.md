@@ -3,13 +3,13 @@ id: owasp-top-10
 title: "OWASP Top 10"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend]
+complexity: medium
+maturity: established
+theorist: OWASP Foundation
+year: 2003
+related: [owasp-asvs, input-validation-output-encoding, secrets-management, cryptographic-hygiene]
+tags: [web-security, injection, broken-access, vulnerabilities, checklist, awareness]
 ---
 
 ## Definition

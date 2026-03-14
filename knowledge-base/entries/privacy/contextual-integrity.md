@@ -3,13 +3,13 @@ id: contextual-integrity
 title: "Contextual Integrity (Helen Nissenbaum)"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Helen Nissenbaum
+year: 2004
+related: [privacy-as-control, privacy-by-design, gdpr, consent-management]
+tags: [information-flow, context, norms, appropriateness, social-norms]
 ---
 
 ## Definition

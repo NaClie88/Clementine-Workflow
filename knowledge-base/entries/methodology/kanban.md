@@ -3,13 +3,13 @@ id: kanban
 title: "Kanban"
 domain: methodology
 sub-domain: "development methodology"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Taiichi Ohno; applied to software by David J. Anderson
+year: 2007
+related: [agile, scrum, lean-software-development]
+tags: [flow, wip-limits, pull-system, visualisation, throughput]
 ---
 
 ## Definition

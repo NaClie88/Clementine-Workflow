@@ -3,13 +3,13 @@ id: supply-chain-security
 title: "Supply Chain Security"
 domain: security
 sub-domain: "secure development"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: emerging
+theorist: multiple
+year: 2020
+related: [dependency-management, devsecops, cryptographic-hygiene]
+tags: [sbom, software-bill-of-materials, provenance, slsa, sigstore, solarwinds]
 ---
 
 ## Definition

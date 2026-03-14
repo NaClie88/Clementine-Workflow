@@ -3,13 +3,13 @@ id: accessibility
 title: "Accessibility (A11y)"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [frontend]
+complexity: medium
+maturity: established
+theorist: Tim Berners-Lee
+year: 1997
+related: [principle-of-least-astonishment, api-design]
+tags: [wcag, a11y, screen-readers, inclusive-design, aria]
 ---
 
 ## Definition

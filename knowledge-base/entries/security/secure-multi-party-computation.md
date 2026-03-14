@@ -3,13 +3,13 @@ id: secure-multi-party-computation
 title: "Secure Multi-Party Computation (MPC)"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [data, backend]
+complexity: high
+maturity: emerging
+theorist: Andrew C. Yao
+year: 1982
+related: [homomorphic-encryption, zero-knowledge-proof-architectures, privacy-enhancing-technologies]
+tags: [mpc, distributed-trust, secret-sharing, garbled-circuits, federated-learning]
 ---
 
 ## Definition

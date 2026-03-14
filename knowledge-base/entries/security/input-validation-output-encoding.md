@@ -3,13 +3,13 @@ id: input-validation-output-encoding
 title: "Input Validation & Output Encoding"
 domain: security
 sub-domain: "secure development"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2001
+related: [owasp-top-10, defensive-programming, fail-fast]
+tags: [injection, xss, sanitisation, encoding, sql-injection, owasp]
 ---
 
 ## Definition

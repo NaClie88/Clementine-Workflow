@@ -3,13 +3,13 @@ id: dry
 title: "DRY — Don't Repeat Yourself"
 domain: architecture
 sub-domain: "design principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: "Andy Hunt, Dave Thomas"
+year: 1999
+related: [solid, wet, refactoring, separation-of-concerns]
+tags: [code-reuse, abstraction, pragmatic-programmer, duplication]
 ---
 
 ## Definition

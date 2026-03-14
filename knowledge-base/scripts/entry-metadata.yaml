@@ -1,0 +1,995 @@
+# entry-metadata.yaml
+# Known metadata for all 107 current entries.
+# Run apply-metadata.py to write these values into the entry files.
+# Fields: applies-to, complexity, maturity, theorist, year, related, tags
+
+entries:
+
+  # ── Architecture / Design Principles ─────────────────────────────────────
+
+  solid:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Robert C. Martin"
+    year: 1995
+    related: [dry, kiss, separation-of-concerns, composition-over-inheritance, defensive-programming]
+    tags: [oop, design-principles, clean-code, single-responsibility]
+
+  dry:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Andy Hunt, Dave Thomas"
+    year: 1999
+    related: [solid, wet, refactoring, separation-of-concerns]
+    tags: [code-reuse, abstraction, pragmatic-programmer, duplication]
+
+  kiss:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1960
+    related: [yagni, dry, defensive-programming]
+    tags: [simplicity, complexity-management, design]
+
+  yagni:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Ron Jeffries"
+    year: 2001
+    related: [kiss, dry, wet]
+    tags: [simplicity, agile, speculative-generality, over-engineering]
+
+  wet:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 2013
+    related: [dry, kiss]
+    tags: [abstraction, code-duplication, pragmatic, rule-of-three]
+
+  separation-of-concerns:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Edsger W. Dijkstra"
+    year: 1974
+    related: [solid, hexagonal-architecture, clean-architecture, law-of-demeter]
+    tags: [modularity, decomposition, coupling, cohesion]
+
+  law-of-demeter:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Ian Holland"
+    year: 1987
+    related: [solid, separation-of-concerns, composition-over-inheritance, encapsulation]
+    tags: [coupling, encapsulation, oop, principle-of-least-knowledge]
+
+  convention-over-configuration:
+    applies-to: [backend, frontend]
+    complexity: low
+    maturity: established
+    theorist: "David Heinemeier Hansson"
+    year: 2005
+    related: [kiss, yagni, principle-of-least-astonishment]
+    tags: [framework-design, rails, developer-experience, defaults]
+
+  fail-fast:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Michael T. Nygard"
+    year: 2007
+    related: [defensive-programming, error-handling, design-by-contract, fail-secure]
+    tags: [error-handling, reliability, debugging, release-it]
+
+  idempotency:
+    applies-to: [backend, data, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 1994
+    related: [fail-fast, api-design, event-driven-architecture, event-sourcing]
+    tags: [reliability, distributed-systems, api, retry-safety]
+
+  design-by-contract:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Bertrand Meyer"
+    year: 1986
+    related: [defensive-programming, fail-fast, testing-taxonomy]
+    tags: [preconditions, postconditions, invariants, eiffel, contracts]
+
+  defensive-programming:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 1976
+    related: [fail-fast, design-by-contract, error-handling, input-validation-output-encoding]
+    tags: [robustness, input-validation, error-handling, assertions]
+
+  principle-of-least-astonishment:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1984
+    related: [api-design, convention-over-configuration, accessibility]
+    tags: [api-design, ux, developer-experience, consistency]
+
+  composition-over-inheritance:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Gang of Four (Gamma, Helm, Johnson, Vlissides)"
+    year: 1994
+    related: [solid, law-of-demeter, hexagonal-architecture]
+    tags: [oop, design-patterns, flexibility, coupling]
+
+  # ── Architecture / Architectural Philosophies ────────────────────────────
+
+  clean-architecture:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "Robert C. Martin"
+    year: 2012
+    related: [hexagonal-architecture, solid, domain-driven-design, separation-of-concerns]
+    tags: [architecture, dependency-rule, layers, use-cases, entities]
+
+  hexagonal-architecture:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "Alistair Cockburn"
+    year: 2005
+    related: [clean-architecture, domain-driven-design, separation-of-concerns, composition-over-inheritance]
+    tags: [ports-and-adapters, testability, decoupling, inversion-of-control]
+
+  domain-driven-design:
+    applies-to: [backend]
+    complexity: high
+    maturity: established
+    theorist: "Eric Evans"
+    year: 2003
+    related: [clean-architecture, hexagonal-architecture, event-driven-architecture, cqrs, microservices]
+    tags: [bounded-context, ubiquitous-language, aggregates, domain-model]
+
+  event-driven-architecture:
+    applies-to: [backend, cloud, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 1990
+    related: [cqrs, event-sourcing, microservices, reactive-systems, idempotency]
+    tags: [async, messaging, decoupling, pub-sub, event-bus]
+
+  cqrs:
+    applies-to: [backend, data]
+    complexity: high
+    maturity: established
+    theorist: "Greg Young"
+    year: 2010
+    related: [event-sourcing, event-driven-architecture, domain-driven-design]
+    tags: [command-query, read-model, write-model, eventual-consistency]
+
+  event-sourcing:
+    applies-to: [backend, data]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 2005
+    related: [cqrs, event-driven-architecture, domain-driven-design, idempotency]
+    tags: [audit-trail, temporal-queries, immutability, append-only]
+
+  microservices:
+    applies-to: [backend, cloud, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "James Lewis, Martin Fowler"
+    year: 2014
+    related: [domain-driven-design, the-12-factor-app, strangler-fig-pattern, reactive-systems, monolith-first]
+    tags: [distributed-systems, independent-deployability, service-mesh, containers]
+
+  monolith-first:
+    applies-to: [backend, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "Martin Fowler"
+    year: 2015
+    related: [microservices, domain-driven-design, strangler-fig-pattern]
+    tags: [architecture, incremental, pragmatic, migration]
+
+  the-12-factor-app:
+    applies-to: [backend, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "Adam Wiggins"
+    year: 2011
+    related: [microservices, immutable-infrastructure, gitops, devops]
+    tags: [cloud-native, twelve-factor, saas, config, stateless]
+
+  strangler-fig-pattern:
+    applies-to: [backend, infrastructure]
+    complexity: medium
+    maturity: established
+    theorist: "Martin Fowler"
+    year: 2004
+    related: [monolith-first, microservices, domain-driven-design]
+    tags: [migration, legacy, incremental-replacement, re-architecture]
+
+  reactive-systems:
+    applies-to: [backend, cloud]
+    complexity: high
+    maturity: established
+    theorist: "Jonas Bonér, Dave Farley, Roland Kuhn, Martin Thompson"
+    year: 2013
+    related: [event-driven-architecture, microservices, observability]
+    tags: [reactive, resilience, elasticity, message-driven, backpressure]
+
+  immutable-infrastructure:
+    applies-to: [infrastructure, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "Chad Fowler"
+    year: 2013
+    related: [the-12-factor-app, gitops, infrastructure-as-code, devops]
+    tags: [immutability, cattle-vs-pets, deployment, reproducibility]
+
+  # ── Methodology / Development Methodologies ──────────────────────────────
+
+  agile:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple (Agile Manifesto authors)"
+    year: 2001
+    related: [scrum, kanban, extreme-programming, lean-software-development, trunk-based-development]
+    tags: [agile, iterative, collaboration, manifesto, adaptive]
+
+  scrum:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Ken Schwaber, Jeff Sutherland"
+    year: 1995
+    related: [agile, kanban, extreme-programming]
+    tags: [sprints, ceremonies, product-backlog, velocity, retrospective]
+
+  kanban:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Taiichi Ohno; applied to software by David J. Anderson"
+    year: 2007
+    related: [agile, scrum, lean-software-development]
+    tags: [flow, wip-limits, pull-system, visualisation, throughput]
+
+  extreme-programming:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Kent Beck"
+    year: 1996
+    related: [test-driven-development, agile, trunk-based-development]
+    tags: [xp, pair-programming, continuous-integration, simple-design]
+
+  test-driven-development:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Kent Beck"
+    year: 1999
+    related: [behaviour-driven-development, extreme-programming, refactoring, testing-taxonomy]
+    tags: [red-green-refactor, unit-testing, feedback, design]
+
+  behaviour-driven-development:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Dan North"
+    year: 2006
+    related: [test-driven-development, agile, testing-taxonomy]
+    tags: [gherkin, cucumber, acceptance-testing, given-when-then, specification-by-example]
+
+  lean-software-development:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Mary Poppendieck, Tom Poppendieck"
+    year: 2003
+    related: [agile, kanban, devops]
+    tags: [waste-elimination, toyota, value-stream, flow, last-responsible-moment]
+
+  waterfall:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Winston W. Royce"
+    year: 1970
+    related: [agile, scrum]
+    tags: [sequential, phases, requirements, historical, plan-driven]
+
+  trunk-based-development:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2000
+    related: [gitops, extreme-programming, version-control-discipline, devops]
+    tags: [git, branching-strategy, continuous-integration, feature-flags, short-lived-branches]
+
+  chaos-engineering:
+    applies-to: [backend, cloud, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "Netflix"
+    year: 2011
+    related: [site-reliability-engineering, observability, reactive-systems]
+    tags: [resilience, fault-injection, gameday, netflix, failure-testing]
+
+  # ── Methodology / Operational Philosophies ───────────────────────────────
+
+  devops:
+    applies-to: [infrastructure, cloud, backend]
+    complexity: medium
+    maturity: established
+    theorist: "Patrick Debois"
+    year: 2009
+    related: [devsecops, gitops, site-reliability-engineering, infrastructure-as-code, observability]
+    tags: [automation, collaboration, ci-cd, deployment, culture]
+
+  devsecops:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 2012
+    related: [devops, gitops, supply-chain-security, secrets-management]
+    tags: [security-shift-left, secure-sdlc, automation, compliance, sast-dast]
+
+  gitops:
+    applies-to: [infrastructure, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "Alexis Richardson"
+    year: 2017
+    related: [devops, infrastructure-as-code, immutable-infrastructure, version-control-discipline]
+    tags: [git, declarative, kubernetes, flux, argocd]
+
+  site-reliability-engineering:
+    applies-to: [infrastructure, cloud, backend]
+    complexity: high
+    maturity: established
+    theorist: "Ben Treynor Sloss"
+    year: 2003
+    related: [devops, observability, chaos-engineering, incident-response]
+    tags: [slo, sla, error-budget, toil, google, on-call]
+
+  infrastructure-as-code:
+    applies-to: [infrastructure, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2006
+    related: [gitops, immutable-infrastructure, devops, the-12-factor-app]
+    tags: [terraform, ansible, pulumi, reproducible, idempotent, drift]
+
+  observability:
+    applies-to: [backend, infrastructure, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2015
+    related: [site-reliability-engineering, logging-observability, chaos-engineering, devops]
+    tags: [logs, metrics, traces, opentelemetry, three-pillars, cardinality]
+
+  blameless-post-mortems:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "John Allspaw"
+    year: 2012
+    related: [site-reliability-engineering, incident-response, devops, observability]
+    tags: [incident-review, psychological-safety, learning, culture, five-whys]
+
+  # ── Coding Practices ─────────────────────────────────────────────────────
+
+  error-handling:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 1975
+    related: [fail-fast, defensive-programming, logging-observability]
+    tags: [exceptions, error-propagation, resilience, robustness, circuit-breaker]
+
+  logging-observability:
+    applies-to: [backend, infrastructure]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2015
+    related: [observability, error-handling, site-reliability-engineering]
+    tags: [structured-logging, metrics, tracing, debugging, elk-stack]
+
+  api-design:
+    applies-to: [backend, frontend]
+    complexity: high
+    maturity: established
+    theorist: "Roy Fielding"
+    year: 2000
+    related: [idempotency, principle-of-least-astonishment, separation-of-concerns, versioning]
+    tags: [rest, graphql, grpc, versioning, contracts, openapi]
+
+  testing-taxonomy:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Mike Cohn"
+    year: 2009
+    related: [test-driven-development, behaviour-driven-development, code-review]
+    tags: [unit-tests, integration-tests, e2e-tests, test-pyramid, contract-testing]
+
+  code-review:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Michael Fagan"
+    year: 1976
+    related: [refactoring, version-control-discipline, testing-taxonomy]
+    tags: [peer-review, pull-request, quality, collaboration, inspection]
+
+  refactoring:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Martin Fowler"
+    year: 1999
+    related: [test-driven-development, code-review, dry, solid]
+    tags: [code-smell, clean-code, technical-debt, rename, extract]
+
+  dependency-management:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2004
+    related: [supply-chain-security, version-control-discipline]
+    tags: [semver, package-managers, transitive-dependencies, vulnerabilities, lock-files]
+
+  documentation:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1970
+    related: [api-design, code-review]
+    tags: [readme, adr, living-documentation, docs-as-code, divio]
+
+  version-control-discipline:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Linus Torvalds"
+    year: 2005
+    related: [trunk-based-development, gitops, code-review]
+    tags: [git, commit-messages, branching, history, atomic-commits]
+
+  performance-engineering:
+    applies-to: [backend, frontend, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 1975
+    related: [observability, site-reliability-engineering, logging-observability]
+    tags: [profiling, benchmarking, latency, throughput, optimisation, amdahl]
+
+  accessibility:
+    applies-to: [frontend]
+    complexity: medium
+    maturity: established
+    theorist: "Tim Berners-Lee"
+    year: 1997
+    related: [principle-of-least-astonishment, api-design]
+    tags: [wcag, a11y, screen-readers, inclusive-design, aria]
+
+  # ── Privacy / Foundational Theories ──────────────────────────────────────
+
+  privacy-as-a-human-right:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "UN General Assembly"
+    year: 1948
+    related: [privacy-as-control, privacy-as-limitation-of-power, gdpr, surveillance-capitalism]
+    tags: [human-rights, philosophy, legal-foundation, article-12]
+
+  privacy-as-control:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Alan Westin"
+    year: 1967
+    related: [privacy-as-a-human-right, privacy-by-design, contextual-integrity, data-minimisation]
+    tags: [consent, autonomy, self-determination, information-control]
+
+  privacy-as-limitation-of-power:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Julie E. Cohen"
+    year: 2012
+    related: [privacy-as-a-human-right, surveillance-capitalism, contextual-integrity]
+    tags: [power-dynamics, regulatory, surveillance, corporate-power]
+
+  surveillance-capitalism:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "Shoshana Zuboff"
+    year: 2019
+    related: [privacy-as-limitation-of-power, privacy-as-a-human-right, data-minimisation, consent-management]
+    tags: [behavioral-data, prediction, advertising, tech-critique, data-economy]
+
+  contextual-integrity:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Helen Nissenbaum"
+    year: 2004
+    related: [privacy-as-control, privacy-by-design, gdpr, consent-management]
+    tags: [information-flow, context, norms, appropriateness, social-norms]
+
+  fair-information-practice-principles:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "US HEW Advisory Committee"
+    year: 1973
+    related: [gdpr, privacy-by-design, data-minimisation, consent-management]
+    tags: [fipp, data-practices, collection-limitation, fair-use, oecd]
+
+  # ── Privacy / Regulatory Frameworks ─────────────────────────────────────
+
+  gdpr:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "European Parliament and Council"
+    year: 2016
+    related: [privacy-by-design, data-minimisation, dpia, consent-management, ccpa-cpra]
+    tags: [regulation, eu, data-protection, compliance, right-to-erasure, lawful-basis]
+
+  ccpa-cpra:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "California Legislature"
+    year: 2018
+    related: [gdpr, consent-management, data-minimisation]
+    tags: [california, consumer-rights, opt-out, data-broker, us-regulation]
+
+  hipaa:
+    applies-to: [backend, data, cloud]
+    complexity: high
+    maturity: established
+    theorist: "US Congress"
+    year: 1996
+    related: [gdpr, data-minimisation, cryptographic-hygiene, end-to-end-encryption]
+    tags: [healthcare, phi, covered-entity, us-regulation, compliance, baa]
+
+  coppa:
+    applies-to: [frontend, backend, data]
+    complexity: medium
+    maturity: established
+    theorist: "US Congress"
+    year: 1998
+    related: [gdpr, consent-management, data-minimisation]
+    tags: [children, age-verification, parental-consent, us-regulation, ftc]
+
+  # ── Privacy / Technical Approaches ───────────────────────────────────────
+
+  privacy-by-design:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Ann Cavoukian"
+    year: 1995
+    related: [fair-information-practice-principles, data-minimisation, gdpr, dpia]
+    tags: [privacy-engineering, proactive, default-settings, gdpr-article-25, seven-principles]
+
+  differential-privacy:
+    applies-to: [data, ml]
+    complexity: high
+    maturity: established
+    theorist: "Cynthia Dwork, Frank McSherry, Kobbi Nissim, Adam Smith"
+    year: 2006
+    related: [privacy-enhancing-technologies, anonymisation-vs-pseudonymisation, data-minimisation]
+    tags: [mathematical-privacy, noise-addition, epsilon, analytics, apple-google]
+
+  data-minimisation:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1973
+    related: [privacy-by-design, gdpr, differential-privacy, anonymisation-vs-pseudonymisation]
+    tags: [data-hygiene, collection-limitation, retention-policy, purpose-limitation]
+
+  anonymisation-vs-pseudonymisation:
+    applies-to: [data, backend]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2016
+    related: [differential-privacy, data-minimisation, gdpr, privacy-enhancing-technologies]
+    tags: [k-anonymity, tokenisation, re-identification, de-identification, gdpr-recital-26]
+
+  dpia:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "European Parliament and Council"
+    year: 2016
+    related: [gdpr, privacy-by-design, contextual-integrity]
+    tags: [risk-assessment, impact-assessment, gdpr-article-35, high-risk-processing]
+
+  consent-management:
+    applies-to: [frontend, backend]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2016
+    related: [gdpr, ccpa-cpra, contextual-integrity, privacy-by-design]
+    tags: [opt-in, cookie-consent, preference-management, cmp, iab-tcf]
+
+  privacy-enhancing-technologies:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 1995
+    related: [differential-privacy, anonymisation-vs-pseudonymisation, zero-knowledge-proof-architectures, homomorphic-encryption, secure-multi-party-computation]
+    tags: [cryptography, data-protection, anonymisation, pet, k-anonymity]
+
+  # ── Security / Foundational Principles ───────────────────────────────────
+
+  cia-triad:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1977
+    related: [least-privilege, defence-in-depth, cryptographic-hygiene, fail-secure]
+    tags: [confidentiality, integrity, availability, security-foundations]
+
+  least-privilege:
+    applies-to: [backend, infrastructure, cloud]
+    complexity: low
+    maturity: established
+    theorist: "Jerome Saltzer, Michael Schroeder"
+    year: 1975
+    related: [cia-triad, zero-trust-architecture, principle-of-least-authority, defence-in-depth]
+    tags: [access-control, iam, rbac, permissions, need-to-know]
+
+  defence-in-depth:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 1990
+    related: [least-privilege, zero-trust-architecture, cia-triad, attack-surface-minimisation]
+    tags: [layered-security, controls, redundancy, multiple-barriers]
+
+  kerckhoffs-s-principle:
+    applies-to: [backend, infrastructure]
+    complexity: low
+    maturity: established
+    theorist: "Auguste Kerckhoffs"
+    year: 1883
+    related: [cryptographic-hygiene, secrets-management, cia-triad]
+    tags: [cryptography, open-design, security-through-obscurity, open-algorithms]
+
+  fail-secure:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1975
+    related: [fail-fast, defence-in-depth, least-privilege, cia-triad]
+    tags: [default-deny, resilience, access-control, error-handling]
+
+  complete-mediation:
+    applies-to: [backend, infrastructure]
+    complexity: medium
+    maturity: established
+    theorist: "Jerome Saltzer, Michael Schroeder"
+    year: 1975
+    related: [least-privilege, zero-trust-architecture, principle-of-least-authority]
+    tags: [access-control, authorization, every-access, caching-danger, reference-monitor]
+
+  principle-of-least-authority:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Mark S. Miller, Chip Morningstar, Marc Stiegler"
+    year: 2003
+    related: [least-privilege, complete-mediation, zero-trust-architecture]
+    tags: [capability-security, sandboxing, permissions, pola, ocap]
+
+  attack-surface-minimisation:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2000
+    related: [least-privilege, defence-in-depth, secure-by-default]
+    tags: [hardening, reduce-exposure, attack-vectors, default-config]
+
+  secure-by-default:
+    applies-to: [all]
+    complexity: low
+    maturity: established
+    theorist: "multiple"
+    year: 1999
+    related: [attack-surface-minimisation, fail-secure, least-privilege, defence-in-depth]
+    tags: [default-deny, hardening, configuration, security-posture]
+
+  # ── Security / Threat Modelling ───────────────────────────────────────────
+
+  stride:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Praerit Garg, Loren Kohnfelder"
+    year: 1999
+    related: [pasta, attack-trees, owasp-top-10, linddun]
+    tags: [threat-modelling, spoofing, tampering, repudiation, information-disclosure, denial-of-service]
+
+  pasta:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "Tony UcedaVélez, Marco Morana"
+    year: 2012
+    related: [stride, attack-trees, mitre-att-ck-framework]
+    tags: [risk-based, attack-simulation, business-context, threat-modelling, seven-stages]
+
+  attack-trees:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Bruce Schneier"
+    year: 1999
+    related: [stride, pasta, mitre-att-ck-framework]
+    tags: [threat-modelling, attack-paths, risk-analysis, tree-structure]
+
+  linddun:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "Mina Deng, Kim Wuyts, Riccardo Scandariato, Bart Preneel"
+    year: 2010
+    related: [stride, privacy-by-design, gdpr, dpia]
+    tags: [privacy-threat-modelling, linkability, identifiability, disclosure, unawareness]
+
+  # ── Security / Industry Frameworks ──────────────────────────────────────
+
+  owasp-top-10:
+    applies-to: [backend, frontend]
+    complexity: medium
+    maturity: established
+    theorist: "OWASP Foundation"
+    year: 2003
+    related: [owasp-asvs, input-validation-output-encoding, secrets-management, cryptographic-hygiene]
+    tags: [web-security, injection, broken-access, vulnerabilities, checklist, awareness]
+
+  owasp-asvs:
+    applies-to: [backend, frontend]
+    complexity: high
+    maturity: established
+    theorist: "OWASP Foundation"
+    year: 2008
+    related: [owasp-top-10, nist-cybersecurity-framework, input-validation-output-encoding]
+    tags: [verification, security-requirements, assurance-levels, checklist, level-1-2-3]
+
+  nist-cybersecurity-framework:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "NIST"
+    year: 2014
+    related: [iso-iec-27001, cis-controls, incident-response]
+    tags: [identify-protect-detect-respond-recover, risk-management, us-government, csf]
+
+  iso-iec-27001:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "ISO/IEC"
+    year: 2005
+    related: [nist-cybersecurity-framework, cis-controls, soc-2]
+    tags: [isms, certification, audit, information-security-management, annex-a]
+
+  cis-controls:
+    applies-to: [infrastructure, cloud, backend]
+    complexity: medium
+    maturity: established
+    theorist: "Center for Internet Security"
+    year: 2009
+    related: [nist-cybersecurity-framework, iso-iec-27001, owasp-top-10]
+    tags: [hardening, prioritised-controls, benchmarks, baselines, v8]
+
+  mitre-att-ck-framework:
+    applies-to: [infrastructure, backend]
+    complexity: high
+    maturity: established
+    theorist: "MITRE Corporation"
+    year: 2013
+    related: [stride, pasta, attack-trees, incident-response]
+    tags: [tactics, techniques, procedures, ttp, threat-intelligence, adversary-emulation]
+
+  soc-2:
+    applies-to: [cloud, backend]
+    complexity: high
+    maturity: established
+    theorist: "AICPA"
+    year: 2011
+    related: [iso-iec-27001, nist-cybersecurity-framework, cis-controls]
+    tags: [audit, trust-service-criteria, type-i, type-ii, saas-compliance, tsc]
+
+  # ── Security / Secure Development ────────────────────────────────────────
+
+  input-validation-output-encoding:
+    applies-to: [backend, frontend]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2001
+    related: [owasp-top-10, defensive-programming, fail-fast]
+    tags: [injection, xss, sanitisation, encoding, sql-injection, owasp]
+
+  cryptographic-hygiene:
+    applies-to: [backend, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 2000
+    related: [kerckhoffs-s-principle, secrets-management, end-to-end-encryption, hardware-security-modules]
+    tags: [tls, key-management, cipher-suite, algorithms, deprecation, post-quantum]
+
+  secrets-management:
+    applies-to: [backend, infrastructure, cloud]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2010
+    related: [cryptographic-hygiene, hardware-security-modules, least-privilege]
+    tags: [vault, environment-variables, key-rotation, secrets-scanning, hashicorp]
+
+  supply-chain-security:
+    applies-to: [all]
+    complexity: high
+    maturity: emerging
+    theorist: "multiple"
+    year: 2020
+    related: [dependency-management, devsecops, cryptographic-hygiene]
+    tags: [sbom, software-bill-of-materials, provenance, slsa, sigstore, solarwinds]
+
+  zero-trust-architecture:
+    applies-to: [all]
+    complexity: high
+    maturity: established
+    theorist: "John Kindervag"
+    year: 2010
+    related: [least-privilege, complete-mediation, defence-in-depth, federated-identity]
+    tags: [never-trust-always-verify, microsegmentation, identity-first, iam, bzt]
+
+  incident-response:
+    applies-to: [all]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2004
+    related: [site-reliability-engineering, blameless-post-mortems, mitre-att-ck-framework, observability]
+    tags: [irc, containment, eradication, recovery, runbook, nist-sp-800-61]
+
+  # ── Security / Architecture Patterns ─────────────────────────────────────
+
+  trustless-architecture:
+    applies-to: [backend, cloud]
+    complexity: high
+    maturity: emerging
+    theorist: "Satoshi Nakamoto"
+    year: 2008
+    related: [zero-knowledge-proof-architectures, decentralised-identity, content-addressed-storage]
+    tags: [blockchain, cryptographic-verification, trustless, web3, bitcoin, smart-contracts]
+
+  zero-knowledge-proof-architectures:
+    applies-to: [backend, data]
+    complexity: high
+    maturity: emerging
+    theorist: "Shafi Goldwasser, Silvio Micali, Charles Rackoff"
+    year: 1985
+    related: [trustless-architecture, privacy-enhancing-technologies, homomorphic-encryption, decentralised-identity]
+    tags: [zkp, zk-snarks, zk-starks, proof-systems, privacy, zkp-circuits]
+
+  end-to-end-encryption:
+    applies-to: [backend, mobile]
+    complexity: high
+    maturity: established
+    theorist: "Whitfield Diffie, Martin Hellman; Trevor Perrin, Moxie Marlinspike"
+    year: 1976
+    related: [cryptographic-hygiene, federated-identity, hardware-security-modules, trustless-architecture]
+    tags: [e2ee, signal-protocol, forward-secrecy, double-ratchet, key-exchange, diffie-hellman]
+
+  federated-identity:
+    applies-to: [backend, frontend]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2001
+    related: [zero-trust-architecture, end-to-end-encryption, gdpr, consent-management]
+    tags: [oauth2, oidc, saml, sso, identity-provider, jwt, pkce]
+
+  homomorphic-encryption:
+    applies-to: [data, cloud, ml]
+    complexity: high
+    maturity: emerging
+    theorist: "Craig Gentry"
+    year: 2009
+    related: [zero-knowledge-proof-architectures, privacy-enhancing-technologies, secure-multi-party-computation]
+    tags: [fhe, compute-on-encrypted-data, cloud-privacy, lattice-cryptography, tfhe]
+
+  secure-multi-party-computation:
+    applies-to: [data, backend]
+    complexity: high
+    maturity: emerging
+    theorist: "Andrew C. Yao"
+    year: 1982
+    related: [homomorphic-encryption, zero-knowledge-proof-architectures, privacy-enhancing-technologies]
+    tags: [mpc, distributed-trust, secret-sharing, garbled-circuits, federated-learning]
+
+  trusted-execution-environments:
+    applies-to: [infrastructure, cloud, mobile]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 2003
+    related: [hardware-security-modules, cryptographic-hygiene, secure-by-default]
+    tags: [tee, sgx, trustzone, secure-enclave, hardware-isolation, confidential-computing]
+
+  hardware-security-modules:
+    applies-to: [backend, infrastructure]
+    complexity: high
+    maturity: established
+    theorist: "multiple"
+    year: 1970
+    related: [cryptographic-hygiene, secrets-management, trusted-execution-environments, kerckhoffs-s-principle]
+    tags: [hsm, key-storage, fips-140, tamper-resistant, pkcs11, hsm-as-a-service]
+
+  content-addressed-storage:
+    applies-to: [backend, data, infrastructure]
+    complexity: medium
+    maturity: established
+    theorist: "multiple"
+    year: 2005
+    related: [trustless-architecture, version-control-discipline, immutable-infrastructure]
+    tags: [content-hash, ipfs, git, immutability, deduplication, merkle-tree]
+
+  decentralised-identity:
+    applies-to: [backend, mobile]
+    complexity: high
+    maturity: emerging
+    theorist: "W3C DID Working Group"
+    year: 2019
+    related: [trustless-architecture, federated-identity, zero-knowledge-proof-architectures, privacy-enhancing-technologies]
+    tags: [did, verifiable-credentials, ssi, w3c, self-sovereign-identity, bbs-plus]

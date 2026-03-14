@@ -3,13 +3,13 @@ id: composition-over-inheritance
 title: "Composition over Inheritance"
 domain: architecture
 sub-domain: "design principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: "Gang of Four (Gamma, Helm, Johnson, Vlissides)"
+year: 1994
+related: [solid, law-of-demeter, hexagonal-architecture]
+tags: [oop, design-patterns, flexibility, coupling]
 ---
 
 ## Definition

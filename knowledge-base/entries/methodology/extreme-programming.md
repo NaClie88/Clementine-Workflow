@@ -3,13 +3,13 @@ id: extreme-programming
 title: "Extreme Programming (XP — Kent Beck)"
 domain: methodology
 sub-domain: "development methodology"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Kent Beck
+year: 1996
+related: [test-driven-development, agile, trunk-based-development]
+tags: [xp, pair-programming, continuous-integration, simple-design]
 ---
 
 ## Definition

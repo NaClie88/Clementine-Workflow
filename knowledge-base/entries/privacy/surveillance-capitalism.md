@@ -3,13 +3,13 @@ id: surveillance-capitalism
 title: "Surveillance Capitalism (Shoshana Zuboff)"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Shoshana Zuboff
+year: 2019
+related: [privacy-as-limitation-of-power, privacy-as-a-human-right, data-minimisation, consent-management]
+tags: [behavioral-data, prediction, advertising, tech-critique, data-economy]
 ---
 
 ## Definition

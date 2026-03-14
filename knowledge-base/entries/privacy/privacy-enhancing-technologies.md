@@ -3,13 +3,13 @@ id: privacy-enhancing-technologies
 title: "Privacy-Enhancing Technologies (PETs)"
 domain: privacy
 sub-domain: "technical approach"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: multiple
+year: 1995
+related: [differential-privacy, anonymisation-vs-pseudonymisation, zero-knowledge-proof-architectures, homomorphic-encryption, secure-multi-party-computation]
+tags: [cryptography, data-protection, anonymisation, pet, k-anonymity]
 ---
 
 ## Definition

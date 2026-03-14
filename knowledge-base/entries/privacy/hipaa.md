@@ -3,13 +3,13 @@ id: hipaa
 title: "HIPAA (US, 1996)"
 domain: privacy
 sub-domain: "regulatory framework"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, data, cloud]
+complexity: high
+maturity: established
+theorist: US Congress
+year: 1996
+related: [gdpr, data-minimisation, cryptographic-hygiene, end-to-end-encryption]
+tags: [healthcare, phi, covered-entity, us-regulation, compliance, baa]
 ---
 
 ## Definition

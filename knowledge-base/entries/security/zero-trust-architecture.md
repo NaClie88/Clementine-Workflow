@@ -3,13 +3,13 @@ id: zero-trust-architecture
 title: "Zero Trust Architecture"
 domain: security
 sub-domain: "foundational principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: John Kindervag
+year: 2010
+related: [least-privilege, complete-mediation, defence-in-depth, federated-identity]
+tags: [never-trust-always-verify, microsegmentation, identity-first, iam, bzt]
 ---
 
 ## Definition

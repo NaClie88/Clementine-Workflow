@@ -3,13 +3,13 @@ id: event-sourcing
 title: "Event Sourcing"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, data]
+complexity: high
+maturity: established
+theorist: multiple
+year: 2005
+related: [cqrs, event-driven-architecture, domain-driven-design, idempotency]
+tags: [audit-trail, temporal-queries, immutability, append-only]
 ---
 
 ## Definition

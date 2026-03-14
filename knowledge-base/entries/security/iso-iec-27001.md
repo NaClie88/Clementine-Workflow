@@ -3,13 +3,13 @@ id: iso-iec-27001
 title: "ISO/IEC 27001"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: ISO/IEC
+year: 2005
+related: [nist-cybersecurity-framework, cis-controls, soc-2]
+tags: [isms, certification, audit, information-security-management, annex-a]
 ---
 
 ## Definition

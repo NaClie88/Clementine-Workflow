@@ -3,13 +3,13 @@ id: coppa
 title: "COPPA (US, 1998)"
 domain: privacy
 sub-domain: "regulatory framework"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [frontend, backend, data]
+complexity: medium
+maturity: established
+theorist: US Congress
+year: 1998
+related: [gdpr, consent-management, data-minimisation]
+tags: [children, age-verification, parental-consent, us-regulation, ftc]
 ---
 
 ## Definition

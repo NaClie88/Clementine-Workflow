@@ -3,13 +3,13 @@ id: soc-2
 title: "SOC 2 (AICPA)"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [cloud, backend]
+complexity: high
+maturity: established
+theorist: AICPA
+year: 2011
+related: [iso-iec-27001, nist-cybersecurity-framework, cis-controls]
+tags: [audit, trust-service-criteria, type-i, type-ii, saas-compliance, tsc]
 ---
 
 ## Definition

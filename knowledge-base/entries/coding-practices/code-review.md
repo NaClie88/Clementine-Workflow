@@ -3,13 +3,13 @@ id: code-review
 title: "Code Review"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Michael Fagan
+year: 1976
+related: [refactoring, version-control-discipline, testing-taxonomy]
+tags: [peer-review, pull-request, quality, collaboration, inspection]
 ---
 
 ## Definition

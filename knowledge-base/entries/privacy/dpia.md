@@ -3,13 +3,13 @@ id: dpia
 title: "DPIA — Data Protection Impact Assessment"
 domain: privacy
 sub-domain: "regulatory framework"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: European Parliament and Council
+year: 2016
+related: [gdpr, privacy-by-design, contextual-integrity]
+tags: [risk-assessment, impact-assessment, gdpr-article-35, high-risk-processing]
 ---
 
 ## Definition

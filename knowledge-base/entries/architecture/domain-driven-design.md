@@ -3,13 +3,13 @@ id: domain-driven-design
 title: "Domain-Driven Design (DDD — Eric Evans)"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend]
+complexity: high
+maturity: established
+theorist: Eric Evans
+year: 2003
+related: [clean-architecture, hexagonal-architecture, event-driven-architecture, cqrs, microservices]
+tags: [bounded-context, ubiquitous-language, aggregates, domain-model]
 ---
 
 ## Definition

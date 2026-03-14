@@ -3,13 +3,13 @@ id: chaos-engineering
 title: "Chaos Engineering"
 domain: methodology
 sub-domain: "development methodology"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, cloud, infrastructure]
+complexity: high
+maturity: established
+theorist: Netflix
+year: 2011
+related: [site-reliability-engineering, observability, reactive-systems]
+tags: [resilience, fault-injection, gameday, netflix, failure-testing]
 ---
 
 ## Definition

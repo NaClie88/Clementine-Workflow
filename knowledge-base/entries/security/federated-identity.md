@@ -3,13 +3,13 @@ id: federated-identity
 title: "Federated Identity (OAuth 2.0 / OIDC / SAML)"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2001
+related: [zero-trust-architecture, end-to-end-encryption, gdpr, consent-management]
+tags: [oauth2, oidc, saml, sso, identity-provider, jwt, pkce]
 ---
 
 ## Definition

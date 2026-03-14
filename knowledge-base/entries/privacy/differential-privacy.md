@@ -3,13 +3,13 @@ id: differential-privacy
 title: "Differential Privacy"
 domain: privacy
 sub-domain: "technical approach"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [data, ml]
+complexity: high
+maturity: established
+theorist: "Cynthia Dwork, Frank McSherry, Kobbi Nissim, Adam Smith"
+year: 2006
+related: [privacy-enhancing-technologies, anonymisation-vs-pseudonymisation, data-minimisation]
+tags: [mathematical-privacy, noise-addition, epsilon, analytics, apple-google]
 ---
 
 ## Definition

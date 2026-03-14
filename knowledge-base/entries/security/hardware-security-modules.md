@@ -3,13 +3,13 @@ id: hardware-security-modules
 title: "Hardware Security Modules (HSM)"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, infrastructure]
+complexity: high
+maturity: established
+theorist: multiple
+year: 1970
+related: [cryptographic-hygiene, secrets-management, trusted-execution-environments, kerckhoffs-s-principle]
+tags: [hsm, key-storage, fips-140, tamper-resistant, pkcs11, hsm-as-a-service]
 ---
 
 ## Definition

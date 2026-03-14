@@ -3,13 +3,13 @@ id: hexagonal-architecture
 title: "Hexagonal Architecture (Ports and Adapters — Alistair Cockburn)"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: Alistair Cockburn
+year: 2005
+related: [clean-architecture, domain-driven-design, separation-of-concerns, composition-over-inheritance]
+tags: [ports-and-adapters, testability, decoupling, inversion-of-control]
 ---
 
 ## Definition

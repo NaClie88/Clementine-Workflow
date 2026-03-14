@@ -3,13 +3,13 @@ id: homomorphic-encryption
 title: "Homomorphic Encryption"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [data, cloud, ml]
+complexity: high
+maturity: emerging
+theorist: Craig Gentry
+year: 2009
+related: [zero-knowledge-proof-architectures, privacy-enhancing-technologies, secure-multi-party-computation]
+tags: [fhe, compute-on-encrypted-data, cloud-privacy, lattice-cryptography, tfhe]
 ---
 
 ## Definition

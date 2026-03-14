@@ -3,13 +3,13 @@ id: pasta
 title: "PASTA — Process for Attack Simulation and Threat Analysis"
 domain: security
 sub-domain: "threat modelling"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: "Tony UcedaVélez, Marco Morana"
+year: 2012
+related: [stride, attack-trees, mitre-att-ck-framework]
+tags: [risk-based, attack-simulation, business-context, threat-modelling, seven-stages]
 ---
 
 ## Definition

@@ -3,13 +3,13 @@ id: clean-architecture
 title: "Clean Architecture (Robert C. Martin)"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: Robert C. Martin
+year: 2012
+related: [hexagonal-architecture, solid, domain-driven-design, separation-of-concerns]
+tags: [architecture, dependency-rule, layers, use-cases, entities]
 ---
 
 ## Definition

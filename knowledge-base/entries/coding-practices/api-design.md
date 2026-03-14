@@ -3,13 +3,13 @@ id: api-design
 title: "API Design"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend]
+complexity: high
+maturity: established
+theorist: Roy Fielding
+year: 2000
+related: [idempotency, principle-of-least-astonishment, separation-of-concerns, versioning]
+tags: [rest, graphql, grpc, versioning, contracts, openapi]
 ---
 
 ## Definition

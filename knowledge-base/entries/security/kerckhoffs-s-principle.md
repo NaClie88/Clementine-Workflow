@@ -3,13 +3,13 @@ id: kerckhoffs-s-principle
 title: "Kerckhoffs's Principle (1883)"
 domain: security
 sub-domain: "foundational principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, infrastructure]
+complexity: low
+maturity: established
+theorist: Auguste Kerckhoffs
+year: 1883
+related: [cryptographic-hygiene, secrets-management, cia-triad]
+tags: [cryptography, open-design, security-through-obscurity, open-algorithms]
 ---
 
 ## Definition

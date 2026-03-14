@@ -3,13 +3,13 @@ id: linddun
 title: "LINDDUN (KU Leuven)"
 domain: security
 sub-domain: "threat modelling"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: "Mina Deng, Kim Wuyts, Riccardo Scandariato, Bart Preneel"
+year: 2010
+related: [stride, privacy-by-design, gdpr, dpia]
+tags: [privacy-threat-modelling, linkability, identifiability, disclosure, unawareness]
 ---
 
 ## Definition

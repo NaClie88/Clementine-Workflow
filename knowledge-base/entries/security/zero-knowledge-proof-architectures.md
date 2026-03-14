@@ -3,13 +3,13 @@ id: zero-knowledge-proof-architectures
 title: "Zero-Knowledge Proof Architectures"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, data]
+complexity: high
+maturity: emerging
+theorist: "Shafi Goldwasser, Silvio Micali, Charles Rackoff"
+year: 1985
+related: [trustless-architecture, privacy-enhancing-technologies, homomorphic-encryption, decentralised-identity]
+tags: [zkp, zk-snarks, zk-starks, proof-systems, privacy, zkp-circuits]
 ---
 
 ## Definition

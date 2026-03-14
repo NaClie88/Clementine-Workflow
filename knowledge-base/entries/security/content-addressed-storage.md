@@ -3,13 +3,13 @@ id: content-addressed-storage
 title: "Content-Addressed Storage (CAS)"
 domain: security
 sub-domain: "architecture patterns"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, data, infrastructure]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2005
+related: [trustless-architecture, version-control-discipline, immutable-infrastructure]
+tags: [content-hash, ipfs, git, immutability, deduplication, merkle-tree]
 ---
 
 ## Definition

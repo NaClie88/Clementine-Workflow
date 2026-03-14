@@ -3,13 +3,13 @@ id: attack-trees
 title: "Attack Trees (Bruce Schneier)"
 domain: security
 sub-domain: "threat modelling"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Bruce Schneier
+year: 1999
+related: [stride, pasta, mitre-att-ck-framework]
+tags: [threat-modelling, attack-paths, risk-analysis, tree-structure]
 ---
 
 ## Definition

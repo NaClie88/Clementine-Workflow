@@ -3,13 +3,13 @@ id: stride
 title: "STRIDE (Microsoft)"
 domain: security
 sub-domain: "threat modelling"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: "Praerit Garg, Loren Kohnfelder"
+year: 1999
+related: [pasta, attack-trees, owasp-top-10, linddun]
+tags: [threat-modelling, spoofing, tampering, repudiation, information-disclosure, denial-of-service]
 ---
 
 ## Definition

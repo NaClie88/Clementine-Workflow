@@ -3,13 +3,13 @@ id: incident-response
 title: "Incident Response"
 domain: security
 sub-domain: "secure development"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2004
+related: [site-reliability-engineering, blameless-post-mortems, mitre-att-ck-framework, observability]
+tags: [irc, containment, eradication, recovery, runbook, nist-sp-800-61]
 ---
 
 ## Definition

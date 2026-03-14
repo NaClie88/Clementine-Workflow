@@ -3,13 +3,13 @@ id: defensive-programming
 title: "Defensive Programming"
 domain: architecture
 sub-domain: "design principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 1976
+related: [fail-fast, design-by-contract, error-handling, input-validation-output-encoding]
+tags: [robustness, input-validation, error-handling, assertions]
 ---
 
 ## Definition

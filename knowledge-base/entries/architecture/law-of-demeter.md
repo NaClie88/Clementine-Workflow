@@ -3,13 +3,13 @@ id: law-of-demeter
 title: "Law of Demeter (Principle of Least Knowledge)"
 domain: architecture
 sub-domain: "design principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Ian Holland
+year: 1987
+related: [solid, separation-of-concerns, composition-over-inheritance, encapsulation]
+tags: [coupling, encapsulation, oop, principle-of-least-knowledge]
 ---
 
 ## Definition

@@ -3,13 +3,13 @@ id: anonymisation-vs-pseudonymisation
 title: "Anonymisation vs. Pseudonymisation"
 domain: privacy
 sub-domain: "technical approach"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [data, backend]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2016
+related: [differential-privacy, data-minimisation, gdpr, privacy-enhancing-technologies]
+tags: [k-anonymity, tokenisation, re-identification, de-identification, gdpr-recital-26]
 ---
 
 ## Definition

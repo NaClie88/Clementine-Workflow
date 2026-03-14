@@ -3,13 +3,13 @@ id: consent-management
 title: "Consent Management"
 domain: privacy
 sub-domain: "technical approach"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [frontend, backend]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2016
+related: [gdpr, ccpa-cpra, contextual-integrity, privacy-by-design]
+tags: [opt-in, cookie-consent, preference-management, cmp, iab-tcf]
 ---
 
 ## Definition

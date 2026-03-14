@@ -3,13 +3,13 @@ id: owasp-asvs
 title: "OWASP ASVS (Application Security Verification Standard)"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend]
+complexity: high
+maturity: established
+theorist: OWASP Foundation
+year: 2008
+related: [owasp-top-10, nist-cybersecurity-framework, input-validation-output-encoding]
+tags: [verification, security-requirements, assurance-levels, checklist, level-1-2-3]
 ---
 
 ## Definition

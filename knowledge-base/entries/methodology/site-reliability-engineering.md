@@ -3,13 +3,13 @@ id: site-reliability-engineering
 title: "Site Reliability Engineering (SRE — Google)"
 domain: methodology
 sub-domain: "operational philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [infrastructure, cloud, backend]
+complexity: high
+maturity: established
+theorist: Ben Treynor Sloss
+year: 2003
+related: [devops, observability, chaos-engineering, incident-response]
+tags: [slo, sla, error-budget, toil, google, on-call]
 ---
 
 ## Definition

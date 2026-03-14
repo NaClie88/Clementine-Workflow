@@ -3,13 +3,13 @@ id: yagni
 title: "YAGNI — You Aren't Gonna Need It"
 domain: architecture
 sub-domain: "design principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Ron Jeffries
+year: 2001
+related: [kiss, dry, wet]
+tags: [simplicity, agile, speculative-generality, over-engineering]
 ---
 
 ## Definition

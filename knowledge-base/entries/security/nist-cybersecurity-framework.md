@@ -3,13 +3,13 @@ id: nist-cybersecurity-framework
 title: "NIST Cybersecurity Framework (CSF 2.0)"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: NIST
+year: 2014
+related: [iso-iec-27001, cis-controls, incident-response]
+tags: [identify-protect-detect-respond-recover, risk-management, us-government, csf]
 ---
 
 ## Definition

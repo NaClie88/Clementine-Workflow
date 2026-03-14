@@ -3,13 +3,13 @@ id: dependency-management
 title: "Dependency Management"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2004
+related: [supply-chain-security, version-control-discipline]
+tags: [semver, package-managers, transitive-dependencies, vulnerabilities, lock-files]
 ---
 
 ## Definition

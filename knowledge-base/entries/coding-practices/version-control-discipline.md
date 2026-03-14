@@ -3,13 +3,13 @@ id: version-control-discipline
 title: "Version Control Discipline"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Linus Torvalds
+year: 2005
+related: [trunk-based-development, gitops, code-review]
+tags: [git, commit-messages, branching, history, atomic-commits]
 ---
 
 ## Definition

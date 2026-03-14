@@ -3,13 +3,13 @@ id: principle-of-least-authority
 title: "Principle of Least Authority (POLA)"
 domain: security
 sub-domain: "foundational principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: "Mark S. Miller, Chip Morningstar, Marc Stiegler"
+year: 2003
+related: [least-privilege, complete-mediation, zero-trust-architecture]
+tags: [capability-security, sandboxing, permissions, pola, ocap]
 ---
 
 ## Definition

@@ -3,13 +3,13 @@ id: least-privilege
 title: "Least Privilege"
 domain: security
 sub-domain: "foundational principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, infrastructure, cloud]
+complexity: low
+maturity: established
+theorist: "Jerome Saltzer, Michael Schroeder"
+year: 1975
+related: [cia-triad, zero-trust-architecture, principle-of-least-authority, defence-in-depth]
+tags: [access-control, iam, rbac, permissions, need-to-know]
 ---
 
 ## Definition

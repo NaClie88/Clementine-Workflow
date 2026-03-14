@@ -3,13 +3,13 @@ id: strangler-fig-pattern
 title: "Strangler Fig Pattern"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, infrastructure]
+complexity: medium
+maturity: established
+theorist: Martin Fowler
+year: 2004
+related: [monolith-first, microservices, domain-driven-design]
+tags: [migration, legacy, incremental-replacement, re-architecture]
 ---
 
 ## Definition

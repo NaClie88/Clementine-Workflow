@@ -3,13 +3,13 @@ id: logging-observability
 title: "Logging & Observability"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, infrastructure]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 2015
+related: [observability, error-handling, site-reliability-engineering]
+tags: [structured-logging, metrics, tracing, debugging, elk-stack]
 ---
 
 ## Definition

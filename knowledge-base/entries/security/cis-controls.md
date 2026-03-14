@@ -3,13 +3,13 @@ id: cis-controls
 title: "CIS Controls (v8)"
 domain: security
 sub-domain: "industry frameworks"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [infrastructure, cloud, backend]
+complexity: medium
+maturity: established
+theorist: Center for Internet Security
+year: 2009
+related: [nist-cybersecurity-framework, iso-iec-27001, owasp-top-10]
+tags: [hardening, prioritised-controls, benchmarks, baselines, v8]
 ---
 
 ## Definition

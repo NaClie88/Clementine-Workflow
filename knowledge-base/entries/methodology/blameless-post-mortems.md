@@ -3,13 +3,13 @@ id: blameless-post-mortems
 title: "Blameless Post-Mortems"
 domain: methodology
 sub-domain: "operational philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: John Allspaw
+year: 2012
+related: [site-reliability-engineering, incident-response, devops, observability]
+tags: [incident-review, psychological-safety, learning, culture, five-whys]
 ---
 
 ## Definition

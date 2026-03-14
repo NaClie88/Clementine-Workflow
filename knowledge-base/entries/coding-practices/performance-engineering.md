@@ -3,13 +3,13 @@ id: performance-engineering
 title: "Performance Engineering"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, frontend, infrastructure]
+complexity: high
+maturity: established
+theorist: multiple
+year: 1975
+related: [observability, site-reliability-engineering, logging-observability]
+tags: [profiling, benchmarking, latency, throughput, optimisation, amdahl]
 ---
 
 ## Definition

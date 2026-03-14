@@ -3,13 +3,13 @@ id: gdpr
 title: "GDPR — General Data Protection Regulation (EU, 2018)"
 domain: privacy
 sub-domain: "regulatory framework"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: high
+maturity: established
+theorist: European Parliament and Council
+year: 2016
+related: [privacy-by-design, data-minimisation, dpia, consent-management, ccpa-cpra]
+tags: [regulation, eu, data-protection, compliance, right-to-erasure, lawful-basis]
 ---
 
 ## Definition

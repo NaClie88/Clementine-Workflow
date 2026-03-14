@@ -3,13 +3,13 @@ id: testing-taxonomy
 title: "Testing Taxonomy"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: Mike Cohn
+year: 2009
+related: [test-driven-development, behaviour-driven-development, code-review]
+tags: [unit-tests, integration-tests, e2e-tests, test-pyramid, contract-testing]
 ---
 
 ## Definition

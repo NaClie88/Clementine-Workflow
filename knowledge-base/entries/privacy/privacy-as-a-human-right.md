@@ -3,13 +3,13 @@ id: privacy-as-a-human-right
 title: "Privacy as a Human Right"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: UN General Assembly
+year: 1948
+related: [privacy-as-control, privacy-as-limitation-of-power, gdpr, surveillance-capitalism]
+tags: [human-rights, philosophy, legal-foundation, article-12]
 ---
 
 ## Definition

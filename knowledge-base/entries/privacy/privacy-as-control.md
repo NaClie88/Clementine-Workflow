@@ -3,13 +3,13 @@ id: privacy-as-control
 title: "Privacy as Control (Westin)"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: Alan Westin
+year: 1967
+related: [privacy-as-a-human-right, privacy-by-design, contextual-integrity, data-minimisation]
+tags: [consent, autonomy, self-determination, information-control]
 ---
 
 ## Definition

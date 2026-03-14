@@ -3,13 +3,13 @@ id: mitre-att-ck-framework
 title: "MITRE ATT&CK Framework"
 domain: security
 sub-domain: "threat modelling"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [infrastructure, backend]
+complexity: high
+maturity: established
+theorist: MITRE Corporation
+year: 2013
+related: [stride, pasta, attack-trees, incident-response]
+tags: [tactics, techniques, procedures, ttp, threat-intelligence, adversary-emulation]
 ---
 
 ## Definition

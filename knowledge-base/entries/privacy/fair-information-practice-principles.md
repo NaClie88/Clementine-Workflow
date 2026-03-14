@@ -3,13 +3,13 @@ id: fair-information-practice-principles
 title: "Fair Information Practice Principles (FIPPs)"
 domain: privacy
 sub-domain: "foundational theory"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: US HEW Advisory Committee
+year: 1973
+related: [gdpr, privacy-by-design, data-minimisation, consent-management]
+tags: [fipp, data-practices, collection-limitation, fair-use, oecd]
 ---
 
 ## Definition

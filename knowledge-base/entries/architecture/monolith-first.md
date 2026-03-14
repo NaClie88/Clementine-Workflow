@@ -3,13 +3,13 @@ id: monolith-first
 title: "Monolith-First (Martin Fowler)"
 domain: architecture
 sub-domain: "architectural philosophy"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [backend, cloud]
+complexity: medium
+maturity: established
+theorist: Martin Fowler
+year: 2015
+related: [microservices, domain-driven-design, strangler-fig-pattern]
+tags: [architecture, incremental, pragmatic, migration]
 ---
 
 ## Definition

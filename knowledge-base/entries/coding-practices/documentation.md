@@ -3,13 +3,13 @@ id: documentation
 title: "Documentation"
 domain: coding-practices
 sub-domain: "coding discipline"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: low
+maturity: established
+theorist: multiple
+year: 1970
+related: [api-design, code-review]
+tags: [readme, adr, living-documentation, docs-as-code, divio]
 ---
 
 ## Definition

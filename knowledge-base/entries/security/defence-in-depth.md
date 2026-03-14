@@ -3,13 +3,13 @@ id: defence-in-depth
 title: "Defence in Depth"
 domain: security
 sub-domain: "foundational principles"
-applies-to: []  # TODO: backend | frontend | infrastructure | cloud | mobile | data | ml | all
-complexity: ""  # TODO: low | medium | high
-maturity: ""    # TODO: established | emerging | theoretical
-theorist: ""    # TODO: primary originator or "multiple"
-year: null      # TODO: year concept was formally named/published
-related: []     # TODO: IDs of related entries
-tags: []        # TODO: free-form tags
+applies-to: [all]
+complexity: medium
+maturity: established
+theorist: multiple
+year: 1990
+related: [least-privilege, zero-trust-architecture, cia-triad, attack-surface-minimisation]
+tags: [layered-security, controls, redundancy, multiple-barriers]
 ---
 
 ## Definition
