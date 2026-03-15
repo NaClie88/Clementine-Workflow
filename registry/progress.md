@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Session 2026-03-15 (completed). Docs alignment pass (all 10 docs/ files) + skill vetting automation decision (D02). skill-tester rejected as Phase 1 automation base — quality tool without security awareness; /vet-skill already covers §2.6 automation. --help/JSON/dual-output checks adopted as Phase 4 supplementary quality checks (§5.6 added to skill-vetting-workflow.md). Active Work queue is now empty.
+Session 2026-03-15 (completed). Added /session-start and /session-end skills (.claude/commands/session-start.md, session-end.md); both logged in docs/approved-skills.md. Attribution format corrected: model name/ID read from system context at runtime — not hardcoded; memory/feedback_attribution_format.md updated to match. Active Work queue is empty.
 
 **Constitution v6.0 (MAJOR):**
 - Part 1: Complete Mediation (Saltzer & Schroeder, 1975) in Amendment 5; input-validation/attack-surface vocabulary in Amendment 6
