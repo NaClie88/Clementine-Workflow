@@ -24,6 +24,24 @@ Make the following changes to `registry/progress.md`:
 
 If everything is complete and clean: `Session [date] (completed). [What was done]. Active Work queue is empty.`
 
+**Verification line** — Append this as the final line of the Last Session Note (required, never skip):
+
+Run the four checks, then record the result:
+- **A** — File path references: do referenced paths exist on disk?
+- **B** — Name/rename consistency: do any renamed files leave stale references elsewhere?
+- **C** — Test suite: run tests if any exist; if docs-only session, say so explicitly
+- **D** — Structural integrity: are governing docs (constitution, STD05) well-formed and complete?
+
+```
+Verification: ✅ A, B, C (skip — docs-only), D — all checks passed [date].
+```
+or
+```
+Verification: ❌ [category] — [what failed or was skipped and why] [date].
+```
+
+A missing verification line means the handoff is unverified. The next session must run the checks before starting new work.
+
 **Active Work table** — Verify it accurately reflects what is still in progress. Move any items completed this session to the Completed Work table.
 
 **Completed Work table** — Add a row for each document or decision completed this session. Use today's date.

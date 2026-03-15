@@ -13,7 +13,8 @@
 
 ### Last Session Note
 
-Session 2026-03-15 (completed). Added /session-start and /session-end skills (.claude/commands/session-start.md, session-end.md); both logged in docs/approved-skills.md. Attribution format corrected: model name/ID read from system context at runtime — not hardcoded; memory/feedback_attribution_format.md updated to match. Active Work queue is empty.
+Session 2026-03-15 (completed). Closed the verification gap: `.gitignore` added (ignores `Claude CLI.py`); `.claude/commands/session-end.md` updated to require a Verification line (A/B/C/D checks) at every session close; retroactive verification run on prior session's changes — all checks passed. Active Work queue is empty.
+Verification: ✅ A (gitignore, session-end.md, progress.md all exist), B (no renames this session), C (skip — docs-only), D (constitution 7 Parts present, STD05 sections intact) — all checks passed 2026-03-15.
 
 **Constitution v6.0 (MAJOR):**
 - Part 1: Complete Mediation (Saltzer & Schroeder, 1975) in Amendment 5; input-validation/attack-surface vocabulary in Amendment 6
@@ -49,6 +50,8 @@ No active work items.
 
 | Document | Type | Completed | Notes |
 |---|---|---|---|
+| `.gitignore` | Config | 2026-03-15 | Root .gitignore created; ignores `Claude CLI.py` |
+| `.claude/commands/session-end.md` | Skill | 2026-03-15 | Verification step added — A/B/C/D checks required at every session close |
 | `memory/constitution.md` | Constitution | 2026-03-10 | Ratified — merged from constitutional-rules + conduct-policy |
 | `AGENTS.md` | Agent Runtime File | 2026-03-10 | Ratified — merged from system-prompt + persona-voice-guide |
 | `specs/llm-deployment/spec.md` | Specification | 2026-03-10 | Ratified |
