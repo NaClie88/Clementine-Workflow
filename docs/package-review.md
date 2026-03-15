@@ -112,6 +112,14 @@ Standard library packages are pre-approved. They require no entry here but are l
 - **Concerns:** None. No network, no shell, no file I/O beyond what the calling code explicitly does.
 - **Decision:** APPROVED
 
+### python-frontmatter
+- **Version reviewed:** 1.1.0
+- **Risk tier:** Tier 1
+- **Install footprint:** PyYAML, python-dateutil
+- **Capabilities:** Reads and writes YAML frontmatter from Markdown files; delegates YAML parsing to `yaml.safe_load()` via PyYAML. No network, no shell, no subprocess.
+- **Concerns:** None beyond PyYAML concerns (safe_load only — already enforced by library). No eval, no dynamic imports.
+- **Decision:** APPROVED — used for reading .md entry metadata; PyYAML already in registry at Tier 2 (APPROVED WITH CONDITIONS); python-frontmatter uses safe_load exclusively
+
 ### requests
 - **Version reviewed:** 2.31.0
 - **Risk tier:** Tier 1
@@ -259,11 +267,27 @@ Standard library packages are pre-approved. They require no entry here but are l
 - **Concerns:** Same as openai — external data transmission. API key from environment only.
 - **Decision:** APPROVED WITH CONDITIONS — no hardcoded API keys; document what data is sent
 
+### lancedb
+- **Version reviewed:** 0.29.2
+- **Risk tier:** Tier 2
+- **Install footprint:** pyarrow, lance (Apache Arrow format), pydantic, deprecation, semver, packaging; aiohttp in transitive deps
+- **Capabilities:** File-based vector database using Apache Arrow format. Reads and writes `.lance` table files locally. Supports remote server mode (LanceDB Cloud / self-hosted) via separate connect URI, but query.py uses local `lancedb.connect(path)` only.
+- **Concerns:** Transitive dep `aiohttp` enables HTTP if a remote URI is passed to `lancedb.connect()`. In query.py the path is always a local filesystem path derived from a fixed `repo_root` constant — no user-supplied URI reaches the connect call. No subprocess, no shell, no file writes (reads existing DB).
+- **Decision:** APPROVED WITH CONDITIONS — local mode only (`lancedb.connect(local_path)`); DB path must be project-local and not constructed from unsanitized user input; do not pass remote URIs (https://, s3://, etc.) without explicit Operator decision
+
 ---
 
 ## Tier 3 — High Risk
 
 *Packages in this tier require explicit written justification for the use case and Operator sign-off before Phase 4.*
+
+### sentence-transformers
+- **Version reviewed:** 5.3.0
+- **Risk tier:** Tier 3
+- **Install footprint:** torch (~800MB), transformers, huggingface_hub, accelerate, safetensors, tokenizers (Rust), tqdm, scikit-learn, scipy, Pillow, requests, filelock, packaging
+- **Capabilities:** Text embedding via pre-trained transformer models. Downloads model weights from HuggingFace Hub on first use; caches to `~/.cache/huggingface/` on subsequent runs. Runtime inference is entirely local once the model is cached.
+- **Concerns:** (1) Network: HuggingFace Hub download on first run — subsequent runs are offline from `~/.cache/`. (2) Large binary install (torch ~800MB). (3) `huggingface_hub` respects `HF_TOKEN` environment variable — if set, token is sent in download requests to HuggingFace CDN. (4) `device="cpu"` must be specified explicitly — without it, PyTorch attempts CUDA which failed on this system (GTX 1060, sm_61 incompatible).
+- **Decision:** APPROVED WITH CONDITIONS — (a) `device="cpu"` must always be specified in `SentenceTransformer(model, device="cpu")` calls; (b) model must be pre-downloaded and cached before offline use; (c) do not pass user-controlled strings as the model name argument; (d) `HF_TOKEN` is optional — only needed for private models; the `all-MiniLM-L6-v2` model used here is public and token-free. Operator sign-off required per Tier 3 rule. **Signed off: Joshua Alexander Clement + claude-sonnet-4-6, 2026-03-14 (D01)**
 
 ### selenium
 - **Version reviewed:** 4.17.2
@@ -337,3 +361,4 @@ Standard library packages are pre-approved. They require no entry here but are l
 |---|---|
 | 2026-03-12 | Initial registry created. Standard library pre-approvals, Tier 1 (requests, click, pydantic, pydantic-settings, python-dotenv, rich, typer, httpx), Tier 2 (jinja2, PyYAML, paramiko, GitPython, cryptography, boto3, openai, anthropic), Tier 3 (selenium, playwright, docker, pyautogui), Tier 4 (pycryptodome, requests-unixsocket, pyzmq in scripts, pickle for untrusted input). |
 | 2026-03-13 | Added 8 packages required by Anthropic official skills: Tier 1 (pypdf, pdfplumber, openpyxl, pillow, imageio, numpy), Tier 2 (reportlab, imageio-ffmpeg). Clears package gate hold on pdf, xlsx, slack-gif-creator skills from github.com/anthropics/skills. |
+| 2026-03-14 | Added 3 packages required by kb-query skill (knowledge base RAG pipeline, D01): Tier 1 (python-frontmatter), Tier 2 (lancedb), Tier 3 (sentence-transformers). Tier 3 sign-off for sentence-transformers included inline per workflow §2.7 requirement. |

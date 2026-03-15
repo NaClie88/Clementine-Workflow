@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Session 2026-03-14 (continued). RAG knowledge base built and functional. LanceDB approved via STD09 §4 (D01) after 12-option evaluation. Schema.yaml ratified. 107 entries migrated from dev-philosophy-reference.md into per-entry files. LanceDB index built and tested (query.py returning semantically correct results). Next: fill TODO frontmatter fields in entry files (theorist, year, applies-to, tags), then vet query skill through Phase 1–4 workflow.
+Session 2026-03-14 (continued). All 107 original entries have full frontmatter (applied via entry-metadata.yaml + apply-metadata.py). 44 Tier 1 domain entries written across 5 domains: database (10), distributed-systems (8), systems-thinking (10), functional-programming (5), ux (11). LanceDB index rebuilt — 151 entries total. Next: vet query.py as agent skill through Phase 1–4 workflow; add to docs/approved-skills.md.
 
 ---
 
@@ -21,8 +21,7 @@ Session 2026-03-14 (continued). RAG knowledge base built and functional. LanceDB
 
 | Document | Type | State | In state since | Notes |
 |---|---|---|---|---|
-| `knowledge-base/entries/` | Knowledge Base | In progress | 2026-03-14 | 107 entries exist; TODO frontmatter fields (theorist, year, applies-to, tags) need filling |
-| `docs/approved-skills.md` | Reference | Pending | — | query.py needs Phase 1–4 skill vetting |
+| `docs/approved-skills.md` | Reference | Completed | 2026-03-14 | /kb-query approved — Phase 1–4 complete; strace network fix applied |
 
 ---
 
@@ -66,6 +65,13 @@ Session 2026-03-14 (continued). RAG knowledge base built and functional. LanceDB
 | `knowledge-base/scripts/migrate.py` | Script | 2026-03-14 | One-time migration: dev-philosophy-reference.md → 107 per-entry files |
 | `knowledge-base/scripts/embed.py` | Script | 2026-03-14 | Indexes entries into LanceDB (CPU, all-MiniLM-L6-v2, 384d) |
 | `knowledge-base/scripts/query.py` | Script | 2026-03-14 | CLI query tool; cosine similarity; --domain, --applies-to, --top-k, --json |
+| `knowledge-base/scripts/entry-metadata.yaml` | Data | 2026-03-14 | Metadata for all 107 original entries; applied via apply-metadata.py |
+| `knowledge-base/scripts/apply-metadata.py` | Script | 2026-03-14 | Regex-based batch frontmatter updater for entry files |
+| `knowledge-base/entries/database/` (10) | Knowledge Base | 2026-03-14 | Tier 1: relational-model, normalisation, acid, cap, pacelc, base, data-modelling-paradigms, schema-evolution, dimensional-modelling, data-mesh |
+| `knowledge-base/entries/distributed-systems/` (8) | Knowledge Base | 2026-03-14 | Tier 1: fallacies, two-generals, byzantine-generals, lamport-clocks, saga, crdts, circuit-breaker, bulkhead |
+| `knowledge-base/entries/systems-thinking/` (10) | Knowledge Base | 2026-03-14 | Tier 1: cynefin, feedback-loops, theory-of-constraints, conways-law, goodharts-law, hyrums-law, galls-law, postels-principle, littles-law, second-order-thinking |
+| `knowledge-base/entries/functional-programming/` (5) | Knowledge Base | 2026-03-14 | Tier 1: immutability, referential-transparency, function-composition, algebraic-data-types, unix-philosophy |
+| `knowledge-base/entries/ux/` (11) | Knowledge Base | 2026-03-14 | Tier 1: user-centered-design, cognitive-load-theory, affordance-theory, gestalt-principles, fitts-law, hicks-law, nielsens-heuristics, progressive-disclosure, design-thinking, jobs-to-be-done, dark-patterns |
 
 ---
 
