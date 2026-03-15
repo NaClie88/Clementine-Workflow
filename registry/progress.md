@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Session 2026-03-15 (completed). Docs alignment pass: all 10 `docs/` files updated with correct constitutional authority references (Part/Amendment format) and vocabulary alignment. Five high-value files additionally received vocabulary work: guardrails (prompt injection as trust boundary violation, attack-surface-minimisation framing), incident-response (NIST SP 800-61 lifecycle, blameless post-mortems), skill-vetting-workflow (STRIDE framework with table annotations), tool-use-policy (POLA with confused-deputy language, fail-secure), change-management (conduct amendment refs, Part 1 Amendment refs). Skill vetting automation decision added to backlog.
+Session 2026-03-15 (completed). Docs alignment pass (all 10 docs/ files) + skill vetting automation decision (D02). skill-tester rejected as Phase 1 automation base — quality tool without security awareness; /vet-skill already covers §2.6 automation. --help/JSON/dual-output checks adopted as Phase 4 supplementary quality checks (§5.6 added to skill-vetting-workflow.md). Active Work queue is now empty.
 
 **Constitution v6.0 (MAJOR):**
 - Part 1: Complete Mediation (Saltzer & Schroeder, 1975) in Amendment 5; input-validation/attack-surface vocabulary in Amendment 6
@@ -41,9 +41,7 @@ Session 2026-03-15 (completed). Docs alignment pass: all 10 `docs/` files update
 
 ## Active Work
 
-| Document | Type | State | In state since | Notes |
-|---|---|---|---|---|
-| Skill vetting automation | Decision | Backlog | 2026-03-15 | Evaluate skill-tester as Phase 1 automation base; decide if --help/JSON/dual-output checks become a Phase 1 gate (keep security checks separate) |
+No active work items.
 
 ---
 
@@ -93,6 +91,8 @@ Session 2026-03-15 (completed). Docs alignment pass: all 10 `docs/` files update
 | `docs/memory-context-policy.md` | Reference | 2026-03-15 | Authority ref fixed: Article XI → Part 5, Amendment 4; §2 body ref fixed |
 | `docs/knowledge-sources.md` | Reference | 2026-03-15 | Authority refs fixed: Articles VIII/XI → Part 5 Amendments 1+4; §4 and §5 body refs fixed |
 | `docs/user-roles-permissions.md` | Reference | 2026-03-15 | Authority refs fixed: Articles XIII/XVII → Part 1 Amendment 7 + Part 3 Amendment 1; §2 Admin body ref fixed |
+| `registry/decisions/D02-skill-vetting-automation.md` | Decision | 2026-03-15 | skill-tester rejected as Phase 1 automation base; --help/JSON/dual-output adopted as Phase 4 supplementary quality checks |
+| `docs/skill-vetting-workflow.md` §5.6 | Reference | 2026-03-15 | Phase 4 quality checks added for script-backed skills per D02 |
 | `docs/phase4-sandbox.md` | Reference | 2026-03-14 | Docker sandbox procedure; OSError canary fix documented |
 | `docs/knowledge-base-rag-plan.md` | Plan | 2026-03-14 | RAG system plan — ChromaDB replaced with LanceDB (D01) |
 | `registry/decisions/D01-lancedb-vector-database.md` | Decision | 2026-03-14 | 12-option evaluation; LanceDB chosen; 4 packages approved in STD09 §2.4 |

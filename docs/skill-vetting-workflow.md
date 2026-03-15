@@ -638,6 +638,49 @@ find ~ -newer /tmp/skill-sandbox-baseline-${SKILL} -type f 2>/dev/null | head -1
 [ ] (Script-backed) No unexpected processes spawned (check with ps during execution)
 ```
 
+### 5.6 Quality checks (script-backed skills only)
+
+Run after the security execution checks pass. These are quality gates, not security gates — failure is a flag for Operator review, not an automatic reject. Document results in the review record.
+
+**--help validation**
+
+Every script that uses argparse must produce a usage message without error:
+
+```bash
+python3 scripts/[script].py --help
+```
+
+Pass: exits 0, prints usage information. Fail: exits non-zero, crashes, or produces no output.
+
+**JSON output compliance**
+
+Scripts claiming JSON output support must produce valid, parseable JSON:
+
+```bash
+python3 scripts/[script].py [minimal_synthetic_input] --json | python3 -m json.tool
+```
+
+Pass: valid JSON produced, `python3 -m json.tool` exits 0. Fail: malformed output, non-zero exit.
+
+**Dual output format**
+
+Scripts should produce both human-readable and JSON output. Confirm both are available and non-empty:
+
+```bash
+python3 scripts/[script].py [minimal_synthetic_input]          # human-readable
+python3 scripts/[script].py [minimal_synthetic_input] --json   # JSON
+```
+
+Pass: both modes produce non-empty output. Fail: one mode errors or produces empty output.
+
+> These three checks are supplementary Phase 4 requirements per D02. Skills that fail them are not automatically rejected — document findings and present to Operator. A script with no JSON mode may still be approved if JSON output is not part of its stated purpose.
+
+```
+[ ] (Script-backed) --help produces usage message without error
+[ ] (Script-backed) --json produces valid parseable JSON (if JSON output claimed)
+[ ] (Script-backed) Human-readable output available and non-empty
+```
+
 ---
 
 ## 6. Phase 5 — Approval Decision
@@ -944,3 +987,4 @@ Dependency chain: depends on context-engine (REJECTED) — blocked until adapted
 | 2.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Major extension for script-backed skills: added §2.5 Hook Analysis, §2.6 Script Analysis, §2.7 Package Review Gate, §2.8 unified checklist; extended Phase 4 with strace + network namespace isolation; added Python venv sandbox to §7.2; added script-layer red flags to §8; added §9 Package Risk Tiers; added §10 Dependency Chain Analysis |
 | 3.0 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Comprehensive gap remediation after playwright-pro oversight revealed structural gaps. Added: §2.0 Full File Inventory (enumerate all files before analysis begins — approval requires every file read); expanded §2.5 into six subsections (CLAUDE.md injection analysis, hooks.json/settings.json, every .sh file in full, MCP config, plugin.json, agents/ directory); added §2.6b TypeScript/JavaScript Script Analysis (import inventory, file ops, network calls, shell exec, env var access, data flow); added §2.7b npm Package Review Gate with npm package risk tiers; updated §2.8 checklist with all new mandatory items; updated §8 with TypeScript/JS red flags and hook/injection red flags section |
 | 3.1 | 2026-03-15 | claude-sonnet-4-6 | claude-sonnet-4-6 | §1 Threat Model: added STRIDE (Garg & Kohnfelder, 1999) intro paragraph; annotated all prompt-layer and script-layer threat rows with primary STRIDE category |
+| 3.2 | 2026-03-15 | claude-sonnet-4-6 | claude-sonnet-4-6 | §5.6 added: Phase 4 quality checks for script-backed skills (--help validation, JSON output compliance, dual output format) per D02 |
