@@ -53,6 +53,7 @@ Session 2026-03-15 (completed). Constitution rework: absorbed Salty-CDP-DB vocab
 | `docs/memory-context-policy.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XI ref |
 | `docs/knowledge-sources.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XI ref |
 | `docs/user-roles-permissions.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XVII ref |
+| Skill vetting automation | Decision | Backlog | 2026-03-15 | Evaluate skill-tester as Phase 1 automation base; decide if --help/JSON/dual-output checks become a Phase 1 gate (keep security checks separate) |
 
 ---
 
@@ -89,6 +90,7 @@ Session 2026-03-15 (completed). Constitution rework: absorbed Salty-CDP-DB vocab
 | `memory/constitution.md` | Constitution | 2026-03-14 | v5.0 — Parts reordered by importance ranking; cross-refs audited across all docs |
 | `docs/dev-philosophy-reference.md` | Reference | 2026-03-14 | 107-entry reference: dev philosophies, privacy theories, security frameworks with examples, S/W/M |
 | `docs/approved-skills.md` | Reference | 2026-03-14 | Rev 2.3 — skill-tester approved with Phase 4 Docker caveat |
+| Salty-CDP-DB entry files | Knowledge Base | 2026-03-14 | dev-philosophy-reference.md split into per-entry chapter files; visual presentation improved |
 | `memory/constitution.md` | Constitution | 2026-03-15 | v6.0 — Salty-CDP-DB vocabulary absorbed throughout all 7 Parts; 2 new amendments in Part 7 (Dependency Management, API Design) |
 | `standards/STD01,04–09` | Standards | 2026-03-15 | Constitutional authority alignment pass (Article → Part/Amendment format); STD09 §6 SBOM requirement added |
 | `docs/phase4-sandbox.md` | Reference | 2026-03-14 | Docker sandbox procedure; OSError canary fix documented |
