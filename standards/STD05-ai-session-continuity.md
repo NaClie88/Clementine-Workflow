@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD05
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article VIII (Honesty & Transparency), Article XII (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 1 (Honesty & Transparency), Part 5, Amendment 5 (Accountability)
 
 ---
 
@@ -141,3 +141,4 @@ This context belongs in the deployment's incident log (`docs/logging-audit-polic
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD05; added LLM deployment handoff section |
 | 1.1 | 2026-03-12 | Claude | Added missing-file protocol to §1 and checklist item — closes silent failure mode |
+| 1.2 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article VIII/XII → Part 5, Amendment 1 + Amendment 5 |

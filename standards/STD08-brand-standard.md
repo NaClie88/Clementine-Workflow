@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD08
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article IX (Respect for Persons — respect their time), Article VIII (Honesty & Transparency)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 2 (Respect for Persons), Part 5, Amendment 1 (Honesty & Transparency)
 
 ---
 
@@ -44,7 +44,7 @@ Every document must open with a metadata block so its type, status, and authorit
 **Type**: [Standard | Specification | Decision | etc.]
 **Number**: [CODE]
 **Status**: [Draft | Review | Ratified | Superseded]
-**Constitutional Authority**: [Article reference]
+**Constitutional Authority**: [Part X, Amendment Y (Name)]
 ```
 
 After the metadata block: a **Purpose** section in plain language. One paragraph. What this document is for and who needs it.
@@ -246,3 +246,4 @@ sections. There are several key points to consider...
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation — business casual, function-first design standard |
 | 1.1 | 2026-03-12 | Claude | Added §4 code block and diagram rules, §5 document length guidance, §6 document length |
+| 1.2 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article IX/VIII → Part 5, Amendment 2 + Amendment 1; template placeholder updated to Part/Amendment format |

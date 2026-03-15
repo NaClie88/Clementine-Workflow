@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD04
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability), Part 7, Amendment 1 (Version Control & Development Discipline)
 
 ---
 
@@ -94,3 +94,4 @@ For AI-authored PRs: the checklist above must be verified by a human reviewer be
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD04 |
 | 1.1 | 2026-03-12 | Claude | Added §4 PR review criteria — defined "self-consistent" and added merge checklist |
+| 1.2 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XII → Part 5, Amendment 5 + Part 7, Amendment 1 |

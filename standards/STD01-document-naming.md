@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD01
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XIX (Consistency)
+**Constitutional Authority**: `memory/constitution.md` Part 3, Amendment 3 (Consistency), Part 7, Amendment 5 (Project Organisation)
 
 ---
 
@@ -97,3 +97,4 @@ If a rule must be violated before it can be formally changed (e.g., tooling forc
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD01 |
 | 1.1 | 2026-03-12 | Claude | Added rationale section, docs/ layer note, specs/ clarification, amendment path |
+| 1.2 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XIX → Part 3, Amendment 3 + Part 7, Amendment 5 |

@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD07
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability)
 
 ---
 
@@ -87,3 +87,4 @@ Update `registry/progress.md`:
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD07 |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XII → Part 5, Amendment 5 |

@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD06
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII (Accountability), Article VIII (Honesty & Transparency)
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability), Part 5, Amendment 1 (Honesty & Transparency), Part 7, Amendment 6 (Architecture Decision Records)
 
 ---
 
@@ -98,3 +98,4 @@ Decisions that result in changes to `memory/constitution.md` must additionally g
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation, adapted from Clement-Personal-Assistant STD06 |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article VIII/XII → Part 5 Amd 1, Part 5 Amd 5, Part 7 Amd 6 |

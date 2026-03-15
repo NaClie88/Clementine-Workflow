@@ -3,7 +3,7 @@
 **Type**: Standard
 **Number**: STD09
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article V (No Undermining Oversight), Article XII (Accountability)
+**Constitutional Authority**: `memory/constitution.md` Part 1, Amendment 5 (No Undermining Oversight), Part 5, Amendment 5 (Accountability), Part 7, Amendment 7 (Dependency Management)
 
 ---
 
@@ -134,8 +134,9 @@ The §2.4 table must be reviewed at minimum:
 
 During a review, confirm for each entry:
 1. Is the package still in active use in this project?
-2. Does the approved version have known CVEs? Check the package's security advisories.
+2. Does the approved version have known CVEs? Check the package's security advisories and run `pip-audit` or equivalent against the current lockfile — do not rely on the table's approval date as evidence of ongoing safety.
 3. Is a newer version required by another dependency?
+4. Is the package's full dependency tree reflected in the project's SBOM? Per Part 7, Amendment 7 (Dependency Management), an SBOM is required for this project — every approved package must appear in it, and the SBOM must be updated when this table changes.
 
 If a package fails any check, revoke it per the process below.
 
@@ -158,3 +159,4 @@ Do not simply delete the row and leave the import in place. The package is not c
 | 1.0 | 2026-03-10 | Claude | Initial creation — approved technology and dependency governance |
 | 1.1 | 2026-03-12 | Claude | Added version pinning requirement to §2.4, added §6 audit and revocation process |
 | 1.2 | 2026-03-14 | Joshua Alexander Clement | Added first four approved packages to §2.4: lancedb, sentence-transformers, pyyaml, python-frontmatter (D01) |
+| 1.3 | 2026-03-15 | Joshua Alexander Clement | claude-sonnet-4-6 | Constitutional authority updated to Part 1/5/7 format; §6 periodic review expanded to require pip-audit and SBOM verification (Part 7, Amendment 7 alignment) |
