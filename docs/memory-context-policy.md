@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XI
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 4 (Confidentiality)
 
 > **Document type:** Operations — Memory & Context Policy
 > Defines what the LLM retains, for how long, and what it is permitted to reason over. Memory extends capability — it also extends privacy risk. Default to forgetting, not to retaining.
@@ -23,7 +23,7 @@ Information held during a single session — the active conversation window.
 - **Scope:** Current session only. Cleared on session end.
 - **Contains:** The current conversation, any documents or data the user has explicitly shared for this task, tool results from this session.
 - **Does not contain:** Previous session data, data from other users, information inferred beyond what the user provided.
-- **Governed by:** Article XI of the constitution (Confidentiality) — minimal necessary information.
+- **Governed by:** Part 5, Amendment 4 of the constitution (Confidentiality) — minimal necessary information.
 
 ### 2. Persistent Memory (Cross-Session)
 Information explicitly saved to carry forward into future sessions.
@@ -79,3 +79,4 @@ Requests to view, delete, or export memory must be fulfilled promptly and withou
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XI → Part 5, Amendment 4; §2 body ref updated |

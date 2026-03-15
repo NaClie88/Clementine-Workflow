@@ -43,28 +43,30 @@ Skills are either **pure-prompt** (SKILL.md only — no scripts) or **script-bac
 
 Skills are prompt templates that instruct Claude to invoke tools — `Bash`, `Edit`, `Write`, `WebFetch`, `WebSearch`, and others. Script-backed skills additionally execute Python or shell code. The risks are not in reading a skill file — they are in executing one.
 
+This threat model uses STRIDE (Garg & Kohnfelder, 1999) as its classification framework: **S**poofing, **T**ampering, **R**epudiation, **I**nformation Disclosure, **D**enial of Service, **E**levation of Privilege. Each threat below is annotated with its primary STRIDE category. A threat may span multiple categories; the annotation marks the dominant one.
+
 ### Prompt-layer threats
 
-| Threat | Description | Caught in Phase |
-|---|---|---|
-| **Prompt injection** | Instructions hidden in the skill designed to override Claude's behavior or constitution | 1, 2 |
-| **Unexpected tool scope** | Skill reads or writes files outside its stated purpose | 1, 4 |
-| **Data exfiltration** | Skill sends data to external URLs via WebFetch or WebSearch | 1, 4 |
-| **Persistent modification** | Skill writes to config, memory, standards, or constitution files | 1, 4 |
-| **Credential harvesting** | Skill requests or logs sensitive values (tokens, passwords, keys) | 1, 2 |
-| **Supply chain confusion** | Skill impersonates a known approved skill with subtle behavioral differences | 1, 2 |
+| Threat | Description | STRIDE | Caught in Phase |
+|---|---|---|---|
+| **Prompt injection** | Instructions hidden in the skill designed to override Claude's behavior or constitution | E (Elevation of Privilege) | 1, 2 |
+| **Unexpected tool scope** | Skill reads or writes files outside its stated purpose | T (Tampering) | 1, 4 |
+| **Data exfiltration** | Skill sends data to external URLs via WebFetch or WebSearch | I (Information Disclosure) | 1, 4 |
+| **Persistent modification** | Skill writes to config, memory, standards, or constitution files | T (Tampering) | 1, 4 |
+| **Credential harvesting** | Skill requests or logs sensitive values (tokens, passwords, keys) | I (Information Disclosure) | 1, 2 |
+| **Supply chain confusion** | Skill impersonates a known approved skill with subtle behavioral differences | S (Spoofing) | 1, 2 |
 
 ### Script-layer threats (script-backed skills only)
 
-| Threat | Description | Caught in Phase |
-|---|---|---|
-| **Malicious package** | pip dependency contains a supply chain attack or hidden payload | 1.7, 4 |
-| **Script exfiltration** | Script reads project files and sends them to an external server | 1.6, 4 |
-| **Shell injection** | Script constructs shell commands from user-controlled input | 1.6, 4 |
-| **Privilege escalation** | Script calls system commands to expand its own access | 1.6, 4 |
-| **Dependency confusion** | Package name squatting — a malicious package with a similar name to a legitimate one | 1.7 |
-| **Stale CVEs** | Known vulnerabilities in pinned or unpinned packages | 1.7, 4 |
-| **Unconstrained file scope** | Script reads or writes paths based on runtime input, not fixed constants | 1.6, 4 |
+| Threat | Description | STRIDE | Caught in Phase |
+|---|---|---|---|
+| **Malicious package** | pip dependency contains a supply chain attack or hidden payload | T / E (Tampering, Elevation) | 1.7, 4 |
+| **Script exfiltration** | Script reads project files and sends them to an external server | I (Information Disclosure) | 1.6, 4 |
+| **Shell injection** | Script constructs shell commands from user-controlled input | E (Elevation of Privilege) | 1.6, 4 |
+| **Privilege escalation** | Script calls system commands to expand its own access | E (Elevation of Privilege) | 1.6, 4 |
+| **Dependency confusion** | Package name squatting — a malicious package with a similar name to a legitimate one | S (Spoofing) | 1.7 |
+| **Stale CVEs** | Known vulnerabilities in pinned or unpinned packages | E / I (Elevation, Disclosure) | 1.7, 4 |
+| **Unconstrained file scope** | Script reads or writes paths based on runtime input, not fixed constants | T / I (Tampering, Disclosure) | 1.6, 4 |
 
 Reading the skill file and scripts to perform static analysis is safe. The threat only activates on execution.
 
@@ -941,3 +943,4 @@ Dependency chain: depends on context-engine (REJECTED) — blocked until adapted
 | 1.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Initial creation — full vetting workflow for external Claude Code skills |
 | 2.0 | 2026-03-12 | Joshua Alexander Clement | claude-sonnet-4-6 | Major extension for script-backed skills: added §2.5 Hook Analysis, §2.6 Script Analysis, §2.7 Package Review Gate, §2.8 unified checklist; extended Phase 4 with strace + network namespace isolation; added Python venv sandbox to §7.2; added script-layer red flags to §8; added §9 Package Risk Tiers; added §10 Dependency Chain Analysis |
 | 3.0 | 2026-03-13 | Joshua Alexander Clement | claude-sonnet-4-6 | Comprehensive gap remediation after playwright-pro oversight revealed structural gaps. Added: §2.0 Full File Inventory (enumerate all files before analysis begins — approval requires every file read); expanded §2.5 into six subsections (CLAUDE.md injection analysis, hooks.json/settings.json, every .sh file in full, MCP config, plugin.json, agents/ directory); added §2.6b TypeScript/JavaScript Script Analysis (import inventory, file ops, network calls, shell exec, env var access, data flow); added §2.7b npm Package Review Gate with npm package risk tiers; updated §2.8 checklist with all new mandatory items; updated §8 with TypeScript/JS red flags and hook/injection red flags section |
+| 3.1 | 2026-03-15 | claude-sonnet-4-6 | claude-sonnet-4-6 | §1 Threat Model: added STRIDE (Garg & Kohnfelder, 1999) intro paragraph; annotated all prompt-layer and script-layer threat rows with primary STRIDE category |

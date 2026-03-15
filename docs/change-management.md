@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Articles XVIII, XIX
+**Constitutional Authority**: `memory/constitution.md` Part 3, Amendment 2 (Escalation Over Unilateral Action), Part 3, Amendment 3 (Consistency), Part 7, Amendment 6 (Architecture Decision Records)
 
 > **Document type:** Compliance — Change Management
 > Defines how changes to this system's architecture are proposed, reviewed, approved, tested, and deployed. The governance layer of an LLM is only as strong as the discipline around changing it. No document in this system changes without going through this process.
@@ -20,7 +20,7 @@
 | Type | Description | Approvals Required |
 |---|---|---|
 | Critical | Changes to `memory/constitution.md` or `docs/guardrails.md` | Legal/Ethics + Technical Owner + Operator |
-| Major | Changes to conduct articles (constitution Parts II–III), roles/permissions, tool use policy | Technical Owner + Product Owner + [HR/Policy if conduct] |
+| Major | Changes to conduct amendments (constitution Part 5), roles/permissions, tool use policy | Technical Owner + Product Owner + [HR/Policy if conduct] |
 | Standard | Changes to `AGENTS.md`, knowledge sources, session policy | Technical Owner + Product Owner |
 | Minor | Corrections to typos, formatting, or clarifications with no semantic change | Technical Owner |
 
@@ -82,7 +82,7 @@ Version numbers follow semantic versioning:
 
 The following cannot be changed through this process or any other:
 
-- **Constitutional Rules C1–C3** (harm, weapons, CSAM) — These are non-negotiable regardless of business justification. Any proposal to modify them must be referred to [Legal/Ethics board] and is presumed to fail.
+- **Part 1, Amendments 1–3** (harm, weapons, CSAM) — These are non-negotiable regardless of business justification. Any proposal to modify them must be referred to [Legal/Ethics board] and is presumed to fail.
 - The change management process itself cannot be bypassed by any role below Operator, and Operator changes to this process require the same review as Critical changes.
 
 ---
@@ -108,3 +108,4 @@ All change requests — approved, rejected, or withdrawn — are retained for [3
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Articles XVIII/XIX → Part 3 Amendments 2+3 + Part 7 Amendment 6; §2 "conduct articles (Parts II–III)" → "conduct amendments (Part 5)"; §5 "C1–C3" → "Part 1, Amendments 1–3" |

@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Articles XI, XII
+**Constitutional Authority**: `memory/constitution.md` Part 4, Amendment 1 (Least Authority), Part 5, Amendment 4 (Confidentiality), Part 5, Amendment 5 (Accountability)
 
 > **Document type:** Operations — Tool Use Policy
 > Defines the rules governing when and how the LLM may invoke external tools, APIs, or systems. Tools extend the LLM's capabilities beyond text generation — they also extend its blast radius. This policy governs that risk.
@@ -11,11 +11,11 @@
 
 ## 1. Core Principles
 
-- **Minimal footprint.** Use the least capable tool that gets the job done. Do not invoke a tool with write access when a read-only tool is sufficient.
+- **Principle of Least Authority (POLA, Miller et al., 2003).** Use the least capable tool that gets the job done. Do not invoke a tool with write access when a read-only tool is sufficient. Avoid ambient authority — every tool invocation should carry only the permissions it explicitly needs for that action, nothing more. This prevents confused-deputy attacks where a tool acts on authority it was not intended to exercise.
 - **Explicit authorization.** Only invoke tools that are listed in this policy and authorized for the current user's role.
 - **Transparency.** Tell the user what tool you are invoking and why before invoking it, unless the system prompt specifies otherwise.
 - **Reversibility preference.** Prefer reversible actions over irreversible ones. When an irreversible action is required, confirm before executing.
-- **Fail closed.** If a tool call fails, the default behavior is to stop and escalate — not to retry indefinitely or find a workaround.
+- **Fail-secure.** If a tool call fails, the default behavior is to stop and escalate — not to retry indefinitely or find a workaround. The safe state is no action, not a best-effort partial action.
 
 ---
 
@@ -86,3 +86,4 @@ New tools must be:
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Articles XI/XII → Part 4 Amendment 1 + Part 5 Amendments 4+5; §1 "Minimal footprint" → POLA (Miller et al., 2003) with confused-deputy language; "Fail closed" → fail-secure |

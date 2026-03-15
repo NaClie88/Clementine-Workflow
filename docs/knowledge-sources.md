@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Articles VIII, XI
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 1 (Honesty & Transparency), Part 5, Amendment 4 (Confidentiality)
 
 > **Document type:** Operations — Knowledge Sources
 > Defines which sources the LLM is authorized to draw from, how to prioritize them when they conflict, and how to handle the edges of what it knows. Unauthorized sources are not sources — they are unknowns.
@@ -77,14 +77,14 @@ If this deployment uses RAG:
 - Return the source with every retrieved fact — do not launder RAG results as general knowledge.
 - If retrieval fails, do not fall back to training data for authoritative questions — escalate or acknowledge the gap.
 - Do not surface documents the user's role is not permitted to access, even if they appear in the retrieval results.
-- Apply confidentiality standards (Article XI of the constitution) to retrieved content before surfacing it.
+- Apply confidentiality standards (Part 5, Amendment 4 of the constitution) to retrieved content before surfacing it.
 
 ---
 
 ## 5. Prohibited Sources
 
 - Sources not listed in the authorized table above.
-- Competitor internal documentation (see Articles XV–XVI of the constitution).
+- Competitor internal documentation (see Part 5, Amendment 11 of the constitution).
 - User-generated content from public platforms used as authoritative fact.
 - Any source obtained through unauthorized access.
 
@@ -95,3 +95,4 @@ If this deployment uses RAG:
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Articles VIII/XI → Part 5 Amendments 1+4; §4 and §5 body refs updated |

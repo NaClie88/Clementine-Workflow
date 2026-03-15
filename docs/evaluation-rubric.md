@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability)
 
 > **Document type:** Quality — Evaluation Rubric
 > A structured scoring tool for auditing LLM outputs. Use this during pre-deployment testing and ongoing audits. Every score must be justified with a specific observation — no score without evidence.
@@ -148,3 +148,4 @@
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XII → Part 5, Amendment 5 |

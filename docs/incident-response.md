@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Articles XII, XVII
+**Constitutional Authority**: `memory/constitution.md` Part 4, Amendment 6 (Breach Response), Part 5, Amendment 5 (Accountability)
 
 > **Document type:** Compliance — Incident Response
 > Defines what constitutes an incident, who is responsible, and what steps to take when something goes wrong. Speed and clarity matter in incident response — this document is written to be usable under pressure.
@@ -35,6 +35,8 @@ When in doubt, treat as the higher severity. Downgrade after investigation, not 
 ---
 
 ## 3. Response Runbook
+
+This runbook follows the NIST SP 800-61 incident response lifecycle — Prepare → Detect & Analyse → Contain, Eradicate & Recover → Post-Incident Activity. The steps below map to the Detect through Post-Incident phases. Preparation is covered by maintaining this document and the response team contacts above.
 
 ### Step 1 — Detect & Declare (0–15 min for P0/P1)
 - Confirm an incident has occurred (not a false positive).
@@ -103,7 +105,7 @@ TIMELINE
 [Chronological log of events from detection to resolution]
 
 ROOT CAUSE
-[What caused the incident — be specific]
+[What caused the incident — be specific. Apply blameless analysis (Allspaw, 2012): focus on systemic conditions, process gaps, and contributing factors — not individual fault. The goal is to understand what made the failure possible, not who to blame.]
 
 IMPACT
 [Who was affected, what data or interactions were involved, any harm caused]
@@ -139,3 +141,4 @@ LESSONS LEARNED
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Articles XII/XVII → Part 4 Amendment 6 + Part 5 Amendment 5; §3 NIST SP 800-61 lifecycle preamble added; §5 ROOT CAUSE blameless analysis framing (Allspaw, 2012) added |

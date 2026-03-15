@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Article XII
+**Constitutional Authority**: `memory/constitution.md` Part 5, Amendment 5 (Accountability)
 
 > **Document type:** Compliance — Logging & Audit Policy
 > Defines what gets logged, how long it is kept, who can access it, and how it is used. Logs exist to enable accountability and improvement — not surveillance. Handle them accordingly.
@@ -106,3 +106,4 @@ Audit findings must be documented and reviewed within [10 business days] of the 
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Article XII → Part 5, Amendment 5 |

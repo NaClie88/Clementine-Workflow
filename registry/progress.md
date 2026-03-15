@@ -13,7 +13,7 @@
 
 ### Last Session Note
 
-Session 2026-03-15 (completed). Constitution rework: absorbed Salty-CDP-DB vocabulary throughout all 7 Parts + standards alignment pass.
+Session 2026-03-15 (completed). Docs alignment pass: all 10 `docs/` files updated with correct constitutional authority references (Part/Amendment format) and vocabulary alignment. Five high-value files additionally received vocabulary work: guardrails (prompt injection as trust boundary violation, attack-surface-minimisation framing), incident-response (NIST SP 800-61 lifecycle, blameless post-mortems), skill-vetting-workflow (STRIDE framework with table annotations), tool-use-policy (POLA with confused-deputy language, fail-secure), change-management (conduct amendment refs, Part 1 Amendment refs). Skill vetting automation decision added to backlog.
 
 **Constitution v6.0 (MAJOR):**
 - Part 1: Complete Mediation (Saltzer & Schroeder, 1975) in Amendment 5; input-validation/attack-surface vocabulary in Amendment 6
@@ -43,16 +43,6 @@ Session 2026-03-15 (completed). Constitution rework: absorbed Salty-CDP-DB vocab
 
 | Document | Type | State | In state since | Notes |
 |---|---|---|---|---|
-| `docs/guardrails.md` | Reference | Needs alignment | 2026-03-15 | Stale Article refs; vocabulary alignment (input-validation, attack-surface, STRIDE) |
-| `docs/tool-use-policy.md` | Reference | Needs alignment | 2026-03-15 | Least-privilege, fail-secure framing |
-| `docs/incident-response.md` | Reference | Needs alignment | 2026-03-15 | NIST SP 800-61 phases now in constitution — align body |
-| `docs/skill-vetting-workflow.md` | Reference | Needs alignment | 2026-03-15 | STRIDE integration |
-| `docs/change-management.md` | Reference | Needs alignment | 2026-03-15 | Established change-control vocabulary |
-| `docs/evaluation-rubric.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XII ref |
-| `docs/logging-audit-policy.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XII ref |
-| `docs/memory-context-policy.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XI ref |
-| `docs/knowledge-sources.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XI ref |
-| `docs/user-roles-permissions.md` | Reference | Needs alignment | 2026-03-15 | Stale Article XVII ref |
 | Skill vetting automation | Decision | Backlog | 2026-03-15 | Evaluate skill-tester as Phase 1 automation base; decide if --help/JSON/dual-output checks become a Phase 1 gate (keep security checks separate) |
 
 ---
@@ -93,6 +83,16 @@ Session 2026-03-15 (completed). Constitution rework: absorbed Salty-CDP-DB vocab
 | Salty-CDP-DB entry files | Knowledge Base | 2026-03-14 | dev-philosophy-reference.md split into per-entry chapter files; visual presentation improved |
 | `memory/constitution.md` | Constitution | 2026-03-15 | v6.0 — Salty-CDP-DB vocabulary absorbed throughout all 7 Parts; 2 new amendments in Part 7 (Dependency Management, API Design) |
 | `standards/STD01,04–09` | Standards | 2026-03-15 | Constitutional authority alignment pass (Article → Part/Amendment format); STD09 §6 SBOM requirement added |
+| `docs/guardrails.md` | Reference | 2026-03-15 | Authority refs fixed; prompt injection framed as trust boundary violation; §3 Article refs fixed; §4 escalation Article XVII fixed; §6 attack-surface-minimisation framing |
+| `docs/incident-response.md` | Reference | 2026-03-15 | Authority refs fixed; §3 NIST SP 800-61 lifecycle preamble; §5 ROOT CAUSE blameless analysis (Allspaw, 2012) |
+| `docs/skill-vetting-workflow.md` | Reference | 2026-03-15 | §1 STRIDE (Garg & Kohnfelder, 1999) intro + threat table STRIDE category annotations |
+| `docs/tool-use-policy.md` | Reference | 2026-03-15 | Authority refs fixed; §1 POLA (Miller et al., 2003) with confused-deputy language; fail-secure naming |
+| `docs/change-management.md` | Reference | 2026-03-15 | Authority refs fixed; §2 conduct amendment refs; §5 Part 1 Amendment refs |
+| `docs/evaluation-rubric.md` | Reference | 2026-03-15 | Authority ref fixed: Article XII → Part 5, Amendment 5 |
+| `docs/logging-audit-policy.md` | Reference | 2026-03-15 | Authority ref fixed: Article XII → Part 5, Amendment 5 |
+| `docs/memory-context-policy.md` | Reference | 2026-03-15 | Authority ref fixed: Article XI → Part 5, Amendment 4; §2 body ref fixed |
+| `docs/knowledge-sources.md` | Reference | 2026-03-15 | Authority refs fixed: Articles VIII/XI → Part 5 Amendments 1+4; §4 and §5 body refs fixed |
+| `docs/user-roles-permissions.md` | Reference | 2026-03-15 | Authority refs fixed: Articles XIII/XVII → Part 1 Amendment 7 + Part 3 Amendment 1; §2 Admin body ref fixed |
 | `docs/phase4-sandbox.md` | Reference | 2026-03-14 | Docker sandbox procedure; OSError canary fix documented |
 | `docs/knowledge-base-rag-plan.md` | Plan | 2026-03-14 | RAG system plan — ChromaDB replaced with LanceDB (D01) |
 | `registry/decisions/D01-lancedb-vector-database.md` | Decision | 2026-03-14 | 12-option evaluation; LanceDB chosen; 4 packages approved in STD09 §2.4 |

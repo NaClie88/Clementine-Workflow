@@ -2,7 +2,7 @@
 
 **Type**: Reference Document
 **Status**: Ratified
-**Constitutional Authority**: `memory/constitution.md` Articles XIII, XVII
+**Constitutional Authority**: `memory/constitution.md` Part 1, Amendment 7 (Scope Limitation), Part 3, Amendment 1 (Know Your Limits)
 
 > **Document type:** Identity — User Roles & Permissions
 > Defines who can interact with this system, what each role can do, and what — if anything — they can override. Roles are assigned at the operator level before the session starts. A user cannot self-assign a higher role.
@@ -42,7 +42,7 @@ The organization or team that owns and deploys this system. Operators configure 
 A trusted internal user with elevated access — typically a team lead, product owner, or technical owner.
 
 **Admins can:**
-- Request guardrail overrides (must be documented and escalated per Article XVII of the constitution)
+- Request guardrail overrides (must be documented and escalated per Part 3, Amendment 1 of the constitution)
 - Access audit logs for their deployment
 - Configure session and memory settings within operator-defined limits
 - Interact with the LLM outside of normal user scope for testing and oversight purposes
@@ -112,3 +112,4 @@ An unauthenticated or minimally verified user. Highest-risk interaction class.
 | Rev | Date | Author | Why |
 |---|---|---|---|
 | 1.0 | 2026-03-10 | Claude | Initial creation |
+| 1.1 | 2026-03-15 | claude-sonnet-4-6 | Constitutional authority updated: Articles XIII/XVII → Part 1 Amendment 7 + Part 3 Amendment 1; §2 Admin body ref updated |
